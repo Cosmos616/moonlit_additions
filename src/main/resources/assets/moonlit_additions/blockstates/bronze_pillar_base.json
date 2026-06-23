@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "moonlit_additions:block/bronze_pillar_base"
+    },
+    "facing=down": {
+      "model": "moonlit_additions:block/bronze_pillar_base",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "moonlit_additions:block/bronze_pillar_base",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "moonlit_additions:block/bronze_pillar_base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "moonlit_additions:block/bronze_pillar_base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "moonlit_additions:block/bronze_pillar_base",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

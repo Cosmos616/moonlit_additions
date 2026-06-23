@@ -1,0 +1,7 @@
+{
+  "parent": "nomansland:block/tiles_cube",
+  "textures": {
+    "side": "moonlit_additions:block/bronze_tiles",
+    "side_alt": "moonlit_additions:block/bronze_tiles_alt"
+  }
+}

@@ -58,6 +58,9 @@ Example mod description.
 #[[accessTransformers]]
 #file="META-INF/accesstransformer.cfg"
 
+[[mixins]]
+config = "moonlit_additions.mixins.json"
+
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
@@ -88,6 +91,18 @@ Example mod description.
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.moonlit_additions]]
+    modId="nomansland"
+    type="required"
+    versionRange="[1.5.3]"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.moonlit_additions]]
+    modId="accessories"
+    type="optional"
+    ordering="AFTER"
+    side="BOTH"
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.

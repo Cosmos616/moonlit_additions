@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.cosmos.moonlit_additions.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "client.LightTextureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
