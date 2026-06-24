@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
@@ -255,6 +256,7 @@ public class MeteorAuroraParticle extends TextureSheetParticle {
 
     @Override
     public AABB getRenderBoundingBox(float partialTicks) {
-        return this.getBoundingBox().inflate(0, 200, 0);
+        int renderDistance = Minecraft.getInstance().options.renderDistance().get() * 16;
+        return this.getBoundingBox().inflate(renderDistance, 400, renderDistance);
     }
 }

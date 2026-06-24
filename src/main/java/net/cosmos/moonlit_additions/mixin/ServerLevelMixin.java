@@ -24,7 +24,7 @@ public class ServerLevelMixin {
         if (chunk.hasData(ModAttachmentTypes.METEOR)) {
             Meteor meteor = chunk.getData(ModAttachmentTypes.METEOR);
             int age = meteor.age();
-            int y = chunk.getLevel().getMaxBuildHeight();
+            int y = chunk.getLevel().getMaxBuildHeight() + 200;
             for (int i = 0; i < 6; i++) {
                 if (random.nextFloat() > 0.4f) continue;
                 int x = random.nextIntBetweenInclusive(chunk.getPos().getMinBlockX(), chunk.getPos().getMaxBlockX());
