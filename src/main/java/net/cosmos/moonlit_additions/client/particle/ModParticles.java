@@ -12,6 +12,6 @@ public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLES =
             DeferredRegister.create(Registries.PARTICLE_TYPE, MoonlitAdditions.MOD_ID);
 
-    public static final Supplier<SimpleParticleType> METEOR_AURORA =
-            PARTICLES.register("meteor_aurora", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> METEOR_AURORA = PARTICLES.register("meteor_aurora", () -> new SimpleParticleType(true));
+
 }

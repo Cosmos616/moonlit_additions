@@ -3,6 +3,7 @@ package net.cosmos.moonlit_additions;
 import net.cosmos.moonlit_additions.client.MoonlitModels;
 import net.cosmos.moonlit_additions.common.item.ModCreativeTabs;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
+import net.cosmos.moonlit_additions.init.ModAttachmentTypes;
 import net.cosmos.moonlit_additions.init.ModBlockEntities;
 import net.cosmos.moonlit_additions.init.ModBlocks;
 import net.cosmos.moonlit_additions.init.ModItems;
@@ -32,10 +33,10 @@ public class MoonlitAdditions {
         ModCreativeTabs.register(modEventBus);
 
         ModBlocks.register(modEventBus);
-
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
+        ModAttachmentTypes.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

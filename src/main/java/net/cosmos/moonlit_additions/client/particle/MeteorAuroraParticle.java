@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class MeteorAuroraParticle extends TextureSheetParticle {
@@ -252,5 +253,8 @@ public class MeteorAuroraParticle extends TextureSheetParticle {
         return 0xF000F0;
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox(float partialTicks) {
+        return this.getBoundingBox().inflate(0, 200, 0);
+    }
 }
