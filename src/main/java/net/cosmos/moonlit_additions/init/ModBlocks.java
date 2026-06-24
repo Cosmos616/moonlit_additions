@@ -84,14 +84,19 @@ public class ModBlocks {
                     .sound(SoundType.WOOL)
             ));
 
-    public static final BlockDefinition<Block> METEOR =
-            register(
-                    "meteor",
-                    () -> new MeteorBlock(
-                            BlockBehaviour.Properties.of()
-                                    .strength(3.5F, 6.0F)
-                                    .requiresCorrectToolForDrops()
-                                    .lightLevel(state -> state.getValue(MeteorBlock.LIT) ? 12 : 0)
+    public static final BlockDefinition<Block> METEOR = register("meteor", () ->
+                    new MeteorBlock(BlockBehaviour.Properties.of()
+                    .strength(3.5F, 6.0F)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(state -> state.getValue(MeteorBlock.LIT) ? 12 : 0)
+                )
+            );
+
+    public static final BlockDefinition<Block> HOLLOW_METEOR = register("hollow_meteor", () ->
+                    new Block(BlockBehaviour.Properties.of()
+                            .strength(3.5F, 6.0F)
+                            .requiresCorrectToolForDrops()
+                            .noOcclusion()
                     )
             );
 
