@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.particle;
+package net.cosmos.moonlit_additions.client.particle;
 
 import net.cosmos.moonlit_additions.MoonLitAdditions;
 import net.minecraft.core.particles.ParticleType;

@@ -1,10 +1,9 @@
-package net.cosmos.moonlit_additions.block;
+package net.cosmos.moonlit_additions.common.block;
 
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.BlockProperties;
 import net.cosmos.moonlit_additions.MoonLitAdditions;
-import net.cosmos.moonlit_additions.block.custom.BronzePillarBaseBlock;
-import net.cosmos.moonlit_additions.item.ModItems;
+import net.cosmos.moonlit_additions.common.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -60,7 +59,7 @@ public class ModBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
             ));
 
-    public static final BlockDefinition<Block> BRONZE_BELL_BODY_MODEL = registerNoItem("bronze_bell_body_model", ()-> new BronzeBellBlock(BlockBehaviour.Properties.of()));
+    //public static final BlockDefinition<Block> BRONZE_BELL_BODY_MODEL = registerNoItem("bronze_bell_body_model", ()-> new BronzeBellBlock(BlockBehaviour.Properties.of()));
 
     public static final BlockDefinition<Block> MOONLIGHT_PYRE = register("moon_light_pyre",
             ()-> new MoonLightPyreBlock(BlockBehaviour.Properties.of()

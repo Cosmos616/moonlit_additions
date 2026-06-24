@@ -1,8 +1,7 @@
-package net.cosmos.moonlit_additions.block_entity;
+package net.cosmos.moonlit_additions.common.block_entity;
 
 import net.cosmos.moonlit_additions.MoonLitAdditions;
-import net.cosmos.moonlit_additions.block.BronzeBellBlock;
-import net.cosmos.moonlit_additions.block.ModBlocks;
+import net.cosmos.moonlit_additions.common.block.ModBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;

@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.rendering;
+package net.cosmos.moonlit_additions.client.rendering;
 
 import com.farcr.nomansland.common.block.moonlight.MoonlightCandleBlock;
 import net.minecraft.util.Mth;

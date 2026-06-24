@@ -1,16 +1,9 @@
-package net.cosmos.moonlit_additions.item;
+package net.cosmos.moonlit_additions.common.item;
 
-import com.farcr.nomansland.client.renderer.FriendMoonRenderer;
-import com.farcr.nomansland.common.block.moonlight.MoonlightBasinBlock;
-import com.farcr.nomansland.common.blockentity.MoonlightBasinBlockEntity;
 import com.farcr.nomansland.common.definitions.ItemDefinition;
-import com.farcr.nomansland.common.friend.FriendMoon;
 import com.google.common.collect.Sets;
 import net.cosmos.moonlit_additions.MoonLitAdditions;
-import net.cosmos.moonlit_additions.item.BronzeMaskItem;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;

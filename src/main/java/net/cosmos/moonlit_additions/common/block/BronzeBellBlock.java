@@ -1,9 +1,8 @@
-package net.cosmos.moonlit_additions.block;
+package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
-import net.cosmos.moonlit_additions.block_entity.BronzeBellBlockEntity;
-import net.cosmos.moonlit_additions.block_entity.ModBlockEntities;
-import net.minecraft.client.renderer.blockentity.BellRenderer;
+import net.cosmos.moonlit_additions.common.block_entity.BronzeBellBlockEntity;
+import net.cosmos.moonlit_additions.common.block_entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -17,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BellBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;

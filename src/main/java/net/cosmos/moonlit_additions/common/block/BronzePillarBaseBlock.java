@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.block.custom;
+package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;

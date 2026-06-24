@@ -1,63 +1,63 @@
 {
   "variants": {
     "attachment=ceiling,facing=east": {
-      "model": "moonlit_additions:block/bronze_bell_ceiling",
+      "model": "moonlit_additions:block/bronze_bell/ceiling",
       "y": 90
     },
     "attachment=ceiling,facing=north": {
-      "model": "moonlit_additions:block/bronze_bell_ceiling"
+      "model": "moonlit_additions:block/bronze_bell/ceiling"
     },
     "attachment=ceiling,facing=south": {
-      "model": "moonlit_additions:block/bronze_bell_ceiling",
+      "model": "moonlit_additions:block/bronze_bell/ceiling",
       "y": 180
     },
     "attachment=ceiling,facing=west": {
-      "model": "moonlit_additions:block/bronze_bell_ceiling",
+      "model": "moonlit_additions:block/bronze_bell/ceiling",
       "y": 270
     },
     "attachment=double_wall,facing=east": {
-      "model": "moonlit_additions:block/bronze_bell_between_walls"
+      "model": "moonlit_additions:block/bronze_bell/between_walls"
     },
     "attachment=double_wall,facing=north": {
-      "model": "moonlit_additions:block/bronze_bell_between_walls",
+      "model": "moonlit_additions:block/bronze_bell/between_walls",
       "y": 270
     },
     "attachment=double_wall,facing=south": {
-      "model": "moonlit_additions:block/bronze_bell_between_walls",
+      "model": "moonlit_additions:block/bronze_bell/between_walls",
       "y": 90
     },
     "attachment=double_wall,facing=west": {
-      "model": "moonlit_additions:block/bronze_bell_between_walls",
+      "model": "moonlit_additions:block/bronze_bell/between_walls",
       "y": 180
     },
     "attachment=floor,facing=east": {
-      "model": "moonlit_additions:block/bronze_bell_floor",
+      "model": "moonlit_additions:block/bronze_bell/floor",
       "y": 90
     },
     "attachment=floor,facing=north": {
-      "model": "moonlit_additions:block/bronze_bell_floor"
+      "model": "moonlit_additions:block/bronze_bell/floor"
     },
     "attachment=floor,facing=south": {
-      "model": "moonlit_additions:block/bronze_bell_floor",
+      "model": "moonlit_additions:block/bronze_bell/floor",
       "y": 180
     },
     "attachment=floor,facing=west": {
-      "model": "moonlit_additions:block/bronze_bell_floor",
+      "model": "moonlit_additions:block/bronze_bell/floor",
       "y": 270
     },
     "attachment=single_wall,facing=east": {
-      "model": "moonlit_additions:block/bronze_bell_wall"
+      "model": "moonlit_additions:block/bronze_bell/wall"
     },
     "attachment=single_wall,facing=north": {
-      "model": "moonlit_additions:block/bronze_bell_wall",
+      "model": "moonlit_additions:block/bronze_bell/wall",
       "y": 270
     },
     "attachment=single_wall,facing=south": {
-      "model": "moonlit_additions:block/bronze_bell_wall",
+      "model": "moonlit_additions:block/bronze_bell/wall",
       "y": 90
     },
     "attachment=single_wall,facing=west": {
-      "model": "moonlit_additions:block/bronze_bell_wall",
+      "model": "moonlit_additions:block/bronze_bell/wall",
       "y": 180
     }
   }

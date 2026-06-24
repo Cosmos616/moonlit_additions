@@ -1,13 +1,11 @@
-package net.cosmos.moonlit_additions.item;
+package net.cosmos.moonlit_additions.common.item;
 
 import net.cosmos.moonlit_additions.MoonLitAdditions;
-import net.cosmos.moonlit_additions.item.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;

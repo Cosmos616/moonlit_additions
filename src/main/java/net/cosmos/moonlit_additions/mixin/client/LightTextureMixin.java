@@ -1,7 +1,7 @@
 package net.cosmos.moonlit_additions.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.cosmos.moonlit_additions.rendering.BronzeMaskDarknessRenderer;
+import net.cosmos.moonlit_additions.client.rendering.BronzeMaskDarknessRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;

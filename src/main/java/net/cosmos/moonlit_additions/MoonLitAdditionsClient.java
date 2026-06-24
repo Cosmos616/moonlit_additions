@@ -1,11 +1,10 @@
 package net.cosmos.moonlit_additions;
 
-import net.cosmos.moonlit_additions.block_entity.BronzeBellBlockEntity;
-import net.cosmos.moonlit_additions.block_entity.ModBlockEntities;
-import net.cosmos.moonlit_additions.particle.MeteorAuroraParticle;
-import net.cosmos.moonlit_additions.particle.ModParticles;
-import net.cosmos.moonlit_additions.rendering.BronzeBellRenderer;
-import net.cosmos.moonlit_additions.rendering.BronzeMaskAllomancer;
+import net.cosmos.moonlit_additions.common.block_entity.ModBlockEntities;
+import net.cosmos.moonlit_additions.client.particle.MeteorAuroraParticle;
+import net.cosmos.moonlit_additions.client.particle.ModParticles;
+import net.cosmos.moonlit_additions.client.rendering.BronzeBellRenderer;
+import net.cosmos.moonlit_additions.client.rendering.BronzeMaskAllomancer;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,15 +19,11 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-// This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = MoonLitAdditions.MOD_ID, dist = Dist.CLIENT)
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = MoonLitAdditions.MOD_ID, value = Dist.CLIENT)
 public class MoonLitAdditionsClient {
+
     public MoonLitAdditionsClient(ModContainer container) {
-        // Allows NeoForge to create a config screen for this mod's configs.
-        // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
@@ -38,6 +33,7 @@ public class MoonLitAdditionsClient {
         MoonLitAdditions.LOGGER.info("HELLO FROM CLIENT SETUP");
         MoonLitAdditions.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
+
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(
@@ -48,10 +44,7 @@ public class MoonLitAdditionsClient {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(
-                ModBlockEntities.BRONZE_BELL_BLOCK_ENTITY.get(),
-                BronzeBellRenderer::new
-        );
+        event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_BELL_BLOCK_ENTITY.get(), BronzeBellRenderer::new);
     }
 
     @SubscribeEvent

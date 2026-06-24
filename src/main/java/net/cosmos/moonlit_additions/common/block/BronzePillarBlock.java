@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.block;
+package net.cosmos.moonlit_additions.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

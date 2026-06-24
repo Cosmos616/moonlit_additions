@@ -1,10 +1,9 @@
-package net.cosmos.moonlit_additions.block;
+package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
-import net.cosmos.moonlit_additions.item.ModItems;
-import net.cosmos.moonlit_additions.particle.ModParticles;
+import net.cosmos.moonlit_additions.common.item.ModItems;
+import net.cosmos.moonlit_additions.client.particle.ModParticles;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

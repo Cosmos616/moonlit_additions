@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.rendering;
+package net.cosmos.moonlit_additions.client.rendering;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

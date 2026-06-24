@@ -1,4 +1,4 @@
-package net.cosmos.moonlit_additions.particle;
+package net.cosmos.moonlit_additions.client.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
