@@ -101,7 +101,7 @@ public class MeteorBlock extends Block {
             BlockHitResult hitResult
     ) {
         boolean isStardust = stack.is(ModItems.STARDUST.get());
-        boolean isStardustBottle = stack.is(ModItems.STARDUST_BOTTLE.get());
+        boolean isStardustBottle = stack.is(ModItems.BOTTLE_OF_STARDUST.get());
 
         if (!isStardust && !isStardustBottle) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

@@ -20,7 +20,7 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> MOONLIT_DECOR = CREATIVE_MODE_TAB.register("moonlit_decor",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.MOONLIT_BRONZE.get()))
-                    .title(Component.translatable("creative_tab.moonlit_additions.moonlit_decor"))
+                    .title(Component.translatable("itemGroup.moonlit_additions"))
                     .displayItems((itemDisplayParameters, output) -> {
                         for (var registry : ModItems.ITEMS.getEntries()) {
                             if (registry.get() instanceof BlockItem) continue;
