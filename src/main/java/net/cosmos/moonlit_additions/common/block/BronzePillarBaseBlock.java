@@ -44,14 +44,14 @@ public class BronzePillarBaseBlock extends DirectionalBlock {
     }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape cube = Shapes.box(0,0,0,16,16,16);
+        VoxelShape cube = Block.box(0,0,0,16,16,16);
         return switch (state.getValue(FACING)) {
-            case DOWN -> Shapes.or(cube, Shapes.box(-2, 0, -2, 18, 14, 18));
-            case UP -> Shapes.or(cube, Shapes.box(-2, 2, -2, 18, 16, 18));
-            case NORTH -> Shapes.or(cube, Shapes.box(-2, -2, 2, 18, 18, 16));
-            case SOUTH -> Shapes.or(cube, Shapes.box(-2, -2, 0, 18, 18, 14));
-            case WEST -> Shapes.or(cube, Shapes.box(2, -2, -2, 16, 18, 18));
-            case EAST -> Shapes.or(cube, Shapes.box(0, -2, -2, 14, 18, 18));
+            case DOWN -> Shapes.or(cube, Block.box(-2, 0, -2, 18, 14, 18));
+            case UP -> Shapes.or(cube, Block.box(-2, 2, -2, 18, 16, 18));
+            case NORTH -> Shapes.or(cube, Block.box(-2, -2, 0, 18, 18, 14));
+            case SOUTH -> Shapes.or(cube, Block.box(-2, -2, 2, 18, 18, 16));
+            case WEST -> Shapes.or(cube, Block.box(0, -2, -2, 14, 18, 18));
+            case EAST -> Shapes.or(cube, Block.box(2, -2, -2, 16, 18, 18));
         };
     }
 
