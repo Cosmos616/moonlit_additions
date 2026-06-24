@@ -2,6 +2,7 @@ package net.cosmos.moonlit_additions.common.item;
 
 import net.cosmos.moonlit_additions.client.rendering.BronzeMaskAllomancer;
 import net.cosmos.moonlit_additions.client.rendering.BronzeMaskDarknessRenderer;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.Holder;

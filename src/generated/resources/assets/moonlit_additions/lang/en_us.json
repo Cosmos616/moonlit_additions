@@ -1,7 +1,6 @@
 {
   "block.moonlit_additions.block_of_moonlit_ash": "Block of Moonlit Ash",
   "block.moonlit_additions.bronze_bell": "Bronze Bell",
-  "block.moonlit_additions.bronze_bell_body_model": "Bronze Bell Body Model",
   "block.moonlit_additions.bronze_pillar": "Bronze Pillar",
   "block.moonlit_additions.bronze_pillar_base": "Bronze Pillar Base",
   "block.moonlit_additions.bronze_tiles": "Bronze Tiles",
@@ -17,5 +16,5 @@
   "item.moonlit_additions.moonlit_bronze": "Moonlit Bronze",
   "item.moonlit_additions.moonlit_wax": "Moonlit Wax",
   "item.moonlit_additions.stardust": "Stardust",
-  "itemGroup.moonlit_additions": "Moon Light Additions"
+  "itemGroup.moonlit_additions": "Moonlit Additions"
 }

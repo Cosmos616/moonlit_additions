@@ -1,7 +1,7 @@
 package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
-import net.cosmos.moonlit_additions.common.item.ModItems;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

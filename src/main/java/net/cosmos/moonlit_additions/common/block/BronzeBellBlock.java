@@ -2,7 +2,7 @@ package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
 import net.cosmos.moonlit_additions.common.block_entity.BronzeBellBlockEntity;
-import net.cosmos.moonlit_additions.common.block_entity.ModBlockEntities;
+import net.cosmos.moonlit_additions.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -40,8 +40,6 @@ public class BronzeBellBlock extends BaseEntityBlock {
     public static final BooleanProperty POWERED;
     private static final VoxelShape NORTH_SOUTH_FLOOR_SHAPE;
     private static final VoxelShape EAST_WEST_FLOOR_SHAPE;
-    private static final VoxelShape BELL_TOP_SHAPE;
-    private static final VoxelShape BELL_BOTTOM_SHAPE;
     private static final VoxelShape BELL_SHAPE;
     private static final VoxelShape NORTH_SOUTH_BETWEEN;
     private static final VoxelShape EAST_WEST_BETWEEN;
@@ -63,12 +61,12 @@ public class BronzeBellBlock extends BaseEntityBlock {
 
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         boolean flag = level.hasNeighborSignal(pos);
-        if (flag != (Boolean)state.getValue(POWERED)) {
+        if (flag != state.getValue(POWERED)) {
             if (flag) {
-                this.attemptToRing(level, pos, (Direction)null);
+                this.attemptToRing(level, pos, null);
             }
 
-            level.setBlock(pos, (BlockState)state.setValue(POWERED, flag), 3);
+            level.setBlock(pos, state.setValue(POWERED, flag), 3);
         }
 
     }
@@ -103,8 +101,8 @@ public class BronzeBellBlock extends BaseEntityBlock {
 
     private boolean isProperHit(BlockState pos, Direction p_direction, double distanceY) {
         if (p_direction.getAxis() != Direction.Axis.Y && !(distanceY > (double)0.8124F)) {
-            Direction direction = (Direction)pos.getValue(FACING);
-            BellAttachType bellattachtype = (BellAttachType)pos.getValue(ATTACHMENT);
+            Direction direction = pos.getValue(FACING);
+            BellAttachType bellattachtype = pos.getValue(ATTACHMENT);
             switch (bellattachtype) {
                 case FLOOR:
                     return direction.getAxis() == p_direction.getAxis();
@@ -121,18 +119,18 @@ public class BronzeBellBlock extends BaseEntityBlock {
         }
     }
     public boolean attemptToRing(Level level, BlockPos pos, @Nullable Direction direction) {
-        return this.attemptToRing((Entity)null, level, pos, direction);
+        return this.attemptToRing(null, level, pos, direction);
     }
 
     public boolean attemptToRing(@Nullable Entity entity, Level level, BlockPos pos, @Nullable Direction direction) {
         BlockEntity blockentity = level.getBlockEntity(pos);
         if (!level.isClientSide && blockentity instanceof BronzeBellBlockEntity) {
             if (direction == null) {
-                direction = (Direction)level.getBlockState(pos).getValue(FACING);
+                direction = level.getBlockState(pos).getValue(FACING);
             }
 
             ((BronzeBellBlockEntity)blockentity).onHit(direction);
-            level.playSound((Player)null, pos, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 0.7F);
+            level.playSound(null, pos, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 0.7F);
             level.gameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
             return true;
         } else {
@@ -141,8 +139,8 @@ public class BronzeBellBlock extends BaseEntityBlock {
     }
 
     private VoxelShape getVoxelShape(BlockState state) {
-        Direction direction = (Direction)state.getValue(FACING);
-        BellAttachType bellattachtype = (BellAttachType)state.getValue(ATTACHMENT);
+        Direction direction = state.getValue(FACING);
+        BellAttachType bellattachtype = state.getValue(ATTACHMENT);
         if (bellattachtype == BellAttachType.FLOOR) {
             return direction != Direction.NORTH && direction != Direction.SOUTH ? EAST_WEST_FLOOR_SHAPE : NORTH_SOUTH_FLOOR_SHAPE;
         } else if (bellattachtype == BellAttachType.CEILING) {
@@ -179,19 +177,19 @@ public class BronzeBellBlock extends BaseEntityBlock {
         Level level = context.getLevel();
         Direction.Axis direction$axis = direction.getAxis();
         if (direction$axis == Direction.Axis.Y) {
-            BlockState blockstate = (BlockState)((BlockState)this.defaultBlockState().setValue(ATTACHMENT, direction == Direction.DOWN ? BellAttachType.CEILING : BellAttachType.FLOOR)).setValue(FACING, context.getHorizontalDirection());
+            BlockState blockstate = this.defaultBlockState().setValue(ATTACHMENT, direction == Direction.DOWN ? BellAttachType.CEILING : BellAttachType.FLOOR).setValue(FACING, context.getHorizontalDirection());
             if (blockstate.canSurvive(context.getLevel(), blockpos)) {
                 return blockstate;
             }
         } else {
             boolean flag = direction$axis == Direction.Axis.X && level.getBlockState(blockpos.west()).isFaceSturdy(level, blockpos.west(), Direction.EAST) && level.getBlockState(blockpos.east()).isFaceSturdy(level, blockpos.east(), Direction.WEST) || direction$axis == Direction.Axis.Z && level.getBlockState(blockpos.north()).isFaceSturdy(level, blockpos.north(), Direction.SOUTH) && level.getBlockState(blockpos.south()).isFaceSturdy(level, blockpos.south(), Direction.NORTH);
-            BlockState blockstate1 = (BlockState)((BlockState)this.defaultBlockState().setValue(FACING, direction.getOpposite())).setValue(ATTACHMENT, flag ? BellAttachType.DOUBLE_WALL : BellAttachType.SINGLE_WALL);
+            BlockState blockstate1 = this.defaultBlockState().setValue(FACING, direction.getOpposite()).setValue(ATTACHMENT, flag ? BellAttachType.DOUBLE_WALL : BellAttachType.SINGLE_WALL);
             if (blockstate1.canSurvive(context.getLevel(), context.getClickedPos())) {
                 return blockstate1;
             }
 
             boolean flag1 = level.getBlockState(blockpos.below()).isFaceSturdy(level, blockpos.below(), Direction.UP);
-            blockstate1 = (BlockState)blockstate1.setValue(ATTACHMENT, flag1 ? BellAttachType.FLOOR : BellAttachType.CEILING);
+            blockstate1 = blockstate1.setValue(ATTACHMENT, flag1 ? BellAttachType.FLOOR : BellAttachType.CEILING);
             if (blockstate1.canSurvive(context.getLevel(), context.getClickedPos())) {
                 return blockstate1;
             }
@@ -202,25 +200,25 @@ public class BronzeBellBlock extends BaseEntityBlock {
 
     protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
         if (explosion.canTriggerBlocks()) {
-            this.attemptToRing(level, pos, (Direction)null);
+            this.attemptToRing(level, pos, null);
         }
 
         super.onExplosionHit(state, level, pos, explosion, dropConsumer);
     }
 
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        BellAttachType bellattachtype = (BellAttachType)state.getValue(ATTACHMENT);
+        BellAttachType bellattachtype = state.getValue(ATTACHMENT);
         Direction direction = getConnectedDirection(state).getOpposite();
         if (direction == facing && !state.canSurvive(level, currentPos) && bellattachtype != BellAttachType.DOUBLE_WALL) {
             return Blocks.AIR.defaultBlockState();
         } else {
-            if (facing.getAxis() == ((Direction)state.getValue(FACING)).getAxis()) {
+            if (facing.getAxis() == state.getValue(FACING).getAxis()) {
                 if (bellattachtype == BellAttachType.DOUBLE_WALL && !facingState.isFaceSturdy(level, facingPos, facing)) {
-                    return (BlockState)((BlockState)state.setValue(ATTACHMENT, BellAttachType.SINGLE_WALL)).setValue(FACING, facing.getOpposite());
+                    return state.setValue(ATTACHMENT, BellAttachType.SINGLE_WALL).setValue(FACING, facing.getOpposite());
                 }
 
-                if (bellattachtype == BellAttachType.SINGLE_WALL && direction.getOpposite() == facing && facingState.isFaceSturdy(level, facingPos, (Direction)state.getValue(FACING))) {
-                    return (BlockState)state.setValue(ATTACHMENT, BellAttachType.DOUBLE_WALL);
+                if (bellattachtype == BellAttachType.SINGLE_WALL && direction.getOpposite() == facing && facingState.isFaceSturdy(level, facingPos, state.getValue(FACING))) {
+                    return state.setValue(ATTACHMENT, BellAttachType.DOUBLE_WALL);
                 }
             }
 
@@ -234,7 +232,7 @@ public class BronzeBellBlock extends BaseEntityBlock {
     }
 
     private static Direction getConnectedDirection(BlockState state) {
-        switch ((BellAttachType)state.getValue(ATTACHMENT)) {
+        switch (state.getValue(ATTACHMENT)) {
             case FLOOR -> {
                 return Direction.UP;
             }
@@ -242,13 +240,13 @@ public class BronzeBellBlock extends BaseEntityBlock {
                 return Direction.DOWN;
             }
             default -> {
-                return ((Direction)state.getValue(FACING)).getOpposite();
+                return state.getValue(FACING).getOpposite();
             }
         }
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{FACING, ATTACHMENT, POWERED});
+        builder.add(FACING, ATTACHMENT, POWERED);
     }
 
     @Nullable
@@ -275,28 +273,26 @@ public class BronzeBellBlock extends BaseEntityBlock {
     }
 
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return (BlockState)state.setValue(FACING, rotation.rotate((Direction)state.getValue(FACING)));
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     static {
         FACING = HorizontalDirectionalBlock.FACING;
         ATTACHMENT = BlockStateProperties.BELL_ATTACHMENT;
         POWERED = BlockStateProperties.POWERED;
-        NORTH_SOUTH_FLOOR_SHAPE = Block.box((double)0.0F, (double)0.0F, (double)4.0F, (double)16.0F, (double)16.0F, (double)12.0F);
-        EAST_WEST_FLOOR_SHAPE = Block.box((double)4.0F, (double)0.0F, (double)0.0F, (double)12.0F, (double)16.0F, (double)16.0F);
-        BELL_TOP_SHAPE = Block.box((double)5.0F, (double)6.0F, (double)5.0F, (double)11.0F, (double)13.0F, (double)11.0F);
-        BELL_BOTTOM_SHAPE = Block.box((double)4.0F, (double)4.0F, (double)4.0F, (double)12.0F, (double)6.0F, (double)12.0F);
-        BELL_SHAPE = Shapes.or(BELL_BOTTOM_SHAPE, BELL_TOP_SHAPE);
-        NORTH_SOUTH_BETWEEN = Shapes.or(BELL_SHAPE, Block.box((double)7.0F, (double)13.0F, (double)0.0F, (double)9.0F, (double)15.0F, (double)16.0F));
-        EAST_WEST_BETWEEN = Shapes.or(BELL_SHAPE, Block.box((double)0.0F, (double)13.0F, (double)7.0F, (double)16.0F, (double)15.0F, (double)9.0F));
-        TO_WEST = Shapes.or(BELL_SHAPE, Block.box((double)0.0F, (double)13.0F, (double)7.0F, (double)13.0F, (double)15.0F, (double)9.0F));
-        TO_EAST = Shapes.or(BELL_SHAPE, Block.box((double)3.0F, (double)13.0F, (double)7.0F, (double)16.0F, (double)15.0F, (double)9.0F));
-        TO_NORTH = Shapes.or(BELL_SHAPE, Block.box((double)7.0F, (double)13.0F, (double)0.0F, (double)9.0F, (double)15.0F, (double)13.0F));
-        TO_SOUTH = Shapes.or(BELL_SHAPE, Block.box((double)7.0F, (double)13.0F, (double)3.0F, (double)9.0F, (double)15.0F, (double)16.0F));
-        CEILING_SHAPE = Shapes.or(BELL_SHAPE, Block.box((double)7.0F, (double)13.0F, (double)7.0F, (double)9.0F, (double)16.0F, (double)9.0F));
+        NORTH_SOUTH_FLOOR_SHAPE = Block.box(0.0F, 0.0F, 4.0F, 16.0F, 16.0F, 12.0F);
+        EAST_WEST_FLOOR_SHAPE = Block.box(4.0F, 0.0F, 0.0F, 12.0F, 16.0F, 16.0F);
+        BELL_SHAPE = Shapes.or(Block.box(2, 1, 2, 14, 3, 14), Block.box(3, 3, 3, 13, 12, 13), Block.box(4, 12, 4, 12, 13, 12));
+        NORTH_SOUTH_BETWEEN = Shapes.or(BELL_SHAPE, Block.box(7.0F, 13.0F, 0.0F, 9.0F, 15.0F, 16.0F));
+        EAST_WEST_BETWEEN = Shapes.or(BELL_SHAPE, Block.box(0.0F, 13.0F, 7.0F, 16.0F, 15.0F, 9.0F));
+        TO_WEST = Shapes.or(BELL_SHAPE, Block.box(0.0F, 13.0F, 7.0F, 13.0F, 15.0F, 9.0F));
+        TO_EAST = Shapes.or(BELL_SHAPE, Block.box(3.0F, 13.0F, 7.0F, 16.0F, 15.0F, 9.0F));
+        TO_NORTH = Shapes.or(BELL_SHAPE, Block.box(7.0F, 13.0F, 0.0F, 9.0F, 15.0F, 13.0F));
+        TO_SOUTH = Shapes.or(BELL_SHAPE, Block.box(7.0F, 13.0F, 3.0F, 9.0F, 15.0F, 16.0F));
+        CEILING_SHAPE = Shapes.or(BELL_SHAPE, Block.box(7.0F, 13.0F, 7.0F, 9.0F, 16.0F, 9.0F));
     }
 }

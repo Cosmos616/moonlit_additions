@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "layers=1,lit=false": {
+      "model": "moonlit_additions:block/moon_light_pyre_1"
+    },
+    "layers=1,lit=true": {
+      "model": "moonlit_additions:block/moon_light_pyre_1_lit"
+    },
+    "layers=2,lit=false": {
+      "model": "moonlit_additions:block/moon_light_pyre_2"
+    },
+    "layers=2,lit=true": {
+      "model": "moonlit_additions:block/moon_light_pyre_2_lit"
+    },
+    "layers=3,lit=false": {
+      "model": "moonlit_additions:block/moon_light_pyre_3"
+    },
+    "layers=3,lit=true": {
+      "model": "moonlit_additions:block/moon_light_pyre_3_lit"
+    },
+    "layers=4,lit=false": {
+      "model": "moonlit_additions:block/moon_light_pyre_4"
+    },
+    "layers=4,lit=true": {
+      "model": "moonlit_additions:block/moon_light_pyre_4_lit"
+    },
+    "layers=5,lit=false": {
+      "model": "moonlit_additions:block/moon_light_pyre_5"
+    },
+    "layers=5,lit=true": {
+      "model": "moonlit_additions:block/moon_light_pyre_5_lit"
+    }
+  }
+}

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
-import net.cosmos.moonlit_additions.MoonLitAdditions;
+import net.cosmos.moonlit_additions.MoonlitAdditions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 public class BronzeMaskAccessoryRenderer implements AccessoryRenderer {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(
-                    MoonLitAdditions.MOD_ID,
+                    MoonlitAdditions.MOD_ID,
                     "textures/models/armor/bronze_mask_allomancer_layer_1.png"
             );
 

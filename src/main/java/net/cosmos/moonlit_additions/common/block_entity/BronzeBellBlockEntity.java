@@ -1,5 +1,6 @@
 package net.cosmos.moonlit_additions.common.block_entity;
 
+import net.cosmos.moonlit_additions.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;

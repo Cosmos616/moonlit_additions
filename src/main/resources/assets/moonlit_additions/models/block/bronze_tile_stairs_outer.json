@@ -1,7 +1,0 @@
-{
-  "parent": "nomansland:block/tile_stairs_outer",
-  "textures": {
-    "side": "moonlit_additions:block/bronze_tiles",
-    "side_alt": "moonlit_additions:block/bronze_tiles_alt"
-  }
-}

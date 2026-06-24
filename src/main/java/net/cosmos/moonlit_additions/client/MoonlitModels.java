@@ -1,6 +1,6 @@
 package net.cosmos.moonlit_additions.client;
 
-import net.cosmos.moonlit_additions.MoonLitAdditions;
+import net.cosmos.moonlit_additions.MoonlitAdditions;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static net.cosmos.moonlit_additions.MoonLitAdditions.moonlitPath;
+import static net.cosmos.moonlit_additions.MoonlitAdditions.moonlitPath;
 
 public class MoonlitModels {
     private static final ResourceLocation bronzeBellId = moonlitPath("block/bronze_bell/body");
@@ -41,17 +41,17 @@ public class MoonlitModels {
 
     public void onModelBake(ModelBakery loader, Map<ModelResourceLocation, BakedModel> map) {
         if (!registeredModels) {
-            MoonLitAdditions.LOGGER.error("Additional models failed to register! Aborting baking models to avoid early crashing.");
+            MoonlitAdditions.LOGGER.error("Additional models failed to register! Aborting baking models to avoid early crashing.");
             return;
         }
         AtomicInteger baked = new AtomicInteger();
         afterBakeModifiers.forEach((resourceLocation, afterBakeModifier) -> map.computeIfPresent(new ModelResourceLocation(resourceLocation, ""), (resourceLoc, bakedModel) -> afterBakeModifier.apply(bakedModel)));
         modelConsumers.forEach((resourceLocation, bakedModelConsumer) -> {
             bakedModelConsumer.accept(map.get(new ModelResourceLocation(resourceLocation, "standalone")));
-            MoonLitAdditions.LOGGER.error("Baking model: {}", resourceLocation);
+            MoonlitAdditions.LOGGER.error("Baking model: {}", resourceLocation);
             baked.getAndIncrement();
         });
-        MoonLitAdditions.LOGGER.error("Baked {} additional model(s).", baked.get());
+        MoonlitAdditions.LOGGER.error("Baked {} additional model(s).", baked.get());
     }
 
     private ResourceLocation stripBlockPrefix(ResourceLocation id) {

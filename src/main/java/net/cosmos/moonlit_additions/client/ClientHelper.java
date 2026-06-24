@@ -10,7 +10,7 @@ public class ClientHelper {
 
     public static BakedModel getResourceModel(ResourceLocation id) {
         BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(id));
-        return model;// != Minecraft.getInstance().getModelManager().getMissingModel() ? model : null;
+        return model != Minecraft.getInstance().getModelManager().getMissingModel() ? model : null;
     }
 
     public static float toRadians(float degrees) {

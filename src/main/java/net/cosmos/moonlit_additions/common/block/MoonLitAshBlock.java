@@ -1,6 +1,7 @@
 package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
+import net.cosmos.moonlit_additions.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

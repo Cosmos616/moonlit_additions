@@ -1,13 +1,19 @@
 package net.cosmos.moonlit_additions.common.block;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BronzePillarBaseBlock extends DirectionalBlock {
     public static final MapCodec<BronzePillarBaseBlock> CODEC =
@@ -33,8 +39,20 @@ public class BronzePillarBaseBlock extends DirectionalBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        VoxelShape cube = Shapes.box(0,0,0,16,16,16);
+        return switch (state.getValue(FACING)) {
+            case DOWN -> Shapes.or(cube, Shapes.box(-2, 0, -2, 18, 14, 18));
+            case UP -> Shapes.or(cube, Shapes.box(-2, 2, -2, 18, 16, 18));
+            case NORTH -> Shapes.or(cube, Shapes.box(-2, -2, 2, 18, 18, 16));
+            case SOUTH -> Shapes.or(cube, Shapes.box(-2, -2, 0, 18, 18, 14));
+            case WEST -> Shapes.or(cube, Shapes.box(2, -2, -2, 16, 18, 18));
+            case EAST -> Shapes.or(cube, Shapes.box(0, -2, -2, 14, 18, 18));
+        };
     }
 
     @Override

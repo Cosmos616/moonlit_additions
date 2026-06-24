@@ -1,7 +1,8 @@
 package net.cosmos.moonlit_additions.common.item;
 
-import net.cosmos.moonlit_additions.MoonLitAdditions;
-import net.cosmos.moonlit_additions.common.block.ModBlocks;
+import net.cosmos.moonlit_additions.MoonlitAdditions;
+import net.cosmos.moonlit_additions.init.ModBlocks;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MoonLitAdditions.MOD_ID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MoonlitAdditions.MOD_ID);
 
     public static final Supplier<CreativeModeTab> MOONLIT_DECOR = CREATIVE_MODE_TAB.register("moonlit_decor",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.MOONLIT_BRONZE.get()))

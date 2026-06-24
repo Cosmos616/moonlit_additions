@@ -1,6 +1,7 @@
 package net.cosmos.moonlit_additions.common.item;
 
-import net.cosmos.moonlit_additions.MoonLitAdditions;
+import net.cosmos.moonlit_additions.MoonlitAdditions;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +28,7 @@ public class ModArmorMaterials {
                             List.of(
                                     new ArmorMaterial.Layer(
                                             ResourceLocation.fromNamespaceAndPath(
-                                                    MoonLitAdditions.MOD_ID,
+                                                    MoonlitAdditions.MOD_ID,
                                                     "bronze_mask_allomancer"
                                             )
                                     )

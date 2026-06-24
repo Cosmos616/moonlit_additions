@@ -2,7 +2,7 @@ package net.cosmos.moonlit_additions.common.block;
 
 import com.farcr.nomansland.common.registry.NMLParticleTypes;
 import com.mojang.serialization.MapCodec;
-import net.cosmos.moonlit_additions.common.item.ModItems;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

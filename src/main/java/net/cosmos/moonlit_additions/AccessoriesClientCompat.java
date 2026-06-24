@@ -1,7 +1,7 @@
 package net.cosmos.moonlit_additions;
 
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
-import net.cosmos.moonlit_additions.common.item.ModItems;
+import net.cosmos.moonlit_additions.init.ModItems;
 import net.cosmos.moonlit_additions.client.rendering.BronzeMaskAccessoryRenderer;
 
 public class AccessoriesClientCompat {
