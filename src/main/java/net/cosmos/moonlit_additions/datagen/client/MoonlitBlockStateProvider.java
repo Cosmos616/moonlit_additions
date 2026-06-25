@@ -5,28 +5,19 @@ import net.cosmos.moonlit_additions.common.block.BronzeBellBlock;
 import net.cosmos.moonlit_additions.common.block.BronzePillarBlock;
 import net.cosmos.moonlit_additions.common.block.MoonLightPyreBlock;
 import net.cosmos.moonlit_additions.init.ModBlocks;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import team.lodestar.lodestone.modules.datagen.BlockStateSmithTypes;
-import team.lodestar.lodestone.modules.datagen.ItemModelSmithTypes;
-import team.lodestar.lodestone.modules.datagen.providers.block.LodestoneBlockStateSystem;
-import team.lodestar.lodestone.modules.datagen.providers.item.LodestoneItemModelSystem;
-import team.lodestar.lodestone.modules.datagen.smith.blockstate.BlockStateSystemData;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Supplier;
 
 import static net.cosmos.moonlit_additions.MoonlitAdditions.moonlitPath;
@@ -41,8 +32,10 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         this.simpleBlockAndItem(ModBlocks.BRONZE_TILES);
         this.simpleBlockAndItem(ModBlocks.MOONLIT_ASH_BLOCK, moonlitPath("block/moonlit_ash"));
-        this.simpleStairs(ModBlocks.BRONZE_TILES_STAIRS, ModBlocks.BRONZE_TILES);
-        this.simpleSlab(ModBlocks.BRONZE_TILES_SLAB, ModBlocks.BRONZE_TILES);
+        this.litCube(ModBlocks.METEOR);
+        this.simpleBlockAndItem(ModBlocks.HOLLOW_METEOR, RenderType.CUTOUT);
+        this.simpleStairs(ModBlocks.BRONZE_TILE_STAIRS, ModBlocks.BRONZE_TILES);
+        this.simpleSlab(ModBlocks.BRONZE_TILE_SLAB, ModBlocks.BRONZE_TILES);
         this.shinyPillar(ModBlocks.BRONZE_PILLAR);
         this.directionalBlock(ModBlocks.BRONZE_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
         this.simpleBlockItem(ModBlocks.BRONZE_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
@@ -61,8 +54,16 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.simpleBlock(block.get());
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
     }
+    private void simpleBlockAndItem(Supplier<? extends Block> block, RenderType renderType) {
+        this.simpleBlock(block.get(), this.models().cubeAll(this.name(block.get()), this.blockTexture(block.get())).renderType(renderType.name));
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
     private void simpleBlockAndItem(Supplier<? extends Block> block, ResourceLocation texture) {
         this.simpleBlock(block.get(), this.models().cubeAll(this.name(block.get()), texture));
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+    private void simpleBlockAndItem(Supplier<? extends Block> block, ResourceLocation texture, RenderType renderType) {
+        this.simpleBlock(block.get(), this.models().cubeAll(this.name(block.get()), texture).renderType(renderType.name));
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
     }
     private void cubePillar(Supplier<? extends Block> block, ResourceLocation end) {
@@ -146,10 +147,10 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block.get()).forAllStates((state) -> {
             int layer = state.getValue(MoonLightPyreBlock.LAYERS);
             boolean lit = state.getValue(MoonLightPyreBlock.LIT);
-            var model = models().getExistingFile(moonlitPath("block/%s_%s".formatted(name, layer + (lit ? "_lit" : ""))));
+            var model = models().getExistingFile(moonlitPath("block/%s/%s".formatted(name, "height_%s%s".formatted(layer, (lit ? "_lit" : "")))));
             return ConfiguredModel.builder().modelFile(model).build();
         });
-        this.simpleBlockItem(block.get(), models().getExistingFile(moonlitPath("block/%s_5".formatted(name))));
+        this.simpleBlockItem(block.get(), models().getExistingFile(moonlitPath("block/%s/height_5".formatted(name))));
     }
 
     private void bell(Supplier<? extends Block> block) {
@@ -163,11 +164,22 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block.get()).forAllStates(blockState -> {
             int layer = blockState.getValue(SnowLayerBlock.LAYERS);
             ModelFile.ExistingModelFile model;
-            if (layer < 8 ) model = this.models().getExistingFile(moonlitPath("block/%s".formatted(name) + "_height%s".formatted(layer*2)));
+            if (layer < 8 ) model = this.models().getExistingFile(moonlitPath("block/%s/%s".formatted(name, "height_%s".formatted(layer*2))));
             else model = this.models().getExistingFile(moonlitPath("block/%s".formatted(this.name(full.get()))));
             return ConfiguredModel.builder().modelFile(model).build();
         });
-        this.simpleBlockItem(block.get(), models().getExistingFile(moonlitPath("block/%s".formatted(name) + "_height2")));
+        this.simpleBlockItem(block.get(), models().getExistingFile(moonlitPath("block/%s/%s".formatted(name, "height_2"))));
+    }
+
+    private void litCube(Supplier<? extends Block> block) {
+        String name  = this.name(block.get());
+        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState -> {
+            boolean lit = blockState.getValue(BlockStateProperties.LIT);
+            String loc = name + (lit ? "_lit" : "");
+            var model = this.models().cubeAll(loc, moonlitPath("block/%s".formatted(loc)));
+            return ConfiguredModel.builder().modelFile(model).build();
+        }, BlockStateProperties.PERSISTENT);
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s".formatted(name))));
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), rl.getPath() + suffix);}

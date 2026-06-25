@@ -24,11 +24,14 @@ public class ModItems {
 
     public static LinkedHashSet<ItemDefinition<?>> CREATIVE_TAB_ITEMS = Sets.newLinkedHashSet();
 
-    public static final ItemDefinition<Item> MOONLIT_BRONZE = register("moonlit_bronze", () -> new Item(new Item.Properties()));
+    public static final ItemDefinition<Item> MOONLIT_BRONZE_INGOT = register("moonlit_bronze_ingot", () -> new Item(new Item.Properties()));
     public static final ItemDefinition<Item> MOONLIT_WAX = register("moonlit_wax", () -> new Item(new Item.Properties()));
     public static final ItemDefinition<Item> MOONLIT_ASH = register("moonlit_ash", () -> new Item(new Item.Properties()));
-    public static final ItemDefinition<Item> STARDUST =register("stardust", () -> new Item(new Item.Properties()));
+    public static final ItemDefinition<Item> STARDUST = register("stardust", () -> new Item(new Item.Properties()));
     public static final ItemDefinition<Item> BOTTLE_OF_STARDUST = register("bottle_of_stardust", () -> new Item(new Item.Properties()));
+    public static final ItemDefinition<Item> METEORIC_IRON_INGOT = register("meteoric_iron_ingot", () -> new Item(new Item.Properties()));
+    public static final ItemDefinition<Item> RAW_METEORIC_IRON = register("raw_meteoric_iron", () -> new Item(new Item.Properties()));
+
     public static final ItemDefinition<Item> BRONZE_MASK_ALLOMANCER = register(
                     "bronze_mask_allomancer",
                     () -> new BronzeMaskItem(

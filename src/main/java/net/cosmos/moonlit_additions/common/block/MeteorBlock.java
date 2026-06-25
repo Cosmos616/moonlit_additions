@@ -18,14 +18,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class MeteorBlock extends Block {
     public static final MapCodec<MeteorBlock> CODEC = simpleCodec(MeteorBlock::new);
 
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
-    public static final BooleanProperty PERSISTENT = BooleanProperty.create("persistent");
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
 
     private static final int COOL_DOWN_TICKS = 20 * 60 * 5; // 5 minutes
 

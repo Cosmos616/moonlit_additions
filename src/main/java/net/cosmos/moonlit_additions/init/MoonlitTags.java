@@ -17,6 +17,10 @@ public class MoonlitTags {
     public static final TagKey<Item> MOONLIT_ASH = createItemTag("c", "dusts/moonlit_ash");
     public static final SharedTag MOONLIT_ASH_BLOCKS = createSharedTag("c", "storage_blocks/moonlit_ash");
 
+    public static final TagKey<Item> MOONLIT_BRONZE_INGOTS = createItemTag("c", "ingots/moonlit_bronze");
+    public static final TagKey<Item> METEORIC_IRON_INGOTS = createItemTag("c", "ingots/meteoric_iron");
+    public static final TagKey<Item> RAW_METEORIC_IRON = createItemTag("c", "raw_materials/meteoric_iron");
+
     public MoonlitTags() {
     }
 

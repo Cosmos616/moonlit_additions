@@ -26,26 +26,24 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.NETHERITE_BLOCK)
                     ));
-    public static final BlockDefinition<Block> BRONZE_TILES_STAIRS = register("bronze_tiles_stairs",
+    public static final BlockDefinition<Block> BRONZE_TILE_STAIRS = register("bronze_tile_stairs",
             ()-> new StairBlock(BRONZE_TILES.get().defaultBlockState(), BlockBehaviour.Properties.of()
                     .strength(4f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.NETHERITE_BLOCK)
             ));
-    public static final BlockDefinition<Block> BRONZE_TILES_SLAB = register("bronze_tiles_slab",
+    public static final BlockDefinition<Block> BRONZE_TILE_SLAB = register("bronze_tile_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of()
                     .strength(4f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.NETHERITE_BLOCK)
             ));
-
     public static final BlockDefinition<Block> BRONZE_PILLAR = register("bronze_pillar",
             ()-> new BronzePillarBlock(BlockBehaviour.Properties.of()
                     .strength(4f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.NETHERITE_BLOCK)
             ));
-
     public static final BlockDefinition<Block> BRONZE_PILLAR_BASE = register("bronze_pillar_base",
             ()-> new BronzePillarBaseBlock(BlockBehaviour.Properties.of()
                     .strength(4f)
@@ -59,7 +57,7 @@ public class ModBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
             ));
 
-    public static final BlockDefinition<Block> MOONLIGHT_PYRE = register("moon_light_pyre",
+    public static final BlockDefinition<Block> MOONLIGHT_PYRE = register("moonlight_pyre",
             ()-> new MoonLightPyreBlock(BlockBehaviour.Properties.of()
                     .sound(SoundType.CANDLE)
                     .lightLevel(state -> state.getValue(MoonLightPyreBlock.LIT) ? 15 : 0)

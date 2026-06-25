@@ -56,6 +56,18 @@ public class BronzePillarBaseBlock extends DirectionalBlock {
         };
     }
 
+    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
+        VoxelShape cube = Block.box(0,0,0,16,16,16);
+        return switch (state.getValue(FACING)) {
+            case DOWN -> Shapes.or(cube, Block.box(-2, 0, -2, 18, 13, 18));
+            case UP -> Shapes.or(cube, Block.box(-2, 2, -2, 18, 15, 18));
+            case NORTH -> Shapes.or(cube, Block.box(-2, -2, 0, 18, 18, 13));
+            case SOUTH -> Shapes.or(cube, Block.box(-2, -2, 2, 18, 18, 15));
+            case WEST -> Shapes.or(cube, Block.box(0, -2, -2, 13, 18, 18));
+            case EAST -> Shapes.or(cube, Block.box(2, -2, -2, 15, 18, 18));
+        };
+    }
+
     @Override
     protected BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));

@@ -19,7 +19,7 @@ public class ModCreativeTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MoonlitAdditions.MOD_ID);
 
     public static final Supplier<CreativeModeTab> MOONLIT_DECOR = CREATIVE_MODE_TAB.register("moonlit_decor",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.MOONLIT_BRONZE.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.MOONLIT_BRONZE_INGOT.get()))
                     .title(Component.translatable("itemGroup.moonlit_additions"))
                     .displayItems((itemDisplayParameters, output) -> {
                         for (var registry : ModItems.ITEMS.getEntries()) {

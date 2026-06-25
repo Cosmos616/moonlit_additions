@@ -24,7 +24,7 @@ public class ModArmorMaterials {
                             ),
                             12,
                             SoundEvents.ARMOR_EQUIP_IRON,
-                            () -> Ingredient.of(ModItems.MOONLIT_BRONZE.get()),
+                            () -> Ingredient.of(ModItems.MOONLIT_BRONZE_INGOT.get()),
                             List.of(
                                     new ArmorMaterial.Layer(
                                             ResourceLocation.fromNamespaceAndPath(
