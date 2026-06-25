@@ -10,6 +10,7 @@ import net.cosmos.moonlit_additions.mixin.EntityRenderDispatcherAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.*;
@@ -37,11 +38,10 @@ public class AllomancerSigilLayer<T extends LivingEntity, M extends EntityModel<
             poseStack.pushPose();
             model.head.translateAndRotate(poseStack);
             poseStack.translate(-0.95, 0.71, 0.25);
-            //poseStack.translate(-0.95, 0.71, 0.2);
             poseStack.scale(2, 2, 1);
             poseStack.mulPose(ClientHelper.rotateX(180));
             BakedModel sigil = MoonlitModels.INSTANCE.allomancerSigil;
-            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), vc, null, sigil, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
+            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), vc, null, sigil, 1, 1, 1, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
         }
     }
