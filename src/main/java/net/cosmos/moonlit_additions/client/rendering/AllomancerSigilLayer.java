@@ -3,6 +3,7 @@ package net.cosmos.moonlit_additions.client.rendering;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.cosmos.moonlit_additions.AccessoriesClientCompat;
+import net.cosmos.moonlit_additions.client.ClientHelper;
 import net.cosmos.moonlit_additions.client.MoonlitModels;
 import net.cosmos.moonlit_additions.common.item.BronzeMaskItem;
 import net.cosmos.moonlit_additions.mixin.EntityRenderDispatcherAccessor;
@@ -35,8 +36,9 @@ public class AllomancerSigilLayer<T extends LivingEntity, M extends EntityModel<
             VertexConsumer vc = ItemRenderer.getFoilBuffer(buffers, Sheets.cutoutBlockSheet(), false, hasGlint);
             poseStack.pushPose();
             model.head.translateAndRotate(poseStack);
-            poseStack.translate(-0.9, -1.29, -0.75);
+            poseStack.translate(-0.95, 0.71, 0.25);
             poseStack.scale(2, 2, 1);
+            poseStack.mulPose(ClientHelper.rotateX(180));
             BakedModel sigil = MoonlitModels.INSTANCE.allomancerSigil;
             Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), vc, null, sigil, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
