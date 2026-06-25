@@ -32,6 +32,9 @@ public class AllomancerMaskModel extends LodestoneArmorModel {
 			head.addOrReplaceChild("mask", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.51F)).texOffs(32, 0).addBox(-4.0F, -8.0F, -3.8F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.8F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 			return LayerDefinition.create(mesh, 64, 64);
 		});
+
+		//.texOffs(32, 0).addBox(-4.0F, -8.0F, -3.8F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.8F))
+		//
 	}
 
 	@Override

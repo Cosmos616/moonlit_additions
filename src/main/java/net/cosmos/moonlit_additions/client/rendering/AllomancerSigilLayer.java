@@ -37,6 +37,7 @@ public class AllomancerSigilLayer<T extends LivingEntity, M extends EntityModel<
             poseStack.pushPose();
             model.head.translateAndRotate(poseStack);
             poseStack.translate(-0.95, 0.71, 0.25);
+            //poseStack.translate(-0.95, 0.71, 0.2);
             poseStack.scale(2, 2, 1);
             poseStack.mulPose(ClientHelper.rotateX(180));
             BakedModel sigil = MoonlitModels.INSTANCE.allomancerSigil;
