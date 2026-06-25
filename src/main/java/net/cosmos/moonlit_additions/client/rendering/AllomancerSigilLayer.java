@@ -20,8 +20,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 @SuppressWarnings("deprecation")
-public class AllomancerMaskLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-    public AllomancerMaskLayer(RenderLayerParent<T, M> renderer) {
+public class AllomancerSigilLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+    public AllomancerSigilLayer(RenderLayerParent<T, M> renderer) {
         super(renderer);
     }
 
@@ -56,7 +56,7 @@ public class AllomancerMaskLayer<T extends LivingEntity, M extends EntityModel<T
             return;
         if (!(livingRenderer.getModel() instanceof HumanoidModel))
             return;
-        AllomancerMaskLayer<?, ?> layer = new AllomancerMaskLayer<>(livingRenderer);
-        livingRenderer.addLayer((AllomancerMaskLayer) layer);
+        AllomancerSigilLayer<?, ?> layer = new AllomancerSigilLayer<>(livingRenderer);
+        livingRenderer.addLayer((AllomancerSigilLayer) layer);
     }
 }
