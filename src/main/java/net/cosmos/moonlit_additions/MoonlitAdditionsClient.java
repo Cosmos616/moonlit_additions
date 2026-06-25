@@ -6,6 +6,9 @@ import net.cosmos.moonlit_additions.client.MoonlitModelLayers;
 import net.cosmos.moonlit_additions.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
 import net.cosmos.moonlit_additions.client.rendering.BronzeBellRenderer;
+import net.cosmos.moonlit_additions.client.shockwave.ShockwavePostProcessor;
+import net.cosmos.moonlit_additions.common.entity.ModEntities;
+import net.cosmos.moonlit_additions.common.entity.ShockwaveEntityRenderer;
 import net.cosmos.moonlit_additions.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -34,6 +37,9 @@ public class MoonlitAdditionsClient {
         // Some client setup code
         MoonlitAdditions.LOGGER.info("HELLO FROM CLIENT SETUP");
         MoonlitAdditions.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        event.enqueueWork(ShockwavePostProcessor::load);
+
     }
 
     @SubscribeEvent

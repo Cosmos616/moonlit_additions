@@ -1,6 +1,8 @@
 package net.cosmos.moonlit_additions;
 
 import net.cosmos.moonlit_additions.client.MoonlitModels;
+import net.cosmos.moonlit_additions.common.entity.ModEntities;
+import net.cosmos.moonlit_additions.common.entity.ShockwaveEntityRenderer;
 import net.cosmos.moonlit_additions.common.item.ModCreativeTabs;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
 import net.cosmos.moonlit_additions.init.ModAttachmentTypes;
@@ -12,6 +14,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import org.slf4j.Logger;
 
@@ -33,9 +36,11 @@ public class MoonlitAdditions {
         ModCreativeTabs.register(modEventBus);
 
         ModBlocks.register(modEventBus);
+
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
         ModAttachmentTypes.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -57,6 +62,13 @@ public class MoonlitAdditions {
         @SubscribeEvent
         public static void onModelBake(ModelEvent.ModifyBakingResult evt) {
             MoonlitModels.INSTANCE.onModelBake(evt.getModelBakery(), evt.getModels());
+        }
+        @SubscribeEvent
+        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(
+                    ModEntities.SHOCKWAVE_PROJECTOR.get(),
+                    ShockwaveEntityRenderer::new
+            );
         }
     }
 }
