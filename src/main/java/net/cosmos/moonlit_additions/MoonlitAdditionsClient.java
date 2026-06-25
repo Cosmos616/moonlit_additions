@@ -1,9 +1,11 @@
 package net.cosmos.moonlit_additions;
 
+import net.cosmos.moonlit_additions.client.MoonlitArmorModels;
+import net.cosmos.moonlit_additions.client.MoonlitClientExtensions;
+import net.cosmos.moonlit_additions.client.MoonlitModelLayers;
 import net.cosmos.moonlit_additions.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
 import net.cosmos.moonlit_additions.client.rendering.BronzeBellRenderer;
-import net.cosmos.moonlit_additions.client.rendering.BronzeMaskAllomancer;
 import net.cosmos.moonlit_additions.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -35,11 +37,13 @@ public class MoonlitAdditionsClient {
     }
 
     @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(
-                BronzeMaskAllomancer.LAYER_LOCATION,
-                BronzeMaskAllomancer::createBodyLayer
-        );
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        MoonlitModelLayers.registerLayers(event);
+    }
+
+    @SubscribeEvent
+    public static void addLayers(EntityRenderersEvent.AddLayers event) {
+        MoonlitArmorModels.addLayers(event);
     }
 
     @SubscribeEvent
@@ -57,10 +61,6 @@ public class MoonlitAdditionsClient {
 
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        // Your vanilla helmet armor renderer registration here.
-
-        if (ModList.get().isLoaded("accessories")) {
-            AccessoriesClientCompat.registerRenderers();
-        }
+        MoonlitClientExtensions.registerClientExtensions(event);
     }
 }

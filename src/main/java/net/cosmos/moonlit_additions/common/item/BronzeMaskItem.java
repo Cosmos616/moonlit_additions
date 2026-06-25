@@ -1,11 +1,10 @@
 package net.cosmos.moonlit_additions.common.item;
 
-import net.cosmos.moonlit_additions.client.rendering.BronzeMaskAllomancer;
 import net.cosmos.moonlit_additions.client.rendering.BronzeMaskDarknessRenderer;
 import net.cosmos.moonlit_additions.init.ModItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,9 +12,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
+import static net.cosmos.moonlit_additions.MoonlitAdditions.moonlitPath;
 
 public class BronzeMaskItem extends ArmorItem {
     private float friendMoonDarkneningOpacity = 0.0F;
@@ -27,6 +27,10 @@ public class BronzeMaskItem extends ArmorItem {
 
     public static boolean isWearingBronzeMask(LivingEntity entity) {
         return entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.BRONZE_MASK_ALLOMANCER.get());
+    }
+
+    public @Nullable ResourceLocation getArmorTexture(@NotNull ItemStack stack, @NotNull Entity entity, @NotNull EquipmentSlot slot, ArmorMaterial.@NotNull Layer layer, boolean innerModel) {
+        return moonlitPath("textures/armor/bronze_mask_allomancer.png");
     }
 
     @Override
@@ -52,38 +56,5 @@ public class BronzeMaskItem extends ArmorItem {
         if (entity == Minecraft.getInstance().player) {
             BronzeMaskDarknessRenderer.getInstance().tick(isInHelmetSlot);
         }
-    }
-
-
-
-
-
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            @Override
-            public HumanoidModel<?> getHumanoidArmorModel(
-                    LivingEntity entity,
-                    ItemStack stack,
-                    EquipmentSlot slot,
-                    HumanoidModel<?> original
-            ) {
-                BronzeMaskAllomancer<LivingEntity> model = new BronzeMaskAllomancer<>(
-                        Minecraft.getInstance()
-                                .getEntityModels()
-                                .bakeLayer(BronzeMaskAllomancer.LAYER_LOCATION)
-                );
-
-                model.head.visible = slot == EquipmentSlot.HEAD;
-                model.hat.visible = false;
-                model.body.visible = false;
-                model.rightArm.visible = false;
-                model.leftArm.visible = false;
-                model.rightLeg.visible = false;
-                model.leftLeg.visible = false;
-
-                return model;
-            }
-        });
     }
 }

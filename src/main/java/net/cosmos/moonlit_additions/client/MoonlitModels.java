@@ -19,6 +19,8 @@ import static net.cosmos.moonlit_additions.MoonlitAdditions.moonlitPath;
 public class MoonlitModels {
     private static final ResourceLocation bronzeBellId = moonlitPath("block/bronze_bell/body");
 
+    private static final ResourceLocation allomancerSigilId = moonlitPath("special/sigil/allomancer");
+
     public static final MoonlitModels INSTANCE = new MoonlitModels();
 
     private final Map<ResourceLocation, Function<BakedModel, BakedModel>> afterBakeModifiers;
@@ -28,7 +30,8 @@ public class MoonlitModels {
 
     @UnknownNullability
     public BakedModel
-            bronzeBell
+            bronzeBell,
+            allomancerSigil
             ;
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {
@@ -65,6 +68,7 @@ public class MoonlitModels {
         modelConsumers = new HashMap<>();
 
         modelConsumers.put(bronzeBellId, bakedModel -> this.bronzeBell = bakedModel);
+        modelConsumers.put(allomancerSigilId, bakedModel -> this.allomancerSigil = bakedModel);
     }
 
     private static BakedModel[] getBakedModels(Map<ResourceLocation, Consumer<BakedModel>> consumers, ResourceLocation[] ids) {

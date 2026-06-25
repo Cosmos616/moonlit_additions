@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.cosmos.moonlit_additions.MoonlitAdditions;
+import net.cosmos.moonlit_additions.client.MoonlitModelLayers;
+import net.cosmos.moonlit_additions.client.MoonlitModels;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -20,20 +22,20 @@ public class BronzeMaskAccessoryRenderer implements AccessoryRenderer {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(
                     MoonlitAdditions.MOD_ID,
-                    "textures/models/armor/bronze_mask_allomancer_layer_1.png"
+                    "textures/armor/bronze_mask_allomancer.png"
             );
 
-    private BronzeMaskAllomancer<LivingEntity> maskModel;
+    private AllomancerMaskModel maskModel;
 
     public BronzeMaskAccessoryRenderer() {
     }
 
-    private BronzeMaskAllomancer<LivingEntity> getMaskModel() {
+    private AllomancerMaskModel getMaskModel() {
         if (this.maskModel == null) {
-            this.maskModel = new BronzeMaskAllomancer<>(
+            this.maskModel = new AllomancerMaskModel(
                     Minecraft.getInstance()
                             .getEntityModels()
-                            .bakeLayer(BronzeMaskAllomancer.LAYER_LOCATION)
+                            .bakeLayer(MoonlitModelLayers.ALLOMANCER_MASK_LAYER)
             );
         }
 
@@ -59,7 +61,7 @@ public class BronzeMaskAccessoryRenderer implements AccessoryRenderer {
             return;
         }
 
-        BronzeMaskAllomancer<LivingEntity> maskModel = this.getMaskModel();
+        AllomancerMaskModel maskModel = this.getMaskModel();
 
         maskModel.head.visible = true;
         maskModel.hat.visible = false;
@@ -84,7 +86,6 @@ public class BronzeMaskAccessoryRenderer implements AccessoryRenderer {
                 light,
                 OverlayTexture.NO_OVERLAY
         );
-
         matrices.popPose();
     }
 
