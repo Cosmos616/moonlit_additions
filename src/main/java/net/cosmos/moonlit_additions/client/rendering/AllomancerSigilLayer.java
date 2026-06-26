@@ -32,7 +32,7 @@ public class AllomancerSigilLayer<T extends LivingEntity, M extends EntityModel<
         M entityModel = getParentModel();
         if (!(entityModel instanceof HumanoidModel<?> model))
             return;
-        if (BronzeMaskItem.isWearingBronzeMask(entity) || AccessoriesClientCompat.isWearingBronzeMask(entity)) {
+        if (BronzeMaskItem.isWearingBronzeMask(entity) || AccessoriesClientCompat.isWearingBronzeMask(entity, true)) {
             boolean hasGlint = entity.getItemBySlot(EquipmentSlot.HEAD).hasFoil();
             VertexConsumer vc = ItemRenderer.getFoilBuffer(buffers, Sheets.cutoutBlockSheet(), false, hasGlint);
             poseStack.pushPose();
