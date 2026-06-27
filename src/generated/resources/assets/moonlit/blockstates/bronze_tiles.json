@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "moonlit:block/bronze_tiles"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "moonlit:block/bronze_tile_slab"
+    },
+    "type=double": {
+      "model": "moonlit:block/bronze_tiles"
+    },
+    "type=top": {
+      "model": "moonlit:block/bronze_tile_slab_top"
+    }
+  }
+}

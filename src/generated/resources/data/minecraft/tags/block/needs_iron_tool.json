@@ -1,10 +1,10 @@
 {
   "values": [
-    "moonlit_additions:bronze_tiles",
-    "moonlit_additions:bronze_tile_stairs",
-    "moonlit_additions:bronze_tile_slab",
-    "moonlit_additions:bronze_pillar",
-    "moonlit_additions:bronze_pillar_base",
-    "moonlit_additions:bronze_bell"
+    "moonlit:bronze_tiles",
+    "moonlit:bronze_tile_stairs",
+    "moonlit:bronze_tile_slab",
+    "moonlit:bronze_pillar",
+    "moonlit:bronze_pillar_base",
+    "moonlit:bronze_bell"
   ]
 }

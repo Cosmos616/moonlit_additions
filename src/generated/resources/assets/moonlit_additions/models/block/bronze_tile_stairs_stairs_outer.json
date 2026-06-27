@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "moonlit_additions:block/bronze_tiles",
-    "side": "moonlit_additions:block/bronze_tiles",
-    "top": "moonlit_additions:block/bronze_tiles"
-  }
-}

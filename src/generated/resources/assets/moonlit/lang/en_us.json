@@ -1,0 +1,23 @@
+{
+  "block.moonlit.block_of_moonlit_ash": "Block of Moonlit Ash",
+  "block.moonlit.bronze_bell": "Bronze Bell",
+  "block.moonlit.bronze_pillar": "Bronze Pillar",
+  "block.moonlit.bronze_pillar_base": "Bronze Pillar Base",
+  "block.moonlit.bronze_tile_slab": "Bronze Tile Slab",
+  "block.moonlit.bronze_tile_stairs": "Bronze Tile Stairs",
+  "block.moonlit.bronze_tiles": "Bronze Tiles",
+  "block.moonlit.hollow_meteor": "Hollow Meteor",
+  "block.moonlit.meteor": "Meteor",
+  "block.moonlit.moonlight_pyre": "Moonlight Pyre",
+  "block.moonlit.moonlit_ash_pile": "Moonlit Ash Pile",
+  "block.moonlit.moonlit_fire": "Moonlit Fire",
+  "item.moonlit.bottle_of_stardust": "Bottle of Stardust",
+  "item.moonlit.bronze_mask_allomancer": "Bronze Mask",
+  "item.moonlit.meteoric_iron_ingot": "Meteoric Iron Ingot",
+  "item.moonlit.moonlit_ash": "Moonlit Ash",
+  "item.moonlit.moonlit_bronze_ingot": "Moonlit Bronze Ingot",
+  "item.moonlit.moonlit_wax": "Moonlit Wax",
+  "item.moonlit.raw_meteoric_iron": "Raw Meteoric Iron",
+  "item.moonlit.stardust": "Stardust",
+  "itemGroup.moonlit": "Moonlit"
+}

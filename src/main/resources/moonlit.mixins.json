@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.cosmos.moonlit.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "EntityRenderDispatcherAccessor",
+    "client.LightTextureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ServerLevelMixin"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "moonlit:block/bronze_tiles",
+    "side": "moonlit:block/bronze_tiles",
+    "top": "moonlit:block/bronze_tiles"
+  }
+}

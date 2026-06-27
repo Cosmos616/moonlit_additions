@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "moonlit:block/meteor"
+    },
+    "lit=true": {
+      "model": "moonlit:block/meteor_lit"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "values": [
-    "moonlit_additions:moonlit_bronze_ingot",
-    "moonlit_additions:meteoric_iron_ingot"
+    "moonlit:moonlit_bronze_ingot",
+    "moonlit:meteoric_iron_ingot"
   ]
 }

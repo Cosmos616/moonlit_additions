@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Moonlit Additions"
+rootProject.name = "Moonlit"
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
