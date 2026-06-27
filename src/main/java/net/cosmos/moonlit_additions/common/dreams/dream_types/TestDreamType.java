@@ -42,7 +42,7 @@ public class TestDreamType extends DreamType {
     public TestDreamType() {
         this.setCondition(this::timeCondition)
                 .setCanSprint(false).setHUDHidden(true)
-                .setRenderer(() -> MoonlightDreamRenderer::new)
+                //.setRenderer(() -> MoonlightDreamRenderer::new)
                 .setChunkGenerator(this::moonlightChunkGenerator)
                 .setSpawnPoint(new Vec3(0.5, MONOLITH_HEIGHT + 2, -19.5))
                 .setInstanceSupplier(() -> new MoonlightDreamTypeInstance(this));

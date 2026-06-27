@@ -5,10 +5,7 @@ import net.cosmos.moonlit_additions.common.entity.ModEntities;
 import net.cosmos.moonlit_additions.common.entity.ShockwaveEntityRenderer;
 import net.cosmos.moonlit_additions.common.item.ModCreativeTabs;
 import net.cosmos.moonlit_additions.client.particle.ModParticles;
-import net.cosmos.moonlit_additions.init.ModAttachmentTypes;
-import net.cosmos.moonlit_additions.init.ModBlockEntities;
-import net.cosmos.moonlit_additions.init.ModBlocks;
-import net.cosmos.moonlit_additions.init.ModItems;
+import net.cosmos.moonlit_additions.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -42,6 +39,7 @@ public class MoonlitAdditions {
         ModParticles.PARTICLES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModAttachmentTypes.register(modEventBus);
+        ModDreamTypes.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
