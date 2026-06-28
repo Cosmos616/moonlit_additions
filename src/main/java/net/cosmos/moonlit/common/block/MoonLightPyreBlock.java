@@ -32,7 +32,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@SuppressWarnings("unused")
 @ParametersAreNonnullByDefault @MethodsReturnNonnullByDefault
 public class MoonLightPyreBlock extends Block {
     public static final MapCodec<MoonLightPyreBlock> CODEC = simpleCodec(MoonLightPyreBlock::new);
@@ -88,7 +87,7 @@ public class MoonLightPyreBlock extends Block {
             if (topState.getValue(LIT)) {
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
-            level.setBlock(top, topState.setValue(LIT, true), Block.UPDATE_ALL);
+            level.setBlock(top, topState.setValue(LIT, true).setValue(LAYERS, (topState.getValue(LAYERS) == 5) ? 4 : topState.getValue(LAYERS)), Block.UPDATE_ALL);
             level.playSound(null, top, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!level.isClientSide) {
                 level.scheduleTick(top, topState.getBlock(), BURN_INTERVAL_TICKS);
@@ -206,12 +205,7 @@ public class MoonLightPyreBlock extends Block {
     }
 
     @Override
-    public void animateTick(
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            RandomSource random
-    ) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (!state.getValue(LIT)) {
             return;
         }
