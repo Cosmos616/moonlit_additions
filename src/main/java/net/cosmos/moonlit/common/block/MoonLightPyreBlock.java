@@ -4,6 +4,7 @@ import com.farcr.nomansland.common.registry.NMLParticleTypes;
 import com.mojang.serialization.MapCodec;
 import net.cosmos.moonlit.init.ModBlocks;
 import net.cosmos.moonlit.init.ModItems;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +30,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@SuppressWarnings("unused")
+@ParametersAreNonnullByDefault @MethodsReturnNonnullByDefault
 public class MoonLightPyreBlock extends Block {
     public static final MapCodec<MoonLightPyreBlock> CODEC = simpleCodec(MoonLightPyreBlock::new);
 
@@ -63,12 +68,7 @@ public class MoonLightPyreBlock extends Block {
     }
 
     @Override
-    protected VoxelShape getShape(
-            BlockState state,
-            BlockGetter level,
-            BlockPos pos,
-            CollisionContext context
-    ) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(LAYERS)) {
             case 1 -> ONE_LAYER_SHAPE;
             case 2 -> TWO_LAYER_SHAPE;
@@ -84,11 +84,11 @@ public class MoonLightPyreBlock extends Block {
         }
         BlockPos top = getTop(level, pos);
         BlockState topState = level.getBlockState(top);
-        if (topState.is(ModBlocks.MOONLIGHT_PYRE)) {
+        if (topState.is(ModBlocks.MOONLIGHT_PYRE) && isTopExposed(level, top)) {
             if (topState.getValue(LIT)) {
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
-            level.setBlock(top, topState.setValue(LIT, true).setValue(LAYERS, 4), Block.UPDATE_ALL);
+            level.setBlock(top, topState.setValue(LIT, true), Block.UPDATE_ALL);
             level.playSound(null, top, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!level.isClientSide) {
                 level.scheduleTick(top, topState.getBlock(), BURN_INTERVAL_TICKS);
@@ -173,7 +173,6 @@ public class MoonLightPyreBlock extends Block {
     }
 
     public void lightSparkAnimation(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-
         for(int i = 0; i < random.nextInt(4, 8); ++i) {
             level.sendParticles(
                     NMLParticleTypes.MOONLIGHT_SPARK.get(),
