@@ -2,6 +2,7 @@ package net.cosmos.moonlit.common.block;
 
 import com.farcr.nomansland.common.registry.NMLParticleTypes;
 import com.mojang.serialization.MapCodec;
+import net.cosmos.moonlit.init.ModBlocks;
 import net.cosmos.moonlit.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,7 +35,7 @@ public class MoonLightPyreBlock extends Block {
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     public static final IntegerProperty LAYERS = IntegerProperty.create("layers", 1, 5);
 
-    private static final int BURN_INTERVAL_TICKS = 20 * 10; // 20 seconds per layer
+    private static final int BURN_INTERVAL_TICKS = 20 * 20; // 20 seconds per layer
 
     private static final VoxelShape ONE_LAYER_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
     private static final VoxelShape TWO_LAYER_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 8.0D, 14.0D);
@@ -77,44 +78,31 @@ public class MoonLightPyreBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack,
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            BlockHitResult hitResult
-    ) {
-        if (state.getValue(LIT)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!(stack.getItem() instanceof FlintAndSteelItem) && !(stack.getItem() instanceof FireChargeItem)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-
-        // Only the top exposed pyre can be lit.
-        if (!isTopExposed(level, pos)) {
-            return ItemInteractionResult.CONSUME;
-        }
-
-        level.setBlock(pos, state.setValue(LIT, true).setValue(LAYERS, 4), Block.UPDATE_ALL);
-        level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-        if (!level.isClientSide) {
-            level.scheduleTick(pos, this, BURN_INTERVAL_TICKS);
-        }
-
-        if (!player.getAbilities().instabuild) {
-            if (stack.getItem() instanceof FlintAndSteelItem) {
-                stack.hurtAndBreak(1, player, player.getEquipmentSlotForItem(stack));
-            } else if (stack.getItem() instanceof FireChargeItem) {
-                stack.shrink(1);
+        BlockPos top = getTop(level, pos);
+        BlockState topState = level.getBlockState(top);
+        if (topState.is(ModBlocks.MOONLIGHT_PYRE)) {
+            if (topState.getValue(LIT)) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
+            level.setBlock(top, topState.setValue(LIT, true).setValue(LAYERS, 4), Block.UPDATE_ALL);
+            level.playSound(null, top, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!level.isClientSide) {
+                level.scheduleTick(top, topState.getBlock(), BURN_INTERVAL_TICKS);
+            }
+            if (!player.getAbilities().instabuild) {
+                if (stack.getItem() instanceof FlintAndSteelItem) {
+                    stack.hurtAndBreak(1, player, player.getEquipmentSlotForItem(stack));
+                } else if (stack.getItem() instanceof FireChargeItem) {
+                    stack.shrink(1);
+                }
+            }
+            return ItemInteractionResult.SUCCESS;
         }
-
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -208,6 +196,14 @@ public class MoonLightPyreBlock extends Block {
         // This makes only the highest pyre in a vertical stack burn.
         // It also prevents burning if any solid-ish block is directly above.
         return aboveState.isAir() || !aboveState.isFaceSturdy(level, pos.above(), Direction.DOWN);
+    }
+
+    private static BlockPos getTop(BlockGetter level, BlockPos pos) {
+        BlockPos abovePos = pos.above();
+        while (level.getBlockState(abovePos).is(ModBlocks.MOONLIGHT_PYRE)) {
+            abovePos = abovePos.above();
+        }
+        return abovePos.below();
     }
 
     @Override
