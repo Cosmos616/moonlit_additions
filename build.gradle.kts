@@ -83,18 +83,20 @@ repositories {
 dependencies {
     accessTransformers(("team.lodestar.lodestone:lodestone:${mc["version"]}-${deps["lodestone"]}"))
 
-    compileOnly("mezz.jei:jei-${mc["version"]}-common-api:${deps["jei"]}")
-    compileOnly("mezz.jei:jei-${mc["version"]}-neoforge-api:${deps["jei"]}")
-    localRuntime("mezz.jei:jei-${mc["version"]}-neoforge:${deps["jei"]}")
+    compileOnlyApi("dev.emi:emi-neoforge:${deps["emi"]}+${mc["version"]}:api")
+    localRuntime("dev.emi:emi-neoforge:${deps["emi"]}+${mc["version"]}")
 
     compileOnlyApi(("team.lodestar.lodestone:lodestone:${mc["version"]}-${deps["lodestone"]}"))
     runtimeOnly(("team.lodestar.lodestone:lodestone:${mc["version"]}-${deps["lodestone"]}"))
-    compileOnlyApi(("top.theillusivec4.curios:curios-neoforge:${deps["curios"]}"))
-    runtimeOnly(("top.theillusivec4.curios:curios-neoforge:${deps["curios"]}"))
+    compileOnlyApi(("top.theillusivec4.curios:curios-neoforge:${deps["curios"]}+${mc["version"]}"))
+    runtimeOnly(("top.theillusivec4.curios:curios-neoforge:${deps["curios"]}+${mc["version"]}"))
     implementation("maven.modrinth:no-mans-land:${deps["nomansland"]}")
 
-    compileOnly("io.wispforest:accessories-neoforge:1.1.0-beta.53+1.21.1")
-    runtimeOnly("io.wispforest:accessories-neoforge:1.1.0-beta.53+1.21.1")
+    runtimeOnly("maven.modrinth:emi-loot:${deps["emiLoot"]}+1.21+neoforge")
+    runtimeOnly("maven.modrinth:fzzy-config:${deps["fzzyConfig"]}+1.21+neoforge")
+
+    compileOnly("io.wispforest:accessories-neoforge:${deps["accessories"]}+${mc["version"]}")
+    runtimeOnly("io.wispforest:accessories-neoforge:${deps["accessories"]}+${mc["version"]}")
 }
 
 tasks.withType<ProcessResources>().configureEach {
