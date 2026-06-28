@@ -1,6 +1,6 @@
 package net.cosmos.moonlit.datagen.client;
 
-import net.cosmos.moonlit.common.block.BronzeBellBlock;
+import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.BronzePillarBlock;
 import net.cosmos.moonlit.common.block.MoonLightPyreBlock;
 import net.minecraft.core.Direction;

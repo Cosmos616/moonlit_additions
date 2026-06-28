@@ -2,6 +2,7 @@ package net.cosmos.moonlit.datagen.server.loot;
 
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import net.cosmos.moonlit.common.block.MoonLightPyreBlock;
+import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
 import net.cosmos.moonlit.init.ModBlocks;
 import net.cosmos.moonlit.init.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -47,6 +49,7 @@ public class MoonlitBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.MOONLIGHT_PYRE.block(), pyreDrops(ModBlocks.MOONLIGHT_PYRE));
         this.add(ModBlocks.BRONZE_TILE_SLAB.block(), createSlabItemTable(ModBlocks.BRONZE_TILE_SLAB.block()));
         this.add(ModBlocks.MOONLIT_ASH_PILE.block(), ashPileDrops(ModBlocks.MOONLIT_ASH_PILE));
+        this.add(ModBlocks.MANUFACTURED_SUN.block(), sunDrops(ModBlocks.MANUFACTURED_SUN));
     }
 
     protected void dropNamedContainer(Block block) {
@@ -79,6 +82,17 @@ public class MoonlitBlockLootTables extends BlockLootSubProvider {
                         .when(this.doesNotHaveSilkTouch()), AlternativesEntry.alternatives(SnowLayerBlock.LAYERS.getPossibleValues(), (layers) -> (layers == 8 ? LootItem.lootTableItem(ModBlocks.MOONLIT_ASH_BLOCK) :
                         LootItem.lootTableItem(ModBlocks.MOONLIT_ASH_PILE)
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly((float)layers))).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ash.block()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, layers))))))));
+    }
+
+    protected LootTable.Builder sunDrops(BlockDefinition<?> sun) {
+        return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                .add(this.applyExplosionDecay(sun, LootItem.lootTableItem(sun)
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))
+                                .when(InvertedLootItemCondition.invert(LootItemBlockStatePropertyCondition.hasBlockStateProperties(sun.block()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ManufacturedSunBlock.STAGE, ManufacturedSunBlock.Stage.FAILED)))))))
+                .add(this.applyExplosionDecay(sun, LootItem.lootTableItem(ModItems.FAILED_SUN)
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(sun.block()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ManufacturedSunBlock.STAGE, ManufacturedSunBlock.Stage.FAILED))))
+                )));
     }
 
     @Override

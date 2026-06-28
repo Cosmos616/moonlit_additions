@@ -43,6 +43,7 @@ public class MoonlitItemModelProvider extends ItemModelProvider {
                 basicItem(definition);
             }
         }
+
     }
 
     private ItemModelBuilder customModel(ItemDefinition<?> item, ResourceLocation parent) {

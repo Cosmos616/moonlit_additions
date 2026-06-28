@@ -1,0 +1,22 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"0": "moonlit:block/manufactured_sun",
+		"particle": "moonlit:block/manufactured_sun"
+	},
+	"elements": [
+		{
+			"from": [2, 2, 2],
+			"to": [14, 14, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 4, 4]},
+			"faces": {
+				"north": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"east": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"south": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"west": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#0"}
+			}
+		}
+	]
+}

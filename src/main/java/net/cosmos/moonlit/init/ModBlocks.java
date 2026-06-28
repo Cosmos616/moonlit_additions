@@ -4,6 +4,9 @@ import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.BlockProperties;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
+import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
+import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
+import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -97,6 +100,21 @@ public class ModBlocks {
                             .noOcclusion()
                     )
             );
+
+    public static final BlockDefinition<ManufacturedSunBlock> MANUFACTURED_SUN = register("manufactured_sun", () ->
+            new ManufacturedSunBlock(BlockBehaviour.Properties.of()
+                    .strength(6.5F, 12.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .lightLevel(state -> switch (state.getValue(ManufacturedSunBlock.STAGE)) {
+                        case FAILED -> 0;
+                        case DORMANT -> 2;
+                        case BLOOMING -> 10;
+                        case BLOOMED -> 12;
+                        case OVERLOADED -> 15;
+                    })
+            )
+    );
 
 
     public static <T extends Block> BlockDefinition<T> registerNoItem(String name, Supplier<T> block, BlockProperties properties) {

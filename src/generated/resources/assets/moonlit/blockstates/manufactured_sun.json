@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "stage=bloomed": {
+      "model": "moonlit:block/manufactured_sun/bloomed"
+    },
+    "stage=blooming": {
+      "model": "moonlit:block/manufactured_sun/blooming"
+    },
+    "stage=dormant": {
+      "model": "moonlit:block/manufactured_sun/dormant"
+    },
+    "stage=failed": {
+      "model": "moonlit:block/manufactured_sun/failed"
+    },
+    "stage=overloaded": {
+      "model": "moonlit:block/manufactured_sun/overloaded"
+    }
+  }
+}

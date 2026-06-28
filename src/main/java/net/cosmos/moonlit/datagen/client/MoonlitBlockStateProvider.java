@@ -1,9 +1,10 @@
 package net.cosmos.moonlit.datagen.client;
 
 import net.cosmos.moonlit.Moonlit;
-import net.cosmos.moonlit.common.block.BronzeBellBlock;
+import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.BronzePillarBlock;
 import net.cosmos.moonlit.common.block.MoonLightPyreBlock;
+import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
 import net.cosmos.moonlit.init.ModBlocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -42,6 +43,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.pyre(ModBlocks.MOONLIGHT_PYRE);
         this.bell(ModBlocks.BRONZE_BELL);
         this.pile(ModBlocks.MOONLIT_ASH_PILE, ModBlocks.MOONLIT_ASH_BLOCK);
+        this.sun(ModBlocks.MANUFACTURED_SUN);
     }
 
     private void simpleBlockItem(Supplier<? extends Block> block) {
@@ -180,6 +182,16 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
             return ConfiguredModel.builder().modelFile(model).build();
         }, BlockStateProperties.PERSISTENT);
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s".formatted(name))));
+    }
+
+    private void sun(Supplier<? extends Block> block) {
+        String name = this.name(block.get());
+        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+            ManufacturedSunBlock.Stage stage = blockState.getValue(ManufacturedSunBlock.STAGE);
+            var model = this.models().getExistingFile(moonlitPath("block/%s/%s".formatted(name, stage.getSerializedName())));
+            return ConfiguredModel.builder().modelFile(model).build();
+        });
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s/%s".formatted(name, ManufacturedSunBlock.Stage.BLOOMED.getSerializedName()))));
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), rl.getPath() + suffix);}

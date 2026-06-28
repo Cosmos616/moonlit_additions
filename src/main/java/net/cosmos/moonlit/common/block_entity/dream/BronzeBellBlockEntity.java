@@ -1,4 +1,4 @@
-package net.cosmos.moonlit.common.block_entity;
+package net.cosmos.moonlit.common.block_entity.dream;
 
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.MoonlitModels;
-import net.cosmos.moonlit.common.block_entity.BronzeBellBlockEntity;
+import net.cosmos.moonlit.common.block_entity.dream.BronzeBellBlockEntity;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;

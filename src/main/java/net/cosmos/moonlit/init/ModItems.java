@@ -32,6 +32,8 @@ public class ModItems {
     public static final ItemDefinition<Item> METEORIC_IRON_INGOT = register("meteoric_iron_ingot", () -> new Item(new Item.Properties()));
     public static final ItemDefinition<Item> RAW_METEORIC_IRON = register("raw_meteoric_iron", () -> new Item(new Item.Properties()));
 
+    public static final ItemDefinition<Item> FAILED_SUN = register("failed_sun", () -> new Item(new Item.Properties()));
+
     public static final ItemDefinition<Item> BRONZE_MASK_ALLOMANCER = register(
                     "bronze_mask_allomancer",
                     () -> new BronzeMaskItem(

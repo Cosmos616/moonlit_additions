@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "block": "moonlit:manufactured_sun",
+                    "condition": "minecraft:block_state_property",
+                    "properties": {
+                      "stage": "failed"
+                    }
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "moonlit:manufactured_sun"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "moonlit:manufactured_sun",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "stage": "failed"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "moonlit:failed_sun"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "moonlit:blocks/manufactured_sun"
+}

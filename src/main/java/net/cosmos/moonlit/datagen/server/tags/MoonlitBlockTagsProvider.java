@@ -26,11 +26,15 @@ public class MoonlitBlockTagsProvider extends BlockTagsProvider {
         this.tag(MoonlitTags.MOONLIT_ASH_BLOCKS.blockTag()).add(ModBlocks.MOONLIT_ASH_BLOCK.block());
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 BRONZE_TILES.block(), BRONZE_TILE_STAIRS.block(), BRONZE_TILE_SLAB.block(),
-                BRONZE_PILLAR.block(), BRONZE_PILLAR_BASE.block(), BRONZE_BELL.block()
+                BRONZE_PILLAR.block(), BRONZE_PILLAR_BASE.block(), BRONZE_BELL.block(),
+                MANUFACTURED_SUN.block()
         );
         this.tag(BlockTags.NEEDS_IRON_TOOL).add(
                 BRONZE_TILES.block(), BRONZE_TILE_STAIRS.block(), BRONZE_TILE_SLAB.block(),
                 BRONZE_PILLAR.block(), BRONZE_PILLAR_BASE.block(), BRONZE_BELL.block()
+        );
+        this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
+                MANUFACTURED_SUN.block()
         );
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
                 MOONLIT_ASH_PILE.block(), MOONLIT_ASH_BLOCK.block()

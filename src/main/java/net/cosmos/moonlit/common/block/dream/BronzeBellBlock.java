@@ -1,7 +1,7 @@
-package net.cosmos.moonlit.common.block;
+package net.cosmos.moonlit.common.block.dream;
 
 import com.mojang.serialization.MapCodec;
-import net.cosmos.moonlit.common.block_entity.BronzeBellBlockEntity;
+import net.cosmos.moonlit.common.block_entity.dream.BronzeBellBlockEntity;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
