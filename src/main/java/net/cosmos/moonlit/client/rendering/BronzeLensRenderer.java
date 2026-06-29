@@ -33,30 +33,65 @@ public class BronzeLensRenderer implements BlockEntityRenderer<BronzeLensBlockEn
         this.lightBeamRenderer = new LightBeamRenderer(context);
     }
 
-    public void render(BronzeLensBlockEntity blockEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(
+            BronzeLensBlockEntity blockEntityIn,
+            float partialTicks,
+            PoseStack poseStack,
+            MultiBufferSource bufferIn,
+            int combinedLightIn,
+            int combinedOverlayIn
+    ) {
         if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()) {
             renderDebug(blockEntityIn, partialTicks, poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
         }
-        if (blockEntityIn.lightBeam != null) lightBeamRenderer.render(blockEntityIn, partialTicks, poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
+
+        if (blockEntityIn.lightBeam != null) {
+            lightBeamRenderer.render(blockEntityIn, partialTicks, poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
+        }
+
         BakedModel lens = MoonlitModels.INSTANCE.bronzeLens;
 
-        VertexConsumer buffer = bufferIn.getBuffer(ItemBlockRenderTypes.getRenderType(blockEntityIn.getBlockState(), false));
+        VertexConsumer buffer = bufferIn.getBuffer(
+                ItemBlockRenderTypes.getRenderType(blockEntityIn.getBlockState(), false)
+        );
 
         poseStack.pushPose();
-        float yaw = (float) Math.atan2(-blockEntityIn.rotation.x, blockEntityIn.rotation.z);
-        float pitch = (float) Math.atan2(
-                -blockEntityIn.rotation.y,
-                Math.sqrt(blockEntityIn.rotation.x * blockEntityIn.rotation.x + blockEntityIn.rotation.z * blockEntityIn.rotation.z)
+
+        // Assuming rotation is [pitch, yaw, roll] in degrees.
+        // We ignore roll because you want head-like pitch/yaw aiming.
+        float pitchDegrees = (float) blockEntityIn.rotation.x;
+        float yawDegrees = (float) blockEntityIn.rotation.y;
+
+        // Optional model correction values.
+        // Change these depending on how the model was authored.
+        float modelYawOffset = 0.0F;
+        float modelPitchOffset = 0.0F;
+
+        poseStack.rotateAround(
+                Axis.YP.rotationDegrees(yawDegrees + modelYawOffset),
+                0.5F,
+                0.5F,
+                0.5F
         );
-        poseStack.rotateAround(Axis.YN.rotation(yaw), 0.5f, 0.5f, 0.5f);
-        poseStack.rotateAround(Axis.XP.rotation(pitch), 0.5f, 0.5f, 0.5f);
-        //Quaternionf transform = ClientHelper.rotateY((float) blockEntityIn.rotation.y);
-        //transform.mul(ClientHelper.rotateX((float) blockEntityIn.rotation.x));
-        //transform.mul(ClientHelper.rotateZ((float) blockEntityIn.rotation.z));
-        //poseStack.rotateAround(transform, 0.5f, 0.5f, 0.5f);
-        blockRenderDispatcher.getModelRenderer()
-                .renderModel(poseStack.last(), buffer, blockEntityIn.getBlockState(),
-                        lens, 1, 1, 1, combinedLightIn, combinedOverlayIn);
+
+        poseStack.rotateAround(
+                Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset),
+                0.5F,
+                0.5F,
+                0.5F
+        );
+
+        blockRenderDispatcher.getModelRenderer().renderModel(
+                poseStack.last(),
+                buffer,
+                blockEntityIn.getBlockState(),
+                lens,
+                1.0F,
+                1.0F,
+                1.0F,
+                combinedLightIn,
+                combinedOverlayIn
+        );
 
         poseStack.popPose();
     }
