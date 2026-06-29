@@ -57,15 +57,13 @@ public class BronzeLensRenderer implements BlockEntityRenderer<BronzeLensBlockEn
 
         poseStack.pushPose();
 
-        // Assuming rotation is [pitch, yaw, roll] in degrees.
-        // We ignore roll because you want head-like pitch/yaw aiming.
         float pitchDegrees = (float) blockEntityIn.rotation.x;
         float yawDegrees = (float) blockEntityIn.rotation.y;
+        float rollDegrees = (float) blockEntityIn.rotation.z;
 
-        // Optional model correction values.
-        // Change these depending on how the model was authored.
         float modelYawOffset = 0.0F;
         float modelPitchOffset = 0.0F;
+        float modelRollOffset = 0.0F;
 
         poseStack.rotateAround(
                 Axis.YP.rotationDegrees(yawDegrees + modelYawOffset),
@@ -76,6 +74,13 @@ public class BronzeLensRenderer implements BlockEntityRenderer<BronzeLensBlockEn
 
         poseStack.rotateAround(
                 Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset),
+                0.5F,
+                0.5F,
+                0.5F
+        );
+
+        poseStack.rotateAround(
+                Axis.ZP.rotationDegrees(-rollDegrees - modelRollOffset),
                 0.5F,
                 0.5F,
                 0.5F

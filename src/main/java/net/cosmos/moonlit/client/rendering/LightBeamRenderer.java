@@ -98,10 +98,11 @@ public class LightBeamRenderer {
     private static void applyLensRotation(BronzeLensBlockEntity blockEntity, PoseStack poseStack) {
         float pitchDegrees = (float) blockEntity.rotation.x;
         float yawDegrees = (float) blockEntity.rotation.y;
+        float rollDegrees = (float) blockEntity.rotation.z;
 
-        // Adjust these if the beam/lens model's default direction is offset.
         float modelYawOffset = 0.0F;
         float modelPitchOffset = 90.0F;
+        float modelRollOffset = 0.0F;
 
         poseStack.rotateAround(
                 Axis.YP.rotationDegrees(yawDegrees + modelYawOffset),
@@ -112,6 +113,13 @@ public class LightBeamRenderer {
 
         poseStack.rotateAround(
                 Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset),
+                0.5F,
+                0.5F,
+                0.5F
+        );
+
+        poseStack.rotateAround(
+                Axis.YP.rotationDegrees(-rollDegrees - modelRollOffset),
                 0.5F,
                 0.5F,
                 0.5F
