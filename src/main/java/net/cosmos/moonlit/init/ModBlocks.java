@@ -7,7 +7,6 @@ import net.cosmos.moonlit.common.block.*;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
-import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -154,8 +153,8 @@ public class ModBlocks {
             )
     );
 
-    public static final BlockDefinition<BronzeLensBlock> BRONZE_LENS = register("bronze_lens", () ->
-            new BronzeLensBlock(BlockBehaviour.Properties.of()
+    public static final BlockDefinition<Block> BRONZE_LENS = register("bronze_lens", () ->
+            new BronzeLensBlock<>(BlockBehaviour.Properties.of()
                     .strength(4f)
                     .requiresCorrectToolForDrops()
                     .noOcclusion())

@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import team.lodestar.lodestone.modules.toolkit.block.WaterLoggedEntityBlock;
 
-public class BronzeLensBlock extends WaterLoggedEntityBlock<BronzeLensBlockEntity> {
+public class BronzeLensBlock<T extends BronzeLensBlockEntity> extends WaterLoggedEntityBlock<T> {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty ROTATE_X = BooleanProperty.create("rotate_x");

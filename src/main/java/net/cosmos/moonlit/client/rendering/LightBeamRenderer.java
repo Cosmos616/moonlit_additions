@@ -4,15 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.ClientHelper;
-import net.cosmos.moonlit.common.block_entity.forge.light.BeamHelpers;
 import net.cosmos.moonlit.common.block_entity.forge.light.BronzeLensBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 
 public class LightBeamRenderer {
 
@@ -56,7 +52,7 @@ public class LightBeamRenderer {
         // Move beam origin to center of block.
         poseStack.translate(0.5D, 0.5D, 0.5D);
 
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.lightning());
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(ClientHelper.LIGHTNING_CULL);
         Matrix4f pose = poseStack.last().pose();
 
         renderBeam(vertexConsumer, pose, length, settings);

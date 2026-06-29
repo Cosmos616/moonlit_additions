@@ -37,9 +37,7 @@ public class BronzeLensBlockEntity extends LodestoneBlockEntity {
             setAngle(Direction.Axis.Z, (int) (this.rotation.z + 1));
         }
         if (this.lightBeam == null) {
-            this.lightBeam = new LightBeam(worldPosition, level)
-                    .setAngle(rotation)
-                    .setLength(beamRange);
+            this.lightBeam = new LightBeam(worldPosition, level, rotation, beamRange);
         } else {
             lightBeam.setAngle(rotation);
             lightBeam.setLength(beamRange);

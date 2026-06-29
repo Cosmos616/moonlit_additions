@@ -39,6 +39,13 @@ public class LightBeam {
         this.world = world;
     }
 
+    public LightBeam(BlockPos sourcePos, Level world, Vec3 angle, float length) {
+        this.sourcePos = sourcePos;
+        this.world = world;
+        this.angle = angle;
+        this.length = length;
+    }
+
     public Vec3 getLastPossiblePosition() {
         return BeamHelpers.locate3DPos(angle, sourcePos.getCenter(), length);
     }
@@ -96,6 +103,7 @@ public class LightBeam {
 
     public LightBeam setLength(float length) {
         this.length = length;
+        update();
         return this;
     }
 
