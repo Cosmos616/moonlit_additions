@@ -1,0 +1,23 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "moonlit:block/bronze_lens/base",
+		"particle": "moonlit:block/bronze_lens/base"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 2, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
+			"faces": {
+				"north": {"uv": [0, 14, 14, 16], "texture": "#0"},
+				"east": {"uv": [0, 14, 14, 16], "texture": "#0"},
+				"south": {"uv": [0, 14, 14, 16], "texture": "#0"},
+				"west": {"uv": [0, 14, 14, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 14, 14], "texture": "#0"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#0"}
+			}
+		}
+	]
+}

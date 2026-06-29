@@ -1,5 +1,6 @@
 package net.cosmos.moonlit.client;
 
+import net.cosmos.moonlit.common.block_entity.forge.light.BeamHelpers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -13,19 +14,15 @@ public class ClientHelper {
         return model != Minecraft.getInstance().getModelManager().getMissingModel() ? model : null;
     }
 
-    public static float toRadians(float degrees) {
-        return (float) (degrees / 180F * Math.PI);
-    }
-
     public static Quaternionf rotateX(float degrees) {
-        return new Quaternionf().rotateX(toRadians(degrees));
+        return new Quaternionf().rotateX(BeamHelpers.toRadians(degrees));
     }
 
     public static Quaternionf rotateY(float degrees) {
-        return new Quaternionf().rotateY(toRadians(degrees));
+        return new Quaternionf().rotateY(BeamHelpers.toRadians(degrees));
     }
 
     public static Quaternionf rotateZ(float degrees) {
-        return new Quaternionf().rotateZ(toRadians(degrees));
+        return new Quaternionf().rotateZ(BeamHelpers.toRadians(degrees));
     }
 }

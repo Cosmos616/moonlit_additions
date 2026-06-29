@@ -6,6 +6,7 @@ import net.cosmos.moonlit.client.MoonlitModelLayers;
 import net.cosmos.moonlit.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit.client.particle.ModParticles;
 import net.cosmos.moonlit.client.rendering.BronzeBellRenderer;
+import net.cosmos.moonlit.client.rendering.BronzeLensRenderer;
 import net.cosmos.moonlit.client.shockwave.ShockwavePostProcessor;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
@@ -52,6 +53,7 @@ public class MoonlitClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_BELL_BLOCK_ENTITY.get(), BronzeBellRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_LENS.get(), BronzeLensRenderer::new);
     }
 
     @SubscribeEvent

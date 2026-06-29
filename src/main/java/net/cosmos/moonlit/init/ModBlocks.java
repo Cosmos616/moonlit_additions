@@ -5,6 +5,7 @@ import com.farcr.nomansland.common.definitions.BlockProperties;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
+import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
 import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.minecraft.world.item.BlockItem;
@@ -114,6 +115,13 @@ public class ModBlocks {
                         case OVERLOADED -> 15;
                     })
             )
+    );
+
+    public static final BlockDefinition<BronzeLensBlock> BRONZE_LENS = register("bronze_lens", () ->
+            new BronzeLensBlock(BlockBehaviour.Properties.of()
+                    .strength(4f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion())
     );
 
 

@@ -4,6 +4,7 @@ import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.BronzePillarBlock;
 import net.cosmos.moonlit.common.block.MoonLightPyreBlock;
+import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
 import net.cosmos.moonlit.init.ModBlocks;
 import net.minecraft.client.renderer.RenderType;
@@ -44,6 +45,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.bell(ModBlocks.BRONZE_BELL);
         this.pile(ModBlocks.MOONLIT_ASH_PILE, ModBlocks.MOONLIT_ASH_BLOCK);
         this.sun(ModBlocks.MANUFACTURED_SUN);
+        this.lens(ModBlocks.BRONZE_LENS);
     }
 
     private void simpleBlockItem(Supplier<? extends Block> block) {
@@ -192,6 +194,19 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
             return ConfiguredModel.builder().modelFile(model).build();
         });
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s/%s".formatted(name, ManufacturedSunBlock.Stage.BLOOMED.getSerializedName()))));
+    }
+
+    private void lens(Supplier<? extends Block> block) {
+        String name  = this.name(block.get());
+        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+            var direction = blockState.getValue(BronzeLensBlock.FACING);
+            var model = this.models().getExistingFile(moonlitPath("block/%s/base".formatted(name)));
+            return ConfiguredModel.builder().modelFile(model)
+                    .rotationX(direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot() + 180)) % 360)
+                    .build();
+        });
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s/item".formatted(name))));
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), rl.getPath() + suffix);}

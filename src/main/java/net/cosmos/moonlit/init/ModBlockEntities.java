@@ -3,6 +3,7 @@ package net.cosmos.moonlit.init;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block_entity.dream.BronzeBellBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
+import net.cosmos.moonlit.common.block_entity.forge.light.BronzeLensBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -23,6 +24,9 @@ public class ModBlockEntities {
 
     public static final Supplier<LodestoneBlockEntityType<ManufacturedSunBlockEntity>> MANUFACTURED_SUN = BLOCK_ENTITIES.register("manufactured_sun",
             () -> LodestoneBlockEntityTypeBuilder.create(ManufacturedSunBlockEntity::new, ModBlocks.MANUFACTURED_SUN.get()).build());
+
+    public static final Supplier<LodestoneBlockEntityType<BronzeLensBlockEntity>> BRONZE_LENS = BLOCK_ENTITIES.register("bronze_lens",
+            () -> LodestoneBlockEntityTypeBuilder.create(BronzeLensBlockEntity::new, ModBlocks.BRONZE_LENS.get()).build());
 
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);

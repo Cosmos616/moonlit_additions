@@ -21,6 +21,8 @@ public class MoonlitModels {
 
     private static final ResourceLocation allomancerSigilId = moonlitPath("special/sigil/allomancer");
 
+    private static final ResourceLocation bronzeLensId = moonlitPath("block/bronze_lens/lens");
+
     public static final MoonlitModels INSTANCE = new MoonlitModels();
 
     private final Map<ResourceLocation, Function<BakedModel, BakedModel>> afterBakeModifiers;
@@ -29,10 +31,9 @@ public class MoonlitModels {
     public boolean registeredModels = false;
 
     @UnknownNullability
-    public BakedModel
-            bronzeBell,
-            allomancerSigil
-            ;
+    public BakedModel bronzeBell;
+    public BakedModel allomancerSigil;
+    public BakedModel bronzeLens;
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {
         modelConsumers.keySet().forEach(consumer);
@@ -69,6 +70,7 @@ public class MoonlitModels {
 
         modelConsumers.put(bronzeBellId, bakedModel -> this.bronzeBell = bakedModel);
         modelConsumers.put(allomancerSigilId, bakedModel -> this.allomancerSigil = bakedModel);
+        modelConsumers.put(bronzeLensId, bakedModel -> this.bronzeLens = bakedModel);
     }
 
     private static BakedModel[] getBakedModels(Map<ResourceLocation, Consumer<BakedModel>> consumers, ResourceLocation[] ids) {
