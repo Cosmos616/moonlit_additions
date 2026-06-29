@@ -32,6 +32,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         this.simpleBlockAndItem(ModBlocks.BRONZE_TILES);
+        this.simpleBlockItem(ModBlocks.ORNATE_WALNUT);
         this.simpleBlockAndItem(ModBlocks.MOONLIT_ASH_BLOCK, moonlitPath("block/moonlit_ash"));
         this.litCube(ModBlocks.METEOR);
         this.simpleBlockAndItem(ModBlocks.HOLLOW_METEOR, RenderType.CUTOUT);
@@ -40,6 +41,11 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.shinyPillar(ModBlocks.BRONZE_PILLAR);
         this.directionalBlock(ModBlocks.BRONZE_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
         this.simpleBlockItem(ModBlocks.BRONZE_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
+        this.directionalBlock(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
+        this.simpleBlockItem(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
+        this.simpleBlockItem(ModBlocks.WRAPPED_BEAM.get(), models().getExistingFile(moonlitPath("block/wrapped_beam_single")));
+        this.simpleBlockItem(ModBlocks.WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/walnut_pillar")));
+        this.simpleBlockItem(ModBlocks.ORNATE_WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/ornate_walnut_pillar")));
         this.pyre(ModBlocks.MOONLIGHT_PYRE);
         this.bell(ModBlocks.BRONZE_BELL);
         this.pile(ModBlocks.MOONLIT_ASH_PILE, ModBlocks.MOONLIT_ASH_BLOCK);

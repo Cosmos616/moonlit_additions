@@ -1,4 +1,5 @@
 {
+  "block.moonlit.ancient_tiles": "Ancient Tiles",
   "block.moonlit.block_of_moonlit_ash": "Block of Moonlit Ash",
   "block.moonlit.bronze_bell": "Bronze Bell",
   "block.moonlit.bronze_pillar": "Bronze Pillar",
@@ -12,6 +13,11 @@
   "block.moonlit.moonlight_pyre": "Moonlight Pyre",
   "block.moonlit.moonlit_ash_pile": "Moonlit Ash Pile",
   "block.moonlit.moonlit_fire": "Moonlit Fire",
+  "block.moonlit.ornate_walnut": "Ornate Walnut",
+  "block.moonlit.ornate_walnut_pillar": "Ornate Walnut Pillar",
+  "block.moonlit.walnut_pillar": "Walnut Pillar",
+  "block.moonlit.wrapped_beam": "Wrapped Beam",
+  "block.moonlit.wrapped_walnut_pillar_base": "Wrapped Walnut Pillar Base",
   "item.moonlit.bottle_of_stardust": "Bottle of Stardust",
   "item.moonlit.bronze_mask_allomancer": "Bronze Mask",
   "item.moonlit.failed_sun": "Failed Sun",
