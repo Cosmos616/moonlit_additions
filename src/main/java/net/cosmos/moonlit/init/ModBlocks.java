@@ -102,6 +102,43 @@ public class ModBlocks {
                     )
             );
 
+    public static final BlockDefinition<Block> ORNATE_WALNUT = register("ornate_walnut", () ->
+            new Block(BlockBehaviour.Properties.of()
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final BlockDefinition<Block> WRAPPED_WALNUT_PILLAR_BASE = register("wrapped_walnut_pillar_base", () ->
+            new WrappedPillarBaseBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final BlockDefinition<Block> WALNUT_PILLAR = register("walnut_pillar", () ->
+            new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final BlockDefinition<Block> ORNATE_WALNUT_PILLAR = register("ornate_walnut_pillar", () ->
+            new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final BlockDefinition<Block> WRAPPED_BEAM = register("wrapped_beam", () ->
+            new WrappedBeamBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            )
+    );
+
+    public static final BlockDefinition<Block> ANCIENT_TILES = register("ancient_tiles", () ->
+            new Block(BlockBehaviour.Properties.of()
+                    .sound(SoundType.DECORATED_POT)
+            )
+    );
+
     public static final BlockDefinition<ManufacturedSunBlock> MANUFACTURED_SUN = register("manufactured_sun", () ->
             new ManufacturedSunBlock(BlockBehaviour.Properties.of()
                     .strength(6.5F, 12.0F)

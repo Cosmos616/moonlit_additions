@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "moonlit:block/ornate_walnut_top",
+    "side": "moonlit:block/ornate_walnut"
+  }
+}
