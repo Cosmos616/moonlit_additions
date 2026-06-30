@@ -2,7 +2,6 @@ package net.cosmos.moonlit.init;
 
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.BlockProperties;
-import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;

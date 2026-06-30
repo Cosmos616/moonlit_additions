@@ -93,5 +93,6 @@
   "item.moonlit.moonlit_wax": "Moonlit Wax",
   "item.moonlit.raw_meteoric_iron": "Raw Meteoric Iron",
   "item.moonlit.stardust": "Stardust",
-  "itemGroup.moonlit": "Moonlit"
+  "itemGroup.moonlit": "Moonlit",
+  "itemGroup.moonlit.woodworking": "Moonlit Woodworking"
 }

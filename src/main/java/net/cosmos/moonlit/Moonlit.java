@@ -3,7 +3,7 @@ package net.cosmos.moonlit;
 import net.cosmos.moonlit.client.MoonlitModels;
 import net.cosmos.moonlit.common.entity.ModEntities;
 import net.cosmos.moonlit.common.entity.ShockwaveEntityRenderer;
-import net.cosmos.moonlit.common.item.ModCreativeTabs;
+import net.cosmos.moonlit.init.ModCreativeTabs;
 import net.cosmos.moonlit.client.particle.ModParticles;
 import net.cosmos.moonlit.init.*;
 import net.minecraft.client.Minecraft;

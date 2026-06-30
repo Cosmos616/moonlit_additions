@@ -4,7 +4,6 @@ import com.farcr.nomansland.common.definitions.ItemDefinition;
 import com.google.common.collect.Sets;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.item.BronzeMaskItem;
-import net.cosmos.moonlit.common.item.ModArmorMaterials;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;

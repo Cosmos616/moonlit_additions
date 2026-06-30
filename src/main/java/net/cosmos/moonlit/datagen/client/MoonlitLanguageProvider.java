@@ -27,6 +27,7 @@ public class MoonlitLanguageProvider extends LanguageProvider {
             }
         }
         add("itemGroup.moonlit", "Moonlit");
+        add("itemGroup.moonlit.woodworking", "Moonlit Woodworking");
         add("item.moonlit.bronze_mask_allomancer", "Bronze Mask");
     }
 }

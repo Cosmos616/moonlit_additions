@@ -1,7 +1,6 @@
-package net.cosmos.moonlit.common.item;
+package net.cosmos.moonlit.init;
 
 import net.cosmos.moonlit.Moonlit;
-import net.cosmos.moonlit.init.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
