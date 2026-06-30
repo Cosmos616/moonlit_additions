@@ -1,0 +1,39 @@
+{
+  "variants": {
+    "axis=x,part=center": {
+      "model": "moonlit:block/wrapped_willow_beam_center",
+      "y": -90
+    },
+    "axis=x,part=cross": {
+      "model": "moonlit:block/wrapped_willow_beam_cross",
+      "y": -90
+    },
+    "axis=x,part=negative": {
+      "model": "moonlit:block/wrapped_willow_beam_negative",
+      "y": -90
+    },
+    "axis=x,part=positive": {
+      "model": "moonlit:block/wrapped_willow_beam_positive",
+      "y": -90
+    },
+    "axis=x,part=single": {
+      "model": "moonlit:block/wrapped_willow_beam_single",
+      "y": -90
+    },
+    "axis=z,part=center": {
+      "model": "moonlit:block/wrapped_willow_beam_center"
+    },
+    "axis=z,part=cross": {
+      "model": "moonlit:block/wrapped_willow_beam_cross"
+    },
+    "axis=z,part=negative": {
+      "model": "moonlit:block/wrapped_willow_beam_negative"
+    },
+    "axis=z,part=positive": {
+      "model": "moonlit:block/wrapped_willow_beam_positive"
+    },
+    "axis=z,part=single": {
+      "model": "moonlit:block/wrapped_willow_beam_single"
+    }
+  }
+}

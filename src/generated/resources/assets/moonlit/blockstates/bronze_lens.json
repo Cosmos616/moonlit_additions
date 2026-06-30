@@ -1,53 +1,417 @@
 {
   "variants": {
-    "facing=down,waterlogged=false": {
+    "facing=down,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 180
     },
-    "facing=down,waterlogged=true": {
+    "facing=down,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 180
     },
-    "facing=east,waterlogged=false": {
+    "facing=down,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=down,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 180
+    },
+    "facing=east,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
+    "facing=east,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 90
     },
-    "facing=north,waterlogged=false": {
+    "facing=east,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90
     },
-    "facing=north,waterlogged=true": {
+    "facing=north,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90
     },
-    "facing=south,waterlogged=false": {
+    "facing=north,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=north,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90
+    },
+    "facing=south,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
+    "facing=south,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 180
     },
-    "facing=up,waterlogged=false": {
+    "facing=south,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base"
     },
-    "facing=up,waterlogged=true": {
+    "facing=up,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base"
     },
-    "facing=west,waterlogged=false": {
+    "facing=up,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=up,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base"
+    },
+    "facing=west,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=false": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 270
     },
-    "facing=west,waterlogged=true": {
+    "facing=west,rotate_x=false,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=false,rotate_y=true,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=false,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=false,rotate_z=true,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=true,rotate_z=false,waterlogged=true": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=false": {
+      "model": "moonlit:block/bronze_lens/base",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotate_x=true,rotate_y=true,rotate_z=true,waterlogged=true": {
       "model": "moonlit:block/bronze_lens/base",
       "x": 90,
       "y": 270

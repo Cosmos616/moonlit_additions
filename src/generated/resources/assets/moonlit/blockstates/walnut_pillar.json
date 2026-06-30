@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "moonlit:block/walnut_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "moonlit:block/walnut_pillar"
+    },
+    "axis=z": {
+      "model": "moonlit:block/walnut_pillar_horizontal",
+      "x": 90
+    }
+  }
+}

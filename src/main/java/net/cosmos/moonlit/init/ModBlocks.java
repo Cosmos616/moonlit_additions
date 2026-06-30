@@ -2,6 +2,7 @@ package net.cosmos.moonlit.init;
 
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.BlockProperties;
+import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
@@ -22,6 +23,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Moonlit.MOD_ID);
     public static List<BlockDefinition<?>> BLOCK_DEFINITIONS = new ArrayList<>();
+    public static List<Woodset> WOODSETS = new ArrayList<>();
 
     public static final BlockDefinition<Block> BRONZE_TILES = register("bronze_tiles",
             ()-> new Block(BlockBehaviour.Properties.of()
@@ -101,36 +103,53 @@ public class ModBlocks {
                     )
             );
 
-    public static final BlockDefinition<Block> ORNATE_WALNUT = register("ornate_walnut", () ->
-            new Block(BlockBehaviour.Properties.of()
-                    .sound(SoundType.WOOD)
-            )
-    );
+    //public static final BlockDefinition<Block> ORNATE_WALNUT = register("ornate_walnut", () ->
+    //        new Block(BlockBehaviour.Properties.of()
+    //                .sound(SoundType.WOOD)
+    //        )
+    //);
 
-    public static final BlockDefinition<Block> WRAPPED_WALNUT_PILLAR_BASE = register("wrapped_walnut_pillar_base", () ->
-            new WrappedPillarBaseBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.WOOD)
-            )
-    );
+    //public static final BlockDefinition<Block> WRAPPED_WALNUT_PILLAR_BASE = register("wrapped_walnut_pillar_base", () ->
+    //        new WrappedPillarBaseBlock(BlockBehaviour.Properties.of()
+    //                .sound(SoundType.WOOD)
+    //        )
+    //);
+//
+    //public static final BlockDefinition<Block> WALNUT_PILLAR = register("walnut_pillar", () ->
+    //        new RotatedPillarBlock(BlockBehaviour.Properties.of()
+    //                .sound(SoundType.WOOD)
+    //        )
+    //);
+//
+    //public static final BlockDefinition<Block> ORNATE_WALNUT_PILLAR = register("ornate_walnut_pillar", () ->
+    //        new RotatedPillarBlock(BlockBehaviour.Properties.of()
+    //                .sound(SoundType.WOOD)
+    //        )
+    //);
+//
+    //public static final BlockDefinition<Block> WRAPPED_BEAM = register("wrapped_beam", () -> {
+    //            return new WrappedBeamBlock(BlockBehaviour.Properties.of()
+    //                    .sound(SoundType.WOOD)
+    //                    .noOcclusion()
+    //            );
+    //        }
+    //);
 
-    public static final BlockDefinition<Block> WALNUT_PILLAR = register("walnut_pillar", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.WOOD)
-            )
-    );
-
-    public static final BlockDefinition<Block> ORNATE_WALNUT_PILLAR = register("ornate_walnut_pillar", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.WOOD)
-            )
-    );
-
-    public static final BlockDefinition<Block> WRAPPED_BEAM = register("wrapped_beam", () ->
-            new WrappedBeamBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.WOOD)
-                    .noOcclusion()
-            )
-    );
+    // Wooden Blocks
+    public static final Woodset WALNUT = new Woodset("walnut");
+    public static final Woodset WILLOW = new Woodset("willow");
+    public static final Woodset PINE = new Woodset("pine");
+    public static final Woodset MAPLE = new Woodset("maple");
+    public static final Woodset ACACIA = new Woodset("acacia");
+    public static final Woodset BIRCH = new Woodset("birch");
+    public static final Woodset CHERRY = new Woodset("cherry");
+    public static final Woodset CRIMSON = new Woodset("crimson").nonFlammable();
+    public static final Woodset DARK_OAK = new Woodset("dark_oak");
+    public static final Woodset JUNGLE = new Woodset("jungle");
+    public static final Woodset MANGROVE = new Woodset("mangrove");
+    public static final Woodset OAK = new Woodset("oak");
+    public static final Woodset SPRUCE = new Woodset("spruce");
+    public static final Woodset WARPED = new Woodset("warped").nonFlammable();
 
     public static final BlockDefinition<Block> ANCIENT_TILES = register("ancient_tiles", () ->
             new Block(BlockBehaviour.Properties.of()
@@ -192,5 +211,61 @@ public class ModBlocks {
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
+    }
+
+    public static class Woodset {
+        public final String name;
+        private final BlockDefinition<Block> ORNATE;
+        private final BlockDefinition<WrappedPillarBaseBlock> WRAPPED_PILLAR_BASE;
+        private final BlockDefinition<RotatedPillarBlock> PILLAR;
+        private final BlockDefinition<RotatedPillarBlock> ORNATE_PILLAR;
+        private final BlockDefinition<WrappedBeamBlock> WRAPPED_BEAM;
+
+        private boolean flammable = true;
+
+        public Woodset(String name) {
+            this.name = name;
+            ModBlocks.WOODSETS.add(this);
+            this.ORNATE = ModBlocks.register("ornate_" + name, () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.WOOD)));
+            this.WRAPPED_PILLAR_BASE = ModBlocks.register("wrapped_" + name + "_pillar_base", () -> new WrappedPillarBaseBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD)));
+            this.PILLAR = ModBlocks.register(name + "_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD)));
+            this.ORNATE_PILLAR = ModBlocks.register("ornate_" + name + "_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD)));
+            this.WRAPPED_BEAM = ModBlocks.register("wrapped_" + name + "_beam", () -> new WrappedBeamBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).noOcclusion()));
+        }
+
+        public Woodset nonFlammable() {
+            this.flammable = false;
+            return this;
+        }
+
+        public BlockDefinition<Block> ornate() {
+            return this.ORNATE;
+        }
+
+        public BlockDefinition<WrappedPillarBaseBlock> wrappedPillarBase() {
+            return this.WRAPPED_PILLAR_BASE;
+        }
+
+        public BlockDefinition<RotatedPillarBlock> pillar() {
+            return this.PILLAR;
+        }
+
+        public BlockDefinition<RotatedPillarBlock> ornatePillar() {
+            return this.ORNATE_PILLAR;
+        }
+
+        public BlockDefinition<WrappedBeamBlock> wrappedBeam() {
+            return this.WRAPPED_BEAM;
+        }
+
+        public void setFlammables() {
+            if (!flammable) return;
+            FireBlock fireBlock = (FireBlock)Blocks.FIRE;
+            fireBlock.setFlammable(this.ORNATE.block(), 5, 20);
+            fireBlock.setFlammable(this.WRAPPED_PILLAR_BASE.block(), 5, 20);
+            fireBlock.setFlammable(this.PILLAR.block(), 5, 20);
+            fireBlock.setFlammable(this.ORNATE_PILLAR.block(), 5, 20);
+            fireBlock.setFlammable(this.WRAPPED_BEAM.block(), 5, 20);
+        }
     }
 }

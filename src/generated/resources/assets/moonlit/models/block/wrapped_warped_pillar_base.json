@@ -1,0 +1,7 @@
+{
+  "parent": "moonlit:block/wooden/template_wrapped_pillar_base",
+  "textures": {
+    "base": "moonlit:block/wooden/wrapped_warped_pillar_base",
+    "end": "moonlit:block/wooden/ornate_warped_pillar_end"
+  }
+}

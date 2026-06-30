@@ -1,0 +1,6 @@
+{
+  "parent": "moonlit:block/wooden/template_wrapped_beam_cross",
+  "textures": {
+    "base": "moonlit:block/wooden/wrapped_jungle_beam"
+  }
+}

@@ -1,6 +1,12 @@
 package net.cosmos.moonlit.common;
 
+import com.farcr.nomansland.common.blockentity.BombDispenseBehavior;
+import com.farcr.nomansland.common.definitions.BlockDefinition;
+import com.farcr.nomansland.common.definitions.ItemDefinition;
+import com.farcr.nomansland.common.item.ThrowableBombItem;
 import com.farcr.nomansland.common.registry.NMLRegistries;
+import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
+import com.farcr.nomansland.common.registry.items.NMLItems;
 import net.cosmos.moonlit.AccessoriesClientCompat;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.commands.MeteorCommand;
@@ -9,13 +15,21 @@ import net.cosmos.moonlit.init.*;
 import net.cosmos.moonlit.network.ArouraParticlesPayload;
 import net.cosmos.moonlit.network.BronzeMaskDarknessPayload;
 import net.minecraft.core.Registry;
+import net.minecraft.core.dispenser.BoatDispenseItemBehavior;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BoatItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -32,6 +46,26 @@ import static net.cosmos.moonlit.init.ModAttachmentTypes.*;
 
 @EventBusSubscriber(modid = Moonlit.MOD_ID)
 public class CommonEvents {
+
+    @SubscribeEvent
+    public static void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            ModFlammables.register();
+
+            for (BlockDefinition<?> definition : ModBlocks.BLOCK_DEFINITIONS) {
+                if (definition.get() instanceof FlowerPotBlock flowerPotBlock) {
+                    flowerPotBlock.getEmptyPot().addPlant(BuiltInRegistries.BLOCK.getKey(flowerPotBlock.getPotted()), () -> flowerPotBlock);
+                }
+            }
+
+            for (ItemDefinition<?> definition : ModItems.ITEM_DEFINITIONS) {
+                Item item = definition.item();
+                if (item instanceof ThrowableBombItem) DispenserBlock.registerBehavior(item, new BombDispenseBehavior(item));
+                else if (item instanceof ProjectileItem) DispenserBlock.registerProjectileBehavior(item);
+                if (item instanceof BoatItem boat) DispenserBlock.registerBehavior(item, new BoatDispenseItemBehavior(boat.type, boat.hasChest));
+            }
+        });
+    }
 
     @SubscribeEvent
     public static void registerListeners(RegisterCommandsEvent event) {
@@ -57,6 +91,7 @@ public class CommonEvents {
     static {
         reMapBlock.put("moon_light_pyre", moonlitPath("moonlight_pyre"));
         reMapBlock.put("bronze_tiles_stairs", moonlitPath("bronze_tile_stairs"));
+        reMapBlock.put("wrapped_beam", moonlitPath("wrapped_walnut_beam"));
         reMapBlock.put("bronze_tiles_slab", moonlitPath("bronze_tile_slab"));
         reMapItem.put("moonlit_bronze", moonlitPath("moonlit_bronze_ingot"));
     }

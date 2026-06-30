@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "moonlit:block/wooden/ornate_warped_end",
+    "side": "moonlit:block/wooden/ornate_warped"
+  }
+}

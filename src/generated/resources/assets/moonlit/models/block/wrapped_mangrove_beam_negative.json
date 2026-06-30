@@ -1,0 +1,6 @@
+{
+  "parent": "moonlit:block/wooden/template_wrapped_beam_negative",
+  "textures": {
+    "base": "moonlit:block/wooden/wrapped_mangrove_beam"
+  }
+}

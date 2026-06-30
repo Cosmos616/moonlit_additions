@@ -1,6 +1,8 @@
 package net.cosmos.moonlit.datagen.client;
 
 import net.cosmos.moonlit.Moonlit;
+import net.cosmos.moonlit.common.block.WrappedBeamBlock;
+import net.cosmos.moonlit.common.block.WrappedPillarBaseBlock;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.BronzePillarBlock;
 import net.cosmos.moonlit.common.block.MoonLightPyreBlock;
@@ -33,7 +35,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         this.simpleBlockAndItem(ModBlocks.BRONZE_TILES);
-        this.simpleBlockItem(ModBlocks.ORNATE_WALNUT);
+        //this.simpleBlockItem(ModBlocks.ORNATE_WALNUT);
         this.simpleBlockAndItem(ModBlocks.MOONLIT_ASH_BLOCK, moonlitPath("block/moonlit_ash"));
         this.litCube(ModBlocks.METEOR);
         this.simpleBlockAndItem(ModBlocks.HOLLOW_METEOR, RenderType.CUTOUT);
@@ -42,16 +44,23 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.shinyPillar(ModBlocks.BRONZE_PILLAR);
         this.directionalBlock(ModBlocks.BRONZE_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
         this.simpleBlockItem(ModBlocks.BRONZE_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
-        this.directionalBlock(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
-        this.simpleBlockItem(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
-        this.simpleBlockItem(ModBlocks.WRAPPED_BEAM.get(), models().getExistingFile(moonlitPath("block/wrapped_beam_single")));
-        this.simpleBlockItem(ModBlocks.WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/walnut_pillar")));
-        this.simpleBlockItem(ModBlocks.ORNATE_WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/ornate_walnut_pillar")));
+        //this.directionalBlock(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
+        //this.simpleBlockItem(ModBlocks.WRAPPED_WALNUT_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/wrapped_walnut_pillar_base")));
+        //this.simpleBlockItem(ModBlocks.WRAPPED_BEAM.get(), models().getExistingFile(moonlitPath("block/wrapped_beam_single")));
+        //this.simpleBlockItem(ModBlocks.WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/walnut_pillar")));
+        //this.simpleBlockItem(ModBlocks.ORNATE_WALNUT_PILLAR.get(), models().getExistingFile(moonlitPath("block/ornate_walnut_pillar")));
         this.pyre(ModBlocks.MOONLIGHT_PYRE);
         this.bell(ModBlocks.BRONZE_BELL);
         this.pile(ModBlocks.MOONLIT_ASH_PILE, ModBlocks.MOONLIT_ASH_BLOCK);
         this.sun(ModBlocks.MANUFACTURED_SUN);
         this.lens(ModBlocks.BRONZE_LENS);
+        for (ModBlocks.Woodset woodset : ModBlocks.WOODSETS) {
+            this.cubeColumn(woodset.ornate(), moonlitPath("block/wooden/ornate_%s".formatted(woodset.name)));
+            this.cubeColumnAxis(woodset.ornatePillar(), moonlitPath("block/wooden/ornate_%s_pillar".formatted(woodset.name)));
+            this.cubeColumnAxis(woodset.pillar(), moonlitPath("block/wooden/%s_pillar".formatted(woodset.name)));
+            this.wrappedPillarBase(woodset.wrappedPillarBase());
+            this.wrappedBeam(woodset.wrappedBeam());
+        }
     }
 
     private void simpleBlockItem(Supplier<? extends Block> block) {
@@ -74,6 +83,24 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
     }
     private void simpleBlockAndItem(Supplier<? extends Block> block, ResourceLocation texture, RenderType renderType) {
         this.simpleBlock(block.get(), this.models().cubeAll(this.name(block.get()), texture).renderType(renderType.name));
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+    private void cubeColumn(Supplier<? extends Block> block, ResourceLocation texture) {
+        String name = this.name(block.get());
+        this.simpleBlock(block.get(), this.models().cubeColumn(name, texture, texture.withSuffix("_end")));
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+    private void cubeColumnAxis(Supplier<? extends Block> block, ResourceLocation texture) {
+        String name = this.name(block.get());
+        var vertical = models().cubeColumn(name, texture, texture.withSuffix("_end"));
+        var horizontal = models().cubeColumnHorizontal(name + "_horizontal", texture, texture.withSuffix("_end"));
+        getVariantBuilder(block.get())
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .modelForState().modelFile(vertical).addModel()
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .modelForState().modelFile(horizontal).rotationX(90).addModel()
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel();
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
     }
     private void cubePillar(Supplier<? extends Block> block, ResourceLocation end) {
@@ -213,6 +240,38 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
                     .build();
         });
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s/item".formatted(name))));
+    }
+
+    private void wrappedPillarBase(Supplier<? extends Block> block) {
+        String name = this.name(block.get());
+        String wood = name.replace("wrapped_", "").replace("_pillar_base", "");
+        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+            var direction = blockState.getValue(WrappedPillarBaseBlock.FACING);
+            var model = this.models().withExistingParent(name, Moonlit.moonlitPath("block/wooden/template_wrapped_pillar_base"))
+                    .texture("base", moonlitPath("block/wooden/wrapped_%s_pillar_base".formatted(wood)))
+                    .texture("end", moonlitPath("block/wooden/ornate_%s_pillar_end".formatted(wood)));
+            return ConfiguredModel.builder().modelFile(model)
+                    .rotationX(direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360)
+                    .build();
+        });
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+
+    private void wrappedBeam(Supplier<? extends Block> block) {
+        String name = this.name(block.get());
+        String wood = name.replace("wrapped_", "").replace("_beam", "");
+        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+            var axis = blockState.getValue(WrappedBeamBlock.AXIS);
+            var part = blockState.getValue(WrappedBeamBlock.PART);
+            ResourceLocation parentLoc = Moonlit.moonlitPath("block/wooden/template_wrapped_beam_%s".formatted(part.getSerializedName()));
+            var model = this.models().withExistingParent(name + "_%s".formatted(part.getSerializedName()), parentLoc)
+                    .texture("base", moonlitPath("block/wooden/wrapped_%s_beam".formatted(wood)));
+            return ConfiguredModel.builder().modelFile(model)
+                    .rotationY(axis == Direction.Axis.X ? -90 : 0)
+                    .build();
+        });
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/wrapped_%s_beam_single".formatted(wood))));
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), rl.getPath() + suffix);}

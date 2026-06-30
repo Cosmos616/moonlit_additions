@@ -1,0 +1,6 @@
+{
+  "parent": "moonlit:block/wooden/template_wrapped_beam_center",
+  "textures": {
+    "base": "moonlit:block/wooden/wrapped_dark_oak_beam"
+  }
+}
