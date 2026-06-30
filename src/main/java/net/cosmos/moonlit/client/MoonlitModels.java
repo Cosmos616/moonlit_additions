@@ -22,6 +22,10 @@ public class MoonlitModels {
     private static final ResourceLocation allomancerSigilId = moonlitPath("special/sigil/allomancer");
 
     private static final ResourceLocation bronzeLensId = moonlitPath("block/bronze_lens/lens");
+    private static final ResourceLocation bronzeLensMiddleId = moonlitPath("block/bronze_lens/middle");
+
+    private static final ResourceLocation bronzeMirrorId = moonlitPath("block/bronze_mirror/mirror");
+    private static final ResourceLocation bronzeMirrorMiddleId = moonlitPath("block/bronze_mirror/middle");
 
     public static final MoonlitModels INSTANCE = new MoonlitModels();
 
@@ -34,6 +38,9 @@ public class MoonlitModels {
     public BakedModel bronzeBell;
     public BakedModel allomancerSigil;
     public BakedModel bronzeLens;
+    public BakedModel bronzeLensMiddle;
+    public BakedModel bronzeMirror;
+    public BakedModel bronzeMirrorMiddle;
 
     public void onModelRegister(ResourceManager rm, Consumer<ResourceLocation> consumer) {
         modelConsumers.keySet().forEach(consumer);
@@ -71,6 +78,9 @@ public class MoonlitModels {
         modelConsumers.put(bronzeBellId, bakedModel -> this.bronzeBell = bakedModel);
         modelConsumers.put(allomancerSigilId, bakedModel -> this.allomancerSigil = bakedModel);
         modelConsumers.put(bronzeLensId, bakedModel -> this.bronzeLens = bakedModel);
+        modelConsumers.put(bronzeLensMiddleId, bakedModel -> this.bronzeLensMiddle = bakedModel);
+        modelConsumers.put(bronzeMirrorId, bakedModel -> this.bronzeMirror = bakedModel);
+        modelConsumers.put(bronzeMirrorMiddleId, bakedModel -> this.bronzeMirrorMiddle = bakedModel);
     }
 
     private static BakedModel[] getBakedModels(Map<ResourceLocation, Consumer<BakedModel>> consumers, ResourceLocation[] ids) {
