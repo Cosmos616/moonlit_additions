@@ -4,7 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.ClientHelper;
-import net.cosmos.moonlit.common.block_entity.forge.light.BronzeLensBlockEntity;
+import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
+import net.cosmos.moonlit.common.block_entity.forge.light.LightBeam;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.FastColor;
@@ -27,14 +28,11 @@ public class LightBeamRenderer {
     }
 
     public void render(
-            BronzeLensBlockEntity blockEntity,
-            float partialTick,
+            LightBeam lightBeam,
             PoseStack poseStack,
-            MultiBufferSource bufferSource,
-            int packedLight,
-            int packedOverlay
+            MultiBufferSource bufferSource
     ) {
-        float length = (float) blockEntity.beamRange;
+        float length = lightBeam.getLength();
 
         BeamRenderSettings settings = new BeamRenderSettings(
                 0x40FFFFFF, // color: ARGB
@@ -47,7 +45,7 @@ public class LightBeamRenderer {
 
         poseStack.pushPose();
 
-        applyLensRotation(blockEntity, poseStack);
+        applyLensRotation(lightBeam, poseStack);
 
         // Move beam origin to center of block.
         poseStack.translate(0.5D, 0.5D, 0.5D);
@@ -91,14 +89,12 @@ public class LightBeamRenderer {
         }
     }
 
-    private static void applyLensRotation(BronzeLensBlockEntity blockEntity, PoseStack poseStack) {
-        float pitchDegrees = (float) blockEntity.rotation.x;
-        float yawDegrees = (float) blockEntity.rotation.y;
-        float rollDegrees = (float) blockEntity.rotation.z;
+    private static void applyLensRotation(LightBeam lightBeam, PoseStack poseStack) {
+        float pitchDegrees = lightBeam.xAngle;
+        float yawDegrees = lightBeam.yAngle;
 
         float modelYawOffset = 0.0F;
         float modelPitchOffset = 90.0F;
-        float modelRollOffset = 0.0F;
 
         poseStack.rotateAround(
                 Axis.YP.rotationDegrees(yawDegrees + modelYawOffset),
@@ -109,13 +105,6 @@ public class LightBeamRenderer {
 
         poseStack.rotateAround(
                 Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset),
-                0.5F,
-                0.5F,
-                0.5F
-        );
-
-        poseStack.rotateAround(
-                Axis.YP.rotationDegrees(-rollDegrees - modelRollOffset),
                 0.5F,
                 0.5F,
                 0.5F

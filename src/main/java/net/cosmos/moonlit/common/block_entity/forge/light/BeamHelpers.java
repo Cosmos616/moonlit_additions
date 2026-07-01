@@ -23,12 +23,22 @@ public class BeamHelpers {
         return (float) (origin*Math.sin(toRadians(degrees)));
     }
 
+    public static Vec3 getVectorFromAngles(double yawDegrees, double pitchDegrees) {
+        double yawRad = Math.toRadians(yawDegrees);
+        double pitchRad = Math.toRadians(pitchDegrees);
+
+        double x = Math.cos(pitchRad) * Math.sin(yawRad);
+        double y = Math.sin(pitchRad);
+        double z = Math.cos(pitchRad) * Math.cos(yawRad);
+
+        return new Vec3(x, y, z);
+    }
+
     public static Vec2 locate2DPos(float degrees, Vec2 origin) {
         float x = locateX(degrees, origin.x);
         float y = locateY(degrees, origin.y);
         return new Vec2(x, y);
     }
-
 
     public static float yaw(Vec3 angle) {
         return (float) Math.toDegrees(Math.atan2(angle.z, angle.x));

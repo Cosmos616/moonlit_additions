@@ -1,13 +1,21 @@
 package net.cosmos.moonlit.common.block_entity.forge.light;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.util.NBTHelpers;
 import net.cosmos.moonlit.util.OrientedBoundingBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import team.lodestar.lodestone.helpers.NBTHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +24,20 @@ public class LightBeam {
     private final BlockPos sourcePos;
     private final Level world;
 
-    private Vec3 angle = Vec3.ZERO;
-    private float length = 0;
+    public float xAngle;
+    public float yAngle;
+
+    private float length;
 
     public List<BlockPos> availablePositionCache = new ArrayList<>();
     public boolean forceUpdate = false;
 
-    public boolean canRender() {
-        return this.angle != null;
-    }
-
-    public LightBeam(BlockPos sourcePos, Level world, Vec3 angle, float length, List<BlockPos> posCache) {
+    public LightBeam(BlockPos sourcePos, Level world, float length, float xAngle, float yAngle, List<BlockPos> posCache) {
         this.sourcePos = sourcePos;
         this.world = world;
-        this.angle = angle;
         this.length = length;
+        this.xAngle = xAngle;
+        this.yAngle = yAngle;
         this.availablePositionCache = posCache;
     }
 
@@ -39,15 +46,8 @@ public class LightBeam {
         this.world = world;
     }
 
-    public LightBeam(BlockPos sourcePos, Level world, Vec3 angle, float length) {
-        this.sourcePos = sourcePos;
-        this.world = world;
-        this.angle = angle;
-        this.length = length;
-    }
-
     public Vec3 getLastPossiblePosition() {
-        return BeamHelpers.locate3DPos(angle, sourcePos.getCenter(), length);
+        return BeamHelpers.locate3DPos(getAngle(), this.sourcePos.getCenter(), this.length);
     }
 
     public Vec3 position() {
@@ -55,18 +55,18 @@ public class LightBeam {
     }
 
     public Vec3 getLastReachedPosition() {
-        return BeamHelpers.getActualEndpoint(world, sourcePos.getCenter(), getLastPossiblePosition());
+        return BeamHelpers.getActualEndpoint(this.world, this.sourcePos.getCenter(), this.getLastPossiblePosition());
     }
 
     public OrientedBoundingBox getBoundingBox() {
-        Vec3 size = new Vec3(0, length, 0);
-        if (angle == null)
-            return new OrientedBoundingBox(sourcePos.getCenter(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
-        return new OrientedBoundingBox(sourcePos.getCenter(), size, BeamHelpers.yaw(angle), BeamHelpers.pitch(angle));
+        Vec3 size = new Vec3(0, this.length, 0);
+        if (getAngle() == null)
+            return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
+        return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(getAngle()), BeamHelpers.pitch(getAngle()));
     }
 
     public void gatherPositions() {
-        if ((availablePositionCache == null || availablePositionCache.isEmpty()) || forceUpdate) {
+        if ((this.availablePositionCache == null || this.availablePositionCache.isEmpty()) || this.forceUpdate) {
             OrientedBoundingBox boundingBox = getBoundingBox().updateVertex();
             int bound = 8;
             BlockPos origin = BlockPos.ZERO;
@@ -81,8 +81,8 @@ public class LightBeam {
                 }
             }
             posList.removeIf(pos -> !boundingBox.intersects(new AABB(pos)));
-            availablePositionCache = posList;
-            forceUpdate = false;
+            this.availablePositionCache = posList;
+            this.forceUpdate = false;
         }
     }
 
@@ -92,13 +92,16 @@ public class LightBeam {
 
     public void tick(boolean client) {
         gatherPositions();
-
     }
 
-    public LightBeam setAngle(Vec3 angle) {
-        this.angle = angle;
+    public void setXRot(float xAngle) {
+        this.xAngle = xAngle;
         update();
-        return this;
+    }
+
+    public void setYRot(float yAngle) {
+        this.yAngle = yAngle;
+        update();
     }
 
     public LightBeam setLength(float length) {
@@ -108,29 +111,35 @@ public class LightBeam {
     }
 
     public Vec3 getAngle() {
-        return angle;
+        return BeamHelpers.getVectorFromAngles(this.xAngle, this.yAngle);
     }
 
     public float getLength() {
-        return length;
+        return this.length;
     }
 
     public void update() {
         this.forceUpdate = true;
     }
 
-    public void write(CompoundTag tag) {
-        CompoundTag spiritTag = tag.getCompound("light_beam");
-        NBTHelpers.safeWriteUsingCodec(spiritTag, "angle", getAngle(), Vec3.CODEC);
-        NBTHelpers.safeWriteUsingCodec(spiritTag, "cached_positions", availablePositionCache, BlockPos.CODEC.listOf());
-        spiritTag.putFloat("length", getLength());
+    public void write(CompoundTag compound) {
+        CompoundTag lightCompound = new CompoundTag();
+        lightCompound.putFloat("xAngle", this.xAngle);
+        lightCompound.putFloat("yAngle", this.yAngle);
+        lightCompound.putFloat("length", this.length);
+        NBTHelpers.safeWriteUsingCodec(lightCompound, "cached_positions", this.availablePositionCache, BlockPos.CODEC.listOf());
+        compound.put("LightBeam", lightCompound);
     }
 
-    public static LightBeam read(CompoundTag tag, BlockPos sourcePos, Level world) {
-        CompoundTag spiritTag = tag.getCompound("spirit_beam");
-        Vec3 angle = NBTHelpers.safeReadUsingCodec(spiritTag, "angle", Vec3.CODEC);
-        List<BlockPos> posCache = NBTHelpers.safeReadUsingCodec(spiritTag, "cached_positions", BlockPos.CODEC.listOf(), List.of());
-        float length = spiritTag.getFloat("length");
-        return new LightBeam(sourcePos, world, angle, length, posCache);
+    public void read(CompoundTag compound, BlockPos sourcePos, Level world) {
+        CompoundTag lightCompound = compound.getCompound("LightBeam");
+        float xAngle = lightCompound.getFloat("xAngle");
+        float yAngle = lightCompound.getFloat("yAngle");
+        float length = lightCompound.getFloat("length");
+        List<BlockPos> posCache = NBTHelpers.safeReadUsingCodec(lightCompound, "cached_positions", BlockPos.CODEC.listOf());
+        this.xAngle = xAngle;
+        this.yAngle = yAngle;
+        this.length = length;
+        this.availablePositionCache = posCache;
     }
 }

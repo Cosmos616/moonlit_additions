@@ -54,6 +54,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.pile(ModBlocks.MOONLIT_ASH_PILE, ModBlocks.MOONLIT_ASH_BLOCK);
         this.sun(ModBlocks.MANUFACTURED_SUN);
         this.lens(ModBlocks.BRONZE_LENS);
+        this.lens(ModBlocks.BRONZE_MIRROR);
         for (ModBlocks.Woodset woodset : ModBlocks.WOODSETS) {
             this.cubeColumn(woodset.ornate(), moonlitPath("block/wooden/ornate_%s".formatted(woodset.name)));
             this.cubeColumnAxis(woodset.ornatePillar(), moonlitPath("block/wooden/ornate_%s_pillar".formatted(woodset.name)));
@@ -231,14 +232,14 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
 
     private void lens(Supplier<? extends Block> block) {
         String name  = this.name(block.get());
-        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState -> {
             var direction = blockState.getValue(BronzeLensBlock.FACING);
             var model = this.models().getExistingFile(moonlitPath("block/%s/base".formatted(name)));
             return ConfiguredModel.builder().modelFile(model)
                     .rotationX(direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0)
                     .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot() + 180)) % 360)
                     .build();
-        });
+        }, BlockStateProperties.WATERLOGGED);
         this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/%s/item".formatted(name))));
     }
 
