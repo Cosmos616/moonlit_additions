@@ -3,6 +3,7 @@ package net.cosmos.moonlit.client.rendering;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.BeamHelpers;
 import net.cosmos.moonlit.common.block_entity.forge.light.LightBeam;
@@ -106,6 +107,8 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
                     )
                     .setColor(-16776961)
                     .setNormal(posestack$pose, (float)endPoint.x, (float)endPoint.y, (float)endPoint.z);
+        } else {
+            Moonlit.LOGGER.info("light beam is null");
         }
 
     }

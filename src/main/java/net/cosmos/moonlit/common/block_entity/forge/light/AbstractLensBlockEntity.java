@@ -7,10 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.modules.toolkit.blockentity.LodestoneBlockEntity;
 import team.lodestar.lodestone.modules.toolkit.blockentity.LodestoneBlockEntityType;
@@ -114,7 +116,7 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         super.loadAdditional(tag, registries);
         this.angle = NBTHelpers.safeReadUsingCodec(tag, "angle", NBTHelpers.VEC2_CODEC);
         this.lastReached = NBTHelpers.safeReadUsingCodec(tag, "LastReached", Vec3.CODEC);
-        this.lightBeam = LightBeam.read(tag.getCompound("LightBeam"), this.getBlockPos(), this.getLevel());
+        this.lightBeam = LightBeam.read(tag, this.getBlockPos(), this.getLevel());
     }
 
     @Override
@@ -127,5 +129,15 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         if (this.lightBeam != null) {
             this.lightBeam.write(tag);
         }
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }
