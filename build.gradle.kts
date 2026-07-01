@@ -78,10 +78,16 @@ repositories {
     maven("https://maven.blamejared.com/")
     maven("https://maven.terraformersmc.com/")
     maven("https://maven.theillusivec4.top/")
+    maven("https://maven.ryanhcode.dev/releases")
 }
 
 dependencies {
     accessTransformers(("team.lodestar.lodestone:lodestone:${mc["version"]}-${deps["lodestone"]}"))
+    jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${mc["version"]}:${deps["sable_companion"]}") {
+        version {
+            prefer(deps["sable_companion"])
+        }
+    })
 
     compileOnlyApi("dev.emi:emi-neoforge:${deps["emi"]}+${mc["version"]}:api")
     localRuntime("dev.emi:emi-neoforge:${deps["emi"]}+${mc["version"]}")
