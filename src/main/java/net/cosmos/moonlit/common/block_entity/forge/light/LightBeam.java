@@ -68,7 +68,7 @@ public class LightBeam {
     public void gatherPositions() {
         if ((this.availablePositionCache == null || this.availablePositionCache.isEmpty()) || this.forceUpdate) {
             OrientedBoundingBox boundingBox = getBoundingBox().updateVertex();
-            int bound = 8;
+            int bound = Math.round(getLength());
             BlockPos origin = BlockPos.ZERO;
             Vec3i lower = origin.offset(-bound,-bound,-bound);
             Vec3i upper = origin.offset(bound,bound,bound);
