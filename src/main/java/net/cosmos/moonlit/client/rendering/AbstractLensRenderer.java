@@ -52,8 +52,8 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
 
         poseStack.pushPose();
 
-        float pitchDegrees = blockEntity.getXAngle();
-        float yawDegrees = blockEntity.getYAngle();
+        float pitchDegrees = blockEntity.getAngle().x;
+        float yawDegrees = blockEntity.getAngle().y;
 
         float modelYawOffset = 0.0F;
         float modelPitchOffset = 0.0F;
@@ -85,8 +85,8 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
                 }
             }
             Vec3 pos = Vec3.ZERO.add(0.5, 0.5, 0.5);
-            double range = lightBeam.getLength();
-            Vec3 endPoint = BeamHelpers.locate3DPos(lightBeam.getAngle(), pos, lightBeam.getLength());
+            double range = lightBeam.getLastReachedPosition().distanceTo(lightBeam.position());
+            Vec3 endPoint = BeamHelpers.locate3DPos(lightBeam.getAngle(), pos, (float) range);
             AABB focus = new AABB(-range, -range, -range, range, range, range);
             poseStack.pushPose();
             LevelRenderer.renderLineBox(poseStack, vertexconsumer, focus, 1.0F, 0.5F, 0.5F, 0.5F);

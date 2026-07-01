@@ -1,21 +1,15 @@
 package net.cosmos.moonlit.common.block_entity.forge.light;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.util.NBTHelpers;
 import net.cosmos.moonlit.util.OrientedBoundingBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import team.lodestar.lodestone.helpers.NBTHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +18,32 @@ public class LightBeam {
     private final BlockPos sourcePos;
     private final Level world;
 
-    public float xAngle;
-    public float yAngle;
+    public Vec2 angle;
+    public Vec2 cachedAngle;
 
     private float length;
+    public float cachedLength;
 
     public List<BlockPos> availablePositionCache = new ArrayList<>();
     public boolean forceUpdate = false;
 
-    public LightBeam(BlockPos sourcePos, Level world, float length, float xAngle, float yAngle, List<BlockPos> posCache) {
+    public LightBeam(BlockPos sourcePos, Level world, float length, Vec2 angle, float cachedLength, Vec2 cachedAngle, List<BlockPos> posCache) {
         this.sourcePos = sourcePos;
         this.world = world;
         this.length = length;
-        this.xAngle = xAngle;
-        this.yAngle = yAngle;
+        this.cachedLength = cachedLength;
+        this.angle = angle;
+        this.cachedAngle = cachedAngle;
+        this.availablePositionCache = posCache;
+    }
+
+    public LightBeam(BlockPos sourcePos, Level world, float length, Vec2 angle, List<BlockPos> posCache) {
+        this.sourcePos = sourcePos;
+        this.world = world;
+        this.length = length;
+        this.cachedLength = length;
+        this.angle = angle;
+        this.cachedAngle = angle;
         this.availablePositionCache = posCache;
     }
 
@@ -47,7 +53,7 @@ public class LightBeam {
     }
 
     public Vec3 getLastPossiblePosition() {
-        return BeamHelpers.locate3DPos(getAngle(), this.sourcePos.getCenter(), this.length);
+        return BeamHelpers.locate3DPos(getAngle(), this.sourcePos.getCenter(), this.cachedLength);
     }
 
     public Vec3 position() {
@@ -55,11 +61,12 @@ public class LightBeam {
     }
 
     public Vec3 getLastReachedPosition() {
+        if (this.cachedAngle == null || this.length <= 0) return this.sourcePos.getCenter();
         return BeamHelpers.getActualEndpoint(this.world, this.sourcePos.getCenter(), this.getLastPossiblePosition());
     }
 
     public OrientedBoundingBox getBoundingBox() {
-        Vec3 size = new Vec3(0, this.length, 0);
+        Vec3 size = new Vec3(0, this.cachedLength, 0);
         if (getAngle() == null)
             return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
         return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(getAngle()), BeamHelpers.pitch(getAngle()));
@@ -91,30 +98,40 @@ public class LightBeam {
     }
 
     public void tick(boolean client) {
+        if (this.cachedAngle != this.angle && this.angle != null) {
+            this.cachedAngle = this.angle;
+        }
+        if (this.cachedLength != this.length && this.length != 0) {
+            this.cachedLength = this.length;
+        }
         gatherPositions();
     }
 
-    public void setXRot(float xAngle) {
-        this.xAngle = xAngle;
-        update();
-    }
-
-    public void setYRot(float yAngle) {
-        this.yAngle = yAngle;
-        update();
+    public void setAngle(Vec2 angle) {
+        this.angle = angle;
     }
 
     public void setLength(float length) {
         this.length = length;
-        update();
+    }
+
+    public Vec2 cachedAngle() {
+        if (this.cachedAngle == null) {
+            Moonlit.LOGGER.error("Cached angle is null");
+            return null;
+        }
+        return this.cachedAngle;
     }
 
     public Vec3 getAngle() {
-        return BeamHelpers.getVectorFromAngles(this.xAngle, this.yAngle);
+        if (this.cachedAngle() == null) {
+            return null;
+        }
+        return BeamHelpers.getVectorFromAngles(this.cachedAngle().x, this.cachedAngle().y);
     }
 
     public float getLength() {
-        return this.length;
+        return this.cachedLength;
     }
 
     public void update() {
@@ -123,19 +140,21 @@ public class LightBeam {
 
     public void write(CompoundTag compound) {
         CompoundTag lightCompound = new CompoundTag();
-        lightCompound.putFloat("xAngle", this.xAngle);
-        lightCompound.putFloat("yAngle", this.yAngle);
         lightCompound.putFloat("length", this.length);
+        lightCompound.putFloat("cachedLength", this.cachedLength);
+        NBTHelpers.safeWriteUsingCodec(lightCompound, "angle", this.angle, NBTHelpers.VEC2_CODEC);
+        NBTHelpers.safeWriteUsingCodec(lightCompound, "cachedAngle", this.cachedAngle, NBTHelpers.VEC2_CODEC);
         NBTHelpers.safeWriteUsingCodec(lightCompound, "cached_positions", this.availablePositionCache, BlockPos.CODEC.listOf());
         compound.put("LightBeam", lightCompound);
     }
 
     public static LightBeam read(CompoundTag compound, BlockPos sourcePos, Level world) {
         CompoundTag lightCompound = compound.getCompound("LightBeam");
-        float xAngle = lightCompound.getFloat("xAngle");
-        float yAngle = lightCompound.getFloat("yAngle");
+        Vec2 cachedAngle = NBTHelpers.safeReadUsingCodec(lightCompound, "cachedAngle", NBTHelpers.VEC2_CODEC);
+        Vec2 angle = NBTHelpers.safeReadUsingCodec(lightCompound, "angle", NBTHelpers.VEC2_CODEC);
+        float cachedLength = lightCompound.getFloat("cachedLength");
         float length = lightCompound.getFloat("length");
         List<BlockPos> posCache = NBTHelpers.safeReadUsingCodec(lightCompound, "cached_positions", BlockPos.CODEC.listOf());
-        return new LightBeam(sourcePos, world, length, xAngle, yAngle, posCache);
+        return new LightBeam(sourcePos, world, length, angle, cachedLength, cachedAngle, posCache);
     }
 }

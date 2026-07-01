@@ -10,12 +10,4 @@ public class BronzeLensBlockEntity extends AbstractLensBlockEntity {
     public BronzeLensBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BRONZE_LENS.get(), pos, state);
     }
-
-    @Override
-    public void commonTick(Level level) {
-        super.commonTick(level);
-        if (getLightBeam() == null) {
-            setLightBeam(new LightBeam(worldPosition, level));
-        }
-    }
 }

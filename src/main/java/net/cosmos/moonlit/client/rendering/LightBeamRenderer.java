@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.ClientHelper;
-import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.LightBeam;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -32,7 +31,7 @@ public class LightBeamRenderer {
             PoseStack poseStack,
             MultiBufferSource bufferSource
     ) {
-        float length = lightBeam.getLength();
+        float length = (float) lightBeam.position().distanceTo(lightBeam.getLastReachedPosition());
 
         BeamRenderSettings settings = new BeamRenderSettings(
                 0x40FFFFFF, // color: ARGB
@@ -90,8 +89,11 @@ public class LightBeamRenderer {
     }
 
     private static void applyLensRotation(LightBeam lightBeam, PoseStack poseStack) {
-        float pitchDegrees = lightBeam.xAngle;
-        float yawDegrees = lightBeam.yAngle;
+        if (lightBeam.cachedAngle() == null) {
+            return;
+        }
+        float pitchDegrees = lightBeam.cachedAngle().x;
+        float yawDegrees = lightBeam.cachedAngle().y;
 
         float modelYawOffset = 0.0F;
         float modelPitchOffset = 90.0F;

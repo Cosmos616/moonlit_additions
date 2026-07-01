@@ -9,14 +9,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.modules.toolkit.blockentity.LodestoneBlockEntity;
 import team.lodestar.lodestone.modules.toolkit.blockentity.LodestoneBlockEntityType;
 
+import java.util.ArrayList;
+
 public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
-    private float xAngle;
-    private float yAngle;
+    public Vec2 angle = Vec2.ZERO;
     private float range = 8;
     private Vec3 lastReached;
 
@@ -61,21 +63,15 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         this.markUpdated();
     }
 
-    public float getXAngle() {
-        return xAngle;
+    public Vec2 getAngle() {
+        if (this.angle == null) {
+            return Vec2.ZERO;
+        }
+        return this.angle;
     }
 
-    public void setXAngle(float xAngle) {
-        this.xAngle = xAngle;
-        this.markUpdated();
-    }
-
-    public float getYAngle() {
-        return yAngle;
-    }
-
-    public void setYAngle(float yAngle) {
-        this.yAngle = yAngle;
+    public void setAngle(Vec2 angle) {
+        this.angle = angle;
         this.markUpdated();
     }
 
@@ -88,13 +84,12 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
     public void commonTick(Level level) {
         super.commonTick(level);
         if (this.lightBeam != null) {
-            this.lightBeam.setXRot(this.xAngle);
-            this.lightBeam.setYRot(this.yAngle);
+            this.lightBeam.setAngle(this.angle);
             this.lightBeam.setLength(this.range);
             this.lightBeam.tick(false);
             this.setLastReachedPosition(this.lightBeam.getLastReachedPosition());
         } else {
-            Moonlit.LOGGER.info("Server Light Beam is null at {}", getBlockPos());
+            this.lightBeam = new LightBeam(worldPosition, level, this.range, this.angle, new ArrayList<>());
         }
     }
 
@@ -117,8 +112,7 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        this.xAngle = tag.getFloat("xAngle");
-        this.yAngle = tag.getFloat("yAngle");
+        this.angle = NBTHelpers.safeReadUsingCodec(tag, "angle", NBTHelpers.VEC2_CODEC);
         this.lastReached = NBTHelpers.safeReadUsingCodec(tag, "LastReached", Vec3.CODEC);
         this.lightBeam = LightBeam.read(tag.getCompound("LightBeam"), this.getBlockPos(), this.getLevel());
     }
@@ -126,8 +120,7 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
     @Override
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putFloat("xAngle", this.xAngle);
-        tag.putFloat("yAngle", this.yAngle);
+        NBTHelpers.safeWriteUsingCodec(tag, "angle", this.angle, NBTHelpers.VEC2_CODEC);
         if (this.lastReached != null) {
             NBTHelpers.safeWriteUsingCodec(tag, "LastReached", this.lastReached, Vec3.CODEC);
         }

@@ -2,8 +2,12 @@ package net.cosmos.moonlit.util;
 
 import com.mojang.serialization.Codec;
 import net.cosmos.moonlit.Moonlit;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.phys.Vec2;
+
+import java.util.List;
 
 import static team.lodestar.lodestone.LodestoneLib.LOGGER;
 
@@ -40,4 +44,7 @@ public class NBTHelpers {
                 .ifPresent(p -> tag.put(key, p));
         return tag;
     }
+
+    public static final Codec<Vec2> VEC2_CODEC = Codec.FLOAT.listOf().comapFlatMap((list) -> Util.fixedSize(list, 2).map((values) -> new Vec2(values.getFirst(), values.get(1))), (vec) -> List.of(vec.x, vec.y));
+
 }
