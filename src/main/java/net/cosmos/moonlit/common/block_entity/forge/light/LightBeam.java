@@ -104,10 +104,9 @@ public class LightBeam {
         update();
     }
 
-    public LightBeam setLength(float length) {
+    public void setLength(float length) {
         this.length = length;
         update();
-        return this;
     }
 
     public Vec3 getAngle() {
@@ -131,15 +130,12 @@ public class LightBeam {
         compound.put("LightBeam", lightCompound);
     }
 
-    public void read(CompoundTag compound, BlockPos sourcePos, Level world) {
+    public static LightBeam read(CompoundTag compound, BlockPos sourcePos, Level world) {
         CompoundTag lightCompound = compound.getCompound("LightBeam");
         float xAngle = lightCompound.getFloat("xAngle");
         float yAngle = lightCompound.getFloat("yAngle");
         float length = lightCompound.getFloat("length");
         List<BlockPos> posCache = NBTHelpers.safeReadUsingCodec(lightCompound, "cached_positions", BlockPos.CODEC.listOf());
-        this.xAngle = xAngle;
-        this.yAngle = yAngle;
-        this.length = length;
-        this.availablePositionCache = posCache;
+        return new LightBeam(sourcePos, world, length, xAngle, yAngle, posCache);
     }
 }

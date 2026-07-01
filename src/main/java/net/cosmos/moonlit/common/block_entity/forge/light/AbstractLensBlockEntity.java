@@ -1,5 +1,6 @@
 package net.cosmos.moonlit.common.block_entity.forge.light;
 
+import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.forge.AbstractLensBlock;
 import net.cosmos.moonlit.util.NBTHelpers;
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,7 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
     }
 
     public @Nullable LightBeam getLightBeam() {
-        return lightBeam;
+        return this.lightBeam;
     }
 
     public void setLightBeam(@Nullable LightBeam lightBeam) {
@@ -92,6 +93,8 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
             this.lightBeam.setLength(this.range);
             this.lightBeam.tick(false);
             this.setLastReachedPosition(this.lightBeam.getLastReachedPosition());
+        } else {
+            Moonlit.LOGGER.info("Server Light Beam is null at {}", getBlockPos());
         }
     }
 
@@ -100,6 +103,8 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         super.clientTick(level);
         if (this.lightBeam != null) {
             this.lightBeam.tick(true);
+        } else {
+            Moonlit.LOGGER.info("Client Light Beam is null at {}", getBlockPos());
         }
     }
 
@@ -115,10 +120,7 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         this.xAngle = tag.getFloat("xAngle");
         this.yAngle = tag.getFloat("yAngle");
         this.lastReached = NBTHelpers.safeReadUsingCodec(tag, "LastReached", Vec3.CODEC);
-        if (tag.contains("LightBeam")) {
-            this.lightBeam = new LightBeam(this.getBlockPos(), this.getLevel());
-            this.lightBeam.read(tag.getCompound("LightBeam"), this.getBlockPos(), this.getLevel());
-        }
+        this.lightBeam = LightBeam.read(tag.getCompound("LightBeam"), this.getBlockPos(), this.getLevel());
     }
 
     @Override
