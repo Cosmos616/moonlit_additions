@@ -82,6 +82,18 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
 
+    public void setupRotation(Direction direction) {
+        //Always face North if direction is up/down because why not
+        if (direction.getAxis() == Direction.Axis.Y) {
+            this.setAngle(new Vec2(0, 0));
+        } else switch (direction) {
+            case NORTH -> this.setAngle(new Vec2(90, 0));
+            case SOUTH -> this.setAngle(new Vec2(90, 0));
+            case EAST -> this.setAngle(new Vec2(90, 0));
+            case WEST -> this.setAngle(new Vec2(90, 0));
+        }
+    }
+
     @Override
     public void commonTick(Level level) {
         super.commonTick(level);

@@ -38,7 +38,7 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
         }
 
         if (blockEntity.getLightBeam() != null) {
-            lightBeamRenderer.render(blockEntity.getLightBeam(), poseStack, bufferIn);
+            lightBeamRenderer.render(blockEntity, poseStack, bufferIn);
         }
 
         Direction direction = blockEntity.getFacing();
@@ -74,7 +74,7 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
     private void renderDebug(T blockEntity, PoseStack poseStack, MultiBufferSource bufferIn) {
         VertexConsumer vertexconsumer = bufferIn.getBuffer(RenderType.lines());
         LightBeam lightBeam = blockEntity.getLightBeam();
-        if (lightBeam != null) {
+        if (lightBeam != null && lightBeam.angle != null) {
             if (lightBeam.getAvailablePositions() != null) {
                 for (BlockPos pos : lightBeam.getAvailablePositions()) {
                     Vec3i relative = new Vec3i(pos.getX(), pos.getY(), pos.getZ());

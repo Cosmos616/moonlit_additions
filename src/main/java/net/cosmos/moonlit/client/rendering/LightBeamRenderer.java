@@ -4,9 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.ClientHelper;
+import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.LightBeam;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.util.FastColor;
 import org.joml.Matrix4f;
 
@@ -27,14 +29,18 @@ public class LightBeamRenderer {
     }
 
     public void render(
-            LightBeam lightBeam,
+            AbstractLensBlockEntity blockEntity,
             PoseStack poseStack,
             MultiBufferSource bufferSource
     ) {
+        LightBeam lightBeam = blockEntity.getLightBeam();
+        if (lightBeam == null) {
+            return;
+        }
         float length = (float) lightBeam.position().distanceTo(lightBeam.getLastReachedPosition());
 
         BeamRenderSettings settings = new BeamRenderSettings(
-                0x40FFFFFF, // color: ARGB
+                0x35FFFFFF, // color: ARGB
                 1,          // layers
                 0.25F,      // start width radius
                 0.25F,      // start height radius
@@ -44,10 +50,10 @@ public class LightBeamRenderer {
 
         poseStack.pushPose();
 
-        applyLensRotation(lightBeam, poseStack);
+        applyLensRotation(lightBeam, blockEntity, poseStack);
 
         // Move beam origin to center of block.
-        poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.translate(0.5D, 21d/16d, 0.5D);
 
         VertexConsumer vertexConsumer = bufferSource.getBuffer(ClientHelper.LIGHTNING_CULL);
         Matrix4f pose = poseStack.last().pose();
@@ -88,27 +94,31 @@ public class LightBeamRenderer {
         }
     }
 
-    private static void applyLensRotation(LightBeam lightBeam, PoseStack poseStack) {
-        if (lightBeam.cachedAngle() == null) {
+    private static void applyLensRotation(LightBeam lightBeam, AbstractLensBlockEntity blockEntity, PoseStack poseStack) {
+        if (lightBeam.angle == null) {
             return;
         }
-        float pitchDegrees = lightBeam.cachedAngle().x;
-        float yawDegrees = lightBeam.cachedAngle().y;
+        float pitchDegrees = lightBeam.angle.x;
+        float yawDegrees = lightBeam.angle.y;
 
         float modelYawOffset = 0.0F;
-        float modelPitchOffset = 90.0F;
+        float modelPitchOffset = 0.0F;
+
+        Direction direction = blockEntity.getFacing();
+
+        poseStack.rotateAround(direction.getRotation(), 0.5f, 0.5f, 0.5f);
 
         poseStack.rotateAround(
                 Axis.YP.rotationDegrees(yawDegrees + modelYawOffset),
                 0.5F,
-                0.5F,
+                21f/16f,
                 0.5F
         );
 
         poseStack.rotateAround(
                 Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset),
                 0.5F,
-                0.5F,
+                21f/16f,
                 0.5F
         );
     }

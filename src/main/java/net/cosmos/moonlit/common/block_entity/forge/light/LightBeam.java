@@ -1,15 +1,19 @@
 package net.cosmos.moonlit.common.block_entity.forge.light;
 
 import net.cosmos.moonlit.Moonlit;
+import net.cosmos.moonlit.common.block.forge.AbstractLensBlock;
 import net.cosmos.moonlit.util.NBTHelpers;
 import net.cosmos.moonlit.util.OrientedBoundingBox;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import team.lodestar.lodestone.helpers.VecHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +51,11 @@ public class LightBeam {
         this.availablePositionCache = posCache;
     }
 
-    public LightBeam(BlockPos sourcePos, Level world) {
-        this.sourcePos = sourcePos;
-        this.world = world;
-    }
-
     public Vec3 getLastPossiblePosition() {
-        return BeamHelpers.locate3DPos(getAngle(), this.sourcePos.getCenter(), this.cachedLength);
+        if (this.angle == null) {
+            return this.position();
+        }
+        return BeamHelpers.locate3DPos(getAngle(), this.position(), this.length);
     }
 
     public Vec3 position() {
@@ -61,15 +63,15 @@ public class LightBeam {
     }
 
     public Vec3 getLastReachedPosition() {
-        if (this.cachedAngle == null || this.length <= 0) return this.sourcePos.getCenter();
-        return BeamHelpers.getActualEndpoint(this.world, this.sourcePos.getCenter(), this.getLastPossiblePosition());
+        if (this.angle == null || this.length <= 0) return this.position();
+        return BeamHelpers.getActualEndpoint(this.world, this.position(), this.getLastPossiblePosition());
     }
 
     public OrientedBoundingBox getBoundingBox() {
-        Vec3 size = new Vec3(0, this.cachedLength, 0);
-        if (getAngle() == null)
-            return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
-        return new OrientedBoundingBox(this.sourcePos.getCenter(), size, BeamHelpers.yaw(getAngle()), BeamHelpers.pitch(getAngle()));
+        Vec3 size = new Vec3(0, this.length, 0);
+        if (this.angle == null)
+            return new OrientedBoundingBox(this.position(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
+        return new OrientedBoundingBox(this.position(), size, BeamHelpers.yaw(getAngle()), BeamHelpers.pitch(getAngle()));
     }
 
     public void gatherPositions() {
@@ -104,15 +106,19 @@ public class LightBeam {
         if (this.cachedLength != this.length && this.length != 0) {
             this.cachedLength = this.length;
         }
-        gatherPositions();
+        if (this.angle != null) {
+            gatherPositions();
+        }
     }
 
     public void setAngle(Vec2 angle) {
         this.angle = angle;
+        update();
     }
 
     public void setLength(float length) {
         this.length = length;
+        update();
     }
 
     public Vec2 cachedAngle() {
@@ -124,14 +130,11 @@ public class LightBeam {
     }
 
     public Vec3 getAngle() {
-        if (this.cachedAngle() == null) {
-            return null;
-        }
-        return BeamHelpers.getVectorFromAngles(this.cachedAngle().x, this.cachedAngle().y);
+        return BeamHelpers.getVectorFromAngles(this.angle.x, this.angle.y);
     }
 
     public float getLength() {
-        return this.cachedLength;
+        return this.length;
     }
 
     public void update() {

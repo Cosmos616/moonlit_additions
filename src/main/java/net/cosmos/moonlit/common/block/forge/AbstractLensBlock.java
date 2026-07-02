@@ -3,8 +3,11 @@ package net.cosmos.moonlit.common.block.forge;
 import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.modules.toolkit.block.WaterLoggedEntityBlock;
 
 public abstract class AbstractLensBlock<T extends AbstractLensBlockEntity> extends WaterLoggedEntityBlock<T> {
@@ -50,5 +54,14 @@ public abstract class AbstractLensBlock<T extends AbstractLensBlockEntity> exten
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
         super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        var blockEntity = getBlockEntity(level, pos);
+        if (blockEntity != null) {
+            blockEntity.setupRotation(state.getValue(FACING));
+        }
     }
 }
