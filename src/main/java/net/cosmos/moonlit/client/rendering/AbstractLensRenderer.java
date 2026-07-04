@@ -86,7 +86,7 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
             }
             Vec3 pos = Vec3.ZERO.add(0.5, 0.5, 0.5);
             double range = lightBeam.getLastReachedPosition().distanceTo(lightBeam.position());
-            Vec3 endPoint = BeamHelpers.locate3DPos(lightBeam.getAngle(), pos, (float) range);
+            Vec3 endPoint = BeamHelpers.locate3DPos(lightBeam.angle, pos, (float) range);
             AABB focus = new AABB(-range, -range, -range, range, range, range);
             poseStack.pushPose();
             LevelRenderer.renderLineBox(poseStack, vertexconsumer, focus, 1.0F, 0.5F, 0.5F, 0.5F);

@@ -35,7 +35,7 @@ public class LightBeam {
         if (this.angle == null) {
             return this.position();
         }
-        return BeamHelpers.locate3DPos(getAngle(), this.position(), this.length);
+        return BeamHelpers.locate3DPos(angle, this.position(), this.length);
     }
 
     public Vec3 position() {
@@ -51,7 +51,7 @@ public class LightBeam {
         Vec3 size = new Vec3(0, this.length, 0);
         if (this.angle == null)
             return new OrientedBoundingBox(this.position(), size, BeamHelpers.yaw(Vec3.ZERO), BeamHelpers.pitch(Vec3.ZERO));
-        return new OrientedBoundingBox(this.position(), size, BeamHelpers.yaw(getAngle()), BeamHelpers.pitch(getAngle()));
+        return new OrientedBoundingBox(this.position(), size, angle.y, angle.x);
     }
 
     public void gatherPositions() {
@@ -93,10 +93,6 @@ public class LightBeam {
     public void setLength(float length) {
         this.length = length;
         update();
-    }
-
-    public Vec3 getAngle() {
-        return BeamHelpers.getVectorFromAngles(this.angle.x, this.angle.y);
     }
 
     public float getLength() {

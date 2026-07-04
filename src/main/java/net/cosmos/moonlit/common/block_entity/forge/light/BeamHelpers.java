@@ -23,17 +23,6 @@ public class BeamHelpers {
         return (float) (origin*Math.sin(toRadians(degrees)));
     }
 
-    public static Vec3 getVectorFromAngles(double yawDegrees, double pitchDegrees) {
-        double yawRad = Math.toRadians(yawDegrees);
-        double pitchRad = Math.toRadians(pitchDegrees);
-
-        double x = Math.cos(pitchRad) * Math.sin(yawRad);
-        double y = Math.sin(pitchRad);
-        double z = Math.cos(pitchRad) * Math.cos(yawRad);
-
-        return new Vec3(x, y, z);
-    }
-
     public static Vec2 locate2DPos(float degrees, Vec2 origin) {
         float x = locateX(degrees, origin.x);
         float y = locateY(degrees, origin.y);
@@ -48,25 +37,15 @@ public class BeamHelpers {
         return (float) (Math.toDegrees(Math.atan2(Math.sqrt(angle.z * angle.z + angle.x * angle.x), angle.y)) + 180);
     }
 
-    public static Vec3 locate3DPos(Vec3 rotation, Vec3 origin, float distance) {
-        if (rotation == null) return Vec3.ZERO;
-        double radX = Math.toRadians(rotation.x);
-        double radY = Math.toRadians(rotation.y);
-        double radZ = Math.toRadians(rotation.z);
+    public static Vec3 locate3DPos(Vec2 rotation, Vec3 position, double distance) {
+        double yaw = Math.toRadians(rotation.y);
+        double pitch = Math.toRadians(rotation.x);
 
-        double cx = Math.cos(radX), sx = Math.sin(radX);
-        double cy = Math.cos(radY), sy = Math.sin(radY);
-        double cz = Math.cos(radZ), sz = Math.sin(radZ);
+        double x = Math.sin(yaw) * Math.cos(pitch);
+        double y = Math.sin(pitch);
+        double z = Math.cos(yaw) * Math.cos(pitch);
 
-        double dirX = cy * sz + sy * sx * cz;
-        double dirY = cx * cz;
-        double dirZ = -sy * sz + cy * sx * cz;
-
-        return new Vec3(
-                origin.x + (dirX * distance),
-                origin.y + (dirY * distance),
-                origin.z + (dirZ * distance)
-        );
+        return new Vec3(-x*distance, y*distance, -z*distance).add(position);
     }
 
     public static Vec3 getActualEndpoint(Level level, Vec3 start, Vec3 end) {
