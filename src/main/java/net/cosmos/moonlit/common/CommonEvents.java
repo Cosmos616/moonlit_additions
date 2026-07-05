@@ -12,6 +12,7 @@ import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.commands.MeteorCommand;
 import net.cosmos.moonlit.common.item.BronzeMaskItem;
 import net.cosmos.moonlit.init.*;
+import net.cosmos.moonlit.mixin.accessor.BoatItemAccessor;
 import net.cosmos.moonlit.network.ArouraParticlesPayload;
 import net.cosmos.moonlit.network.BronzeMaskDarknessPayload;
 import net.minecraft.core.Registry;
@@ -62,7 +63,7 @@ public class CommonEvents {
                 Item item = definition.item();
                 if (item instanceof ThrowableBombItem) DispenserBlock.registerBehavior(item, new BombDispenseBehavior(item));
                 else if (item instanceof ProjectileItem) DispenserBlock.registerProjectileBehavior(item);
-                if (item instanceof BoatItem boat) DispenserBlock.registerBehavior(item, new BoatDispenseItemBehavior(boat.type, boat.hasChest));
+                if (item instanceof BoatItem boat) DispenserBlock.registerBehavior(item, new BoatDispenseItemBehavior(((BoatItemAccessor) boat).getType(), ((BoatItemAccessor) boat).hasChest()));
             }
         });
     }
