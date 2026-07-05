@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import net.cosmos.moonlit.common.block_entity.forge.light.AbstractLensBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.BeamHelpers;
 import net.cosmos.moonlit.common.block_entity.forge.light.LightBeam;
+import net.cosmos.moonlit.mixin.client.LevelRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -32,16 +33,17 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
     }
 
     @Override
-    public void render(T blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(
+            T blockEntity,
+            float partialTicks,
+            PoseStack poseStack,
+            MultiBufferSource bufferIn,
+            int combinedLightIn,
+            int combinedOverlayIn
+    ) {
         if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()) {
             renderDebug(blockEntity, poseStack, bufferIn);
         }
-
-        if (blockEntity.getLightBeam() != null) {
-            lightBeamRenderer.render(blockEntity, poseStack, bufferIn);
-        }
-
-        Direction direction = blockEntity.getFacing();
 
         BakedModel lens = lensModel();
         BakedModel middle = middleModel();
@@ -50,25 +52,106 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
                 ItemBlockRenderTypes.getRenderType(blockEntity.getBlockState(), false)
         );
 
+        // Render middle/body first.
         poseStack.pushPose();
 
-        float pitchDegrees = blockEntity.getAngle().x;
-        float yawDegrees = blockEntity.getAngle().y;
+        LensTransforms.applyMiddleTransform(blockEntity, poseStack, partialTicks);
 
-        float modelYawOffset = 0.0F;
-        float modelPitchOffset = 0.0F;
-
-        poseStack.rotateAround(direction.getRotation(), 0.5f, 0.5f, 0.5f);
-
-        poseStack.rotateAround(Axis.YP.rotationDegrees(yawDegrees + modelYawOffset), 0.5F, 0.5F, 0.5F);
-
-        blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer, blockEntity.getBlockState(), middle, 1.0F, 1.0F, 1.0F, combinedLightIn, combinedOverlayIn);
-
-        poseStack.rotateAround(Axis.XP.rotationDegrees(pitchDegrees + modelPitchOffset), 0.5F, 21f/16f, 0.5F);
-
-        blockRenderDispatcher.getModelRenderer().renderModel(poseStack.last(), buffer, blockEntity.getBlockState(), lens, 1.0F, 1.0F, 1.0F, combinedLightIn, combinedOverlayIn);
+        blockRenderDispatcher.getModelRenderer().renderModel(
+                poseStack.last(),
+                buffer,
+                blockEntity.getBlockState(),
+                middle,
+                1.0F,
+                1.0F,
+                1.0F,
+                combinedLightIn,
+                combinedOverlayIn
+        );
 
         poseStack.popPose();
+
+        // Render lens/head second.
+        poseStack.pushPose();
+
+        LensTransforms.applyLensTransform(blockEntity, poseStack, partialTicks);
+
+        blockRenderDispatcher.getModelRenderer().renderModel(
+                poseStack.last(),
+                buffer,
+                blockEntity.getBlockState(),
+                lens,
+                1.0F,
+                1.0F,
+                1.0F,
+                combinedLightIn,
+                combinedOverlayIn
+        );
+
+        poseStack.popPose();
+
+        // Render selection outline last.
+        renderSelectionOutline(blockEntity, partialTicks, poseStack, bufferIn);
+
+        // Render translucent beam after the physical model.
+        if (blockEntity.getLightBeam() != null) {
+            lightBeamRenderer.render(blockEntity, poseStack, bufferIn);
+        }
+    }
+
+    private void renderSelectionOutline(
+            T blockEntity,
+            float partialTicks,
+            PoseStack poseStack,
+            MultiBufferSource bufferIn
+    ) {
+        if (!blockEntity.getBlockPos().equals(LensClientSelection.hoveredPos)) {
+            return;
+        }
+
+        VertexConsumer vertexConsumer = bufferIn.getBuffer(RenderType.lines());
+
+        if (LensClientSelection.hoveredPart == LensHitPart.LENS_HEAD) {
+            poseStack.pushPose();
+
+            LensTransforms.applyLensTransform(blockEntity, poseStack, partialTicks);
+
+            LevelRendererAccessor.moonlit$renderShape(
+                    poseStack,
+                    vertexConsumer,
+                    LensSelectionShapes.LENS_HEAD,
+                    0.0D,
+                    0.0D,
+                    0.0D,
+                    0.0F,
+                    0.0F,
+                    0.0F,
+                    0.5F
+            );
+
+            poseStack.popPose();
+        }
+
+        if (LensClientSelection.hoveredPart == LensHitPart.MIDDLE) {
+            poseStack.pushPose();
+
+            LensTransforms.applyMiddleTransform(blockEntity, poseStack, partialTicks);
+
+            LevelRendererAccessor.moonlit$renderShape(
+                    poseStack,
+                    vertexConsumer,
+                    LensSelectionShapes.MIDDLE,
+                    0.0D,
+                    0.0D,
+                    0.0D,
+                    0.0F,
+                    0.0F,
+                    0.0F,
+                    0.5F
+            );
+
+            poseStack.popPose();
+        }
     }
 
     private void renderDebug(T blockEntity, PoseStack poseStack, MultiBufferSource bufferIn) {

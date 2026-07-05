@@ -8,6 +8,7 @@ import net.cosmos.moonlit.client.particle.ModParticles;
 import net.cosmos.moonlit.client.rendering.BronzeBellRenderer;
 import net.cosmos.moonlit.client.rendering.BronzeLensRenderer;
 import net.cosmos.moonlit.client.rendering.BronzeMirrorRenderer;
+import net.cosmos.moonlit.client.rendering.LensClientSelection;
 import net.cosmos.moonlit.client.shockwave.ShockwavePostProcessor;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -39,6 +41,11 @@ public class MoonlitClient {
 
         event.enqueueWork(ShockwavePostProcessor::load);
 
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        LensClientSelection.clientTick();
     }
 
     @SubscribeEvent

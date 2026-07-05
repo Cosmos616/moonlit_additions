@@ -15,6 +15,7 @@ import net.cosmos.moonlit.init.*;
 import net.cosmos.moonlit.mixin.accessor.BoatItemAccessor;
 import net.cosmos.moonlit.network.ArouraParticlesPayload;
 import net.cosmos.moonlit.network.BronzeMaskDarknessPayload;
+import net.cosmos.moonlit.network.SetLensAnglePayload;
 import net.minecraft.core.Registry;
 import net.minecraft.core.dispenser.BoatDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -79,6 +80,12 @@ public class CommonEvents {
 
         registrar.playToClient(ArouraParticlesPayload.TYPE, ArouraParticlesPayload.STREAM_CODEC, ArouraParticlesPayload::handle);
         registrar.playToClient(BronzeMaskDarknessPayload.TYPE, BronzeMaskDarknessPayload.STREAM_CODEC, BronzeMaskDarknessPayload::handle);
+        registrar.playToServer(
+                SetLensAnglePayload.TYPE,
+                SetLensAnglePayload.STREAM_CODEC,
+                SetLensAnglePayload::handle
+        );
+
     }
 
     /**

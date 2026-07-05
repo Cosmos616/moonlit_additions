@@ -33,7 +33,7 @@ public class ClientHelper {
 
     public static final RenderType LIGHTNING_CULL = RenderType.create("lightning_cull", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 1536, true, true, RenderType.CompositeState.builder()
             .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
-            .setWriteMaskState(COLOR_DEPTH_WRITE)
+            .setWriteMaskState(COLOR_WRITE)
             .setTransparencyState(LIGHTNING_TRANSPARENCY)
             .setOutputState(WEATHER_TARGET)
             .createCompositeState(true));
