@@ -20,7 +20,8 @@ public class LightBeamRenderer {
             float startWidthRadius,
             float startHeightRadius,
             float endWidthRadius,
-            float endHeightRadius
+            float endHeightRadius,
+            float endAlphaMultiplier
     ) {
     }
 
@@ -40,14 +41,14 @@ public class LightBeamRenderer {
         float length = (float) lightBeam.position().distanceTo(lightBeam.getLastReachedPosition());
 
         BeamRenderSettings settings = new BeamRenderSettings(
-                0x35FFFFFF, // color: ARGB
-                1,          // layers
-                0.25F,      // start width radius
-                0.25F,      // start height radius
-                0.25F,      // end width radius
-                0.25F       // end height radius
+                0x55D8FFE8,
+                2,
+                0.5F,
+                0.5F,
+                1F,
+                1F,
+                0.0F
         );
-
         poseStack.pushPose();
 
         applyLensRotation(lightBeam, blockEntity, poseStack);
@@ -69,17 +70,25 @@ public class LightBeamRenderer {
             float length,
             BeamRenderSettings settings
     ) {
-        BeamColor color = BeamColor.fromArgb(settings.color());
+        BeamColor baseColor = BeamColor.fromArgb(settings.color());
 
         int layers = Math.max(settings.layers(), 1);
 
-        for (int layer = 1; layer <= layers; layer++) {
-            float layerScale = layer / (float) layers;
+        for (int layer = 0; layer < layers; layer++) {
+            float t = layers == 1 ? 1.0F : layer / (float) (layers - 1);
 
-            float startWidth = settings.startWidthRadius() * layerScale;
-            float startHeight = settings.startHeightRadius() * layerScale;
-            float endWidth = settings.endWidthRadius() * layerScale;
-            float endHeight = settings.endHeightRadius() * layerScale;
+            // Outer layer is wider and softer.
+            // Inner layer is narrower and brighter.
+            float widthScale = lerp(1F, 0.8F, t);
+            float alphaScale = lerp(0.35F, 1.0F, t);
+
+            float startWidth = settings.startWidthRadius() * widthScale;
+            float startHeight = settings.startHeightRadius() * widthScale;
+            float endWidth = settings.endWidthRadius() * widthScale;
+            float endHeight = settings.endHeightRadius() * widthScale;
+
+            BeamColor startColor = baseColor.withAlpha(baseColor.alpha() * alphaScale);
+            BeamColor endColor = baseColor.withAlpha(baseColor.alpha() * alphaScale * settings.endAlphaMultiplier());
 
             renderBeamPrism(
                     vertexConsumer,
@@ -89,9 +98,14 @@ public class LightBeamRenderer {
                     startHeight,
                     endWidth,
                     endHeight,
-                    color
+                    startColor,
+                    endColor
             );
         }
+    }
+
+    private static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
     }
 
     private static void applyLensRotation(LightBeam lightBeam, AbstractLensBlockEntity blockEntity, PoseStack poseStack) {
@@ -132,87 +146,60 @@ public class LightBeamRenderer {
             float startHeight,
             float endWidth,
             float endHeight,
-            BeamColor color
+            BeamColor startColor,
+            BeamColor endColor
     ) {
         float startZ = 0.0F;
         float endZ = -length;
 
-        // Start face corners
         float sx0 = -startWidth;
         float sx1 = startWidth;
         float sy0 = -startHeight;
         float sy1 = startHeight;
 
-        // End face corners
         float ex0 = -endWidth;
         float ex1 = endWidth;
         float ey0 = -endHeight;
         float ey1 = endHeight;
 
-        // Bottom side
-        addDoubleSidedQuad(
+        // Bottom side - inner face only
+        addInnerFacingQuadGradient(
                 vertexConsumer,
                 pose,
-                sx0, sy0, startZ,
-                ex0, ey0, endZ,
-                ex1, ey0, endZ,
-                sx1, sy0, startZ,
-                color
+                sx0, sy0, startZ, startColor,
+                ex0, ey0, endZ, endColor,
+                ex1, ey0, endZ, endColor,
+                sx1, sy0, startZ, startColor
         );
 
-        // Right side
-        addDoubleSidedQuad(
+        // Right side - inner face only
+        addInnerFacingQuadGradient(
                 vertexConsumer,
                 pose,
-                sx1, sy0, startZ,
-                ex1, ey0, endZ,
-                ex1, ey1, endZ,
-                sx1, sy1, startZ,
-                color
+                sx1, sy0, startZ, startColor,
+                ex1, ey0, endZ, endColor,
+                ex1, ey1, endZ, endColor,
+                sx1, sy1, startZ, startColor
         );
 
-        // Top side
-        addDoubleSidedQuad(
+        // Top side - inner face only
+        addInnerFacingQuadGradient(
                 vertexConsumer,
                 pose,
-                sx1, sy1, startZ,
-                ex1, ey1, endZ,
-                ex0, ey1, endZ,
-                sx0, sy1, startZ,
-                color
+                sx1, sy1, startZ, startColor,
+                ex1, ey1, endZ, endColor,
+                ex0, ey1, endZ, endColor,
+                sx0, sy1, startZ, startColor
         );
 
-        // Left side
-        addDoubleSidedQuad(
+        // Left side - inner face only
+        addInnerFacingQuadGradient(
                 vertexConsumer,
                 pose,
-                sx0, sy1, startZ,
-                ex0, ey1, endZ,
-                ex0, ey0, endZ,
-                sx0, sy0, startZ,
-                color
-        );
-
-        // Start cap
-        addDoubleSidedQuad(
-                vertexConsumer,
-                pose,
-                sx0, sy0, startZ,
-                sx0, sy1, startZ,
-                sx1, sy1, startZ,
-                sx1, sy0, startZ,
-                color
-        );
-
-        // End cap
-        addDoubleSidedQuad(
-                vertexConsumer,
-                pose,
-                ex0, ey0, endZ,
-                ex1, ey0, endZ,
-                ex1, ey1, endZ,
-                ex0, ey1, endZ,
-                color
+                sx0, sy1, startZ, startColor,
+                ex0, ey1, endZ, endColor,
+                ex0, ey0, endZ, endColor,
+                sx0, sy0, startZ, startColor
         );
     }
 
@@ -230,6 +217,56 @@ public class LightBeamRenderer {
                     FastColor.ARGB32.alpha(color) / 255.0F
             );
         }
+
+        private BeamColor withAlpha(float alpha) {
+            return new BeamColor(
+                    red,
+                    green,
+                    blue,
+                    Math.max(0.0F, Math.min(1.0F, alpha))
+            );
+        }
+    }
+
+    private static void addDoubleSidedQuadGradient(
+            VertexConsumer vertexConsumer,
+            Matrix4f pose,
+            float x1, float y1, float z1, BeamColor color1,
+            float x2, float y2, float z2, BeamColor color2,
+            float x3, float y3, float z3, BeamColor color3,
+            float x4, float y4, float z4, BeamColor color4
+    ) {
+        addQuadGradient(
+                vertexConsumer,
+                pose,
+                x1, y1, z1, color1,
+                x2, y2, z2, color2,
+                x3, y3, z3, color3,
+                x4, y4, z4, color4
+        );
+
+        addQuadGradient(
+                vertexConsumer,
+                pose,
+                x4, y4, z4, color4,
+                x3, y3, z3, color3,
+                x2, y2, z2, color2,
+                x1, y1, z1, color1
+        );
+    }
+
+    private static void addQuadGradient(
+            VertexConsumer vertexConsumer,
+            Matrix4f pose,
+            float x1, float y1, float z1, BeamColor color1,
+            float x2, float y2, float z2, BeamColor color2,
+            float x3, float y3, float z3, BeamColor color3,
+            float x4, float y4, float z4, BeamColor color4
+    ) {
+        addVertex(vertexConsumer, pose, x1, y1, z1, color1);
+        addVertex(vertexConsumer, pose, x2, y2, z2, color2);
+        addVertex(vertexConsumer, pose, x3, y3, z3, color3);
+        addVertex(vertexConsumer, pose, x4, y4, z4, color4);
     }
 
     private static void addDoubleSidedQuad(
@@ -259,6 +296,26 @@ public class LightBeamRenderer {
                 x2, y2, z2,
                 x1, y1, z1,
                 color
+        );
+    }
+
+    private static void addInnerFacingQuadGradient(
+            VertexConsumer vertexConsumer,
+            Matrix4f pose,
+            float x1, float y1, float z1, BeamColor color1,
+            float x2, float y2, float z2, BeamColor color2,
+            float x3, float y3, float z3, BeamColor color3,
+            float x4, float y4, float z4, BeamColor color4
+    ) {
+        // Reversed winding order.
+        // This makes the quad face inward instead of outward.
+        addQuadGradient(
+                vertexConsumer,
+                pose,
+                x4, y4, z4, color4,
+                x3, y3, z3, color3,
+                x2, y2, z2, color2,
+                x1, y1, z1, color1
         );
     }
 
