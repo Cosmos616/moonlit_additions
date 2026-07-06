@@ -95,7 +95,7 @@ public abstract class AbstractLensRenderer<T extends AbstractLensBlockEntity> im
 
         // Render translucent beam after the physical model.
         if (blockEntity.getLightBeam() != null) {
-            lightBeamRenderer.render(blockEntity, poseStack, bufferIn);
+            lightBeamRenderer.render(blockEntity, partialTicks, poseStack, bufferIn);
         }
     }
 

@@ -31,10 +31,20 @@ public class ClientHelper {
         return new Quaternionf().rotateZ(BeamHelpers.toRadians(degrees));
     }
 
-    public static final RenderType LIGHTNING_CULL = RenderType.create("lightning_cull", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 1536, true, true, RenderType.CompositeState.builder()
-            .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
-            .setWriteMaskState(COLOR_WRITE)
-            .setTransparencyState(LIGHTNING_TRANSPARENCY)
-            .setOutputState(WEATHER_TARGET)
-            .createCompositeState(true));
+    public static final RenderType LIGHT_BEAM = RenderType.create(
+            "moonlit_light_beam",
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.QUADS,
+            1536,
+            true,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setCullState(NO_CULL)
+                    .setOutputState(MAIN_TARGET)
+                    .createCompositeState(true)
+    );
 }

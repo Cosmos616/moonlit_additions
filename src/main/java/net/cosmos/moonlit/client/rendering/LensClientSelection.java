@@ -15,6 +15,10 @@ public final class LensClientSelection {
     public static BlockPos hoveredPos;
     public static LensHitPart hoveredPart = LensHitPart.NONE;
 
+    private static int dragPacketCooldown = 0;
+    private static final int DRAG_PACKET_INTERVAL = 2; // every 2 client ticks
+    private static LensAimTarget lastDragTarget = null;
+
     public static BlockPos draggingPos;
 
     public static void clientTick() {
@@ -23,8 +27,14 @@ public final class LensClientSelection {
         hoveredPos = null;
         hoveredPart = LensHitPart.NONE;
 
-        if (minecraft.level == null || minecraft.player == null || minecraft.gameMode == null) {
+        if (dragPacketCooldown > 0) {
+            dragPacketCooldown--;
+        }
+
+        if (minecraft.level == null || minecraft.player == null) {
             draggingPos = null;
+            lastDragTarget = null;
+            dragPacketCooldown = 0;
             return;
         }
 
@@ -135,22 +145,20 @@ public final class LensClientSelection {
                 partialTick
         );
 
-        // This is where it goes.
-        // It updates the visual client-side preview every client tick while dragging.
+        // Visual preview updates every client tick.
         lensBlockEntity.setClientPreviewAngle(target.pitch(), target.yaw());
 
-        minecraft.gui.setOverlayMessage(
-                Component.literal("Dragging pitch=" + target.pitch() + " yaw=" + target.yaw()),
-                false
-        );
+        // Server packet only sends every few ticks.
+        if (dragPacketCooldown <= 0) {
+            PacketDistributor.sendToServer(
+                    new SetLensAnglePayload(
+                            draggingPos,
+                            target.pitch(),
+                            target.yaw()
+                    )
+            );
 
-        // Later, once visual dragging works:
-        PacketDistributor.sendToServer(
-                new SetLensAnglePayload(
-                        draggingPos,
-                        target.pitch(),
-                        target.yaw()
-                )
-        );
+            dragPacketCooldown = DRAG_PACKET_INTERVAL;
+        }
     }
 }

@@ -31,6 +31,7 @@ public class LightBeamRenderer {
 
     public void render(
             AbstractLensBlockEntity blockEntity,
+            float partialTick,
             PoseStack poseStack,
             MultiBufferSource bufferSource
     ) {
@@ -51,12 +52,12 @@ public class LightBeamRenderer {
         );
         poseStack.pushPose();
 
-        applyLensRotation(lightBeam, blockEntity, poseStack);
+        LensTransforms.applyLensTransform(blockEntity, poseStack, partialTick);
 
         // Move beam origin to center of block.
         poseStack.translate(0.5D, 21d/16d, 0.5D);
 
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(ClientHelper.LIGHTNING_CULL);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(ClientHelper.LIGHT_BEAM);
         Matrix4f pose = poseStack.last().pose();
 
         renderBeam(vertexConsumer, pose, length, settings);
@@ -163,7 +164,7 @@ public class LightBeamRenderer {
         float ey1 = endHeight;
 
         // Bottom side - inner face only
-        addInnerFacingQuadGradient(
+        addDoubleSidedQuadGradient(
                 vertexConsumer,
                 pose,
                 sx0, sy0, startZ, startColor,
@@ -173,7 +174,7 @@ public class LightBeamRenderer {
         );
 
         // Right side - inner face only
-        addInnerFacingQuadGradient(
+        addDoubleSidedQuadGradient(
                 vertexConsumer,
                 pose,
                 sx1, sy0, startZ, startColor,
@@ -183,7 +184,7 @@ public class LightBeamRenderer {
         );
 
         // Top side - inner face only
-        addInnerFacingQuadGradient(
+        addDoubleSidedQuadGradient(
                 vertexConsumer,
                 pose,
                 sx1, sy1, startZ, startColor,
@@ -193,7 +194,7 @@ public class LightBeamRenderer {
         );
 
         // Left side - inner face only
-        addInnerFacingQuadGradient(
+        addDoubleSidedQuadGradient(
                 vertexConsumer,
                 pose,
                 sx0, sy1, startZ, startColor,
@@ -345,9 +346,4 @@ public class LightBeamRenderer {
         vertexConsumer.addVertex(pose, x, y, z)
                 .setColor(color.red(), color.green(), color.blue(), color.alpha());
     }
-
-
-
-
-
 }

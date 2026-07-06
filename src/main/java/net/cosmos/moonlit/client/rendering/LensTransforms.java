@@ -30,7 +30,7 @@ public final class LensTransforms {
     ) {
         applyFacing(blockEntity, poseStack);
 
-        Vec2 angle = getRenderAngle(blockEntity,partialTick);
+        Vec2 angle = blockEntity.getRenderAngle(partialTick);
         float yawDegrees = angle == null ? 0.0F : angle.y;
 
         poseStack.rotateAround(
@@ -47,7 +47,7 @@ public final class LensTransforms {
     ) {
         applyMiddleTransform(blockEntity, poseStack, partialTick);
 
-        Vec2 angle = getRenderAngle(blockEntity,partialTick);
+        Vec2 angle = blockEntity.getRenderAngle(partialTick);
         float pitchDegrees = angle == null ? 0.0F : angle.x;
 
         poseStack.rotateAround(

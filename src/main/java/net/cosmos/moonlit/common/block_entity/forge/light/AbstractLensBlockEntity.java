@@ -32,9 +32,10 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
      * This lets the renderer move immediately without fighting server sync.
      * The real angle is still owned by the server.
      */
+    private Vec2 clientPreviewPreviousAngle = null;
     private Vec2 clientPreviewAngle = null;
 
-    private float range = 8;
+    private float range = 16;
     private Vec3 lastReached;
 
     private LightBeam lightBeam;
@@ -106,7 +107,14 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
      */
     public Vec2 getRenderAngle(float partialTick) {
         if (this.level != null && this.level.isClientSide && this.clientPreviewAngle != null) {
-            return this.clientPreviewAngle;
+            Vec2 previewPrevious = this.clientPreviewPreviousAngle == null
+                    ? this.clientPreviewAngle
+                    : this.clientPreviewPreviousAngle;
+
+            float pitch = Mth.rotLerp(partialTick, previewPrevious.x, this.clientPreviewAngle.x);
+            float yaw = Mth.rotLerp(partialTick, previewPrevious.y, this.clientPreviewAngle.y);
+
+            return new Vec2(pitch, yaw);
         }
 
         Vec2 safePrevious = getPreviousAngle();
@@ -152,10 +160,20 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
             return;
         }
 
-        this.clientPreviewAngle = new Vec2(pitch, yaw);
+        Vec2 nextPreview = new Vec2(pitch, yaw);
+
+        if (this.clientPreviewAngle == null) {
+            this.clientPreviewPreviousAngle = nextPreview;
+            this.clientPreviewAngle = nextPreview;
+            return;
+        }
+
+        this.clientPreviewPreviousAngle = this.clientPreviewAngle;
+        this.clientPreviewAngle = nextPreview;
     }
 
     public void clearClientPreviewAngle() {
+        this.clientPreviewPreviousAngle = null;
         this.clientPreviewAngle = null;
     }
 
@@ -227,13 +245,13 @@ public abstract class AbstractLensBlockEntity extends LodestoneBlockEntity {
         float pitch = Mth.approachDegrees(
                 safeAngle.x,
                 safeTarget.x,
-                0.1F
+                0.01F
         );
 
         float yaw = Mth.approachDegrees(
                 safeAngle.y,
                 safeTarget.y,
-                0.1F
+                0.01F
         );
 
         this.angle = new Vec2(pitch, yaw);
