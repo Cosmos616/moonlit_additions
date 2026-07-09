@@ -3,7 +3,7 @@
     "facing=east,half=bottom,shape=inner_left": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
-      "y": 270
+      "y": 180
     },
     "facing=east,half=bottom,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner"
@@ -11,7 +11,7 @@
     "facing=east,half=bottom,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
-      "y": 270
+      "y": 180
     },
     "facing=east,half=bottom,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer"
@@ -28,7 +28,7 @@
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
       "x": 180,
-      "y": 90
+      "y": 180
     },
     "facing=east,half=top,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -39,7 +39,7 @@
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
       "x": 180,
-      "y": 90
+      "y": 180
     },
     "facing=east,half=top,shape=straight": {
       "model": "moonlit:block/bronze_tile_stairs",
@@ -54,7 +54,7 @@
     "facing=north,half=bottom,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
-      "y": 270
+      "y": 180
     },
     "facing=north,half=bottom,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -64,18 +64,17 @@
     "facing=north,half=bottom,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
-      "y": 270
+      "y": 180
     },
     "facing=north,half=bottom,shape=straight": {
       "model": "moonlit:block/bronze_tile_stairs_alt",
       "uvlock": true,
-      "y": 270
+      "y": 180
     },
     "facing=north,half=top,shape=inner_left": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
-      "x": 180,
-      "y": 270
+      "x": 180
     },
     "facing=north,half=top,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner",
@@ -86,7 +85,7 @@
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
       "x": 180,
-      "y": 270
+      "y": 360
     },
     "facing=north,half=top,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -96,35 +95,31 @@
     "facing=north,half=top,shape=straight": {
       "model": "moonlit:block/bronze_tile_stairs_alt",
       "uvlock": true,
-      "x": 180,
-      "y": 270
+      "x": 180
     },
     "facing=south,half=bottom,shape=inner_left": {
       "model": "moonlit:block/bronze_tile_stairs_inner"
     },
     "facing=south,half=bottom,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
-      "uvlock": true,
-      "y": 90
+      "uvlock": true
     },
     "facing=south,half=bottom,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer"
     },
     "facing=south,half=bottom,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
-      "uvlock": true,
-      "y": 90
+      "uvlock": true
     },
     "facing=south,half=bottom,shape=straight": {
       "model": "moonlit:block/bronze_tile_stairs_alt",
-      "uvlock": true,
-      "y": 90
+      "uvlock": true
     },
     "facing=south,half=top,shape=inner_left": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
       "x": 180,
-      "y": 90
+      "y": -180
     },
     "facing=south,half=top,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner",
@@ -136,7 +131,7 @@
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
       "x": 180,
-      "y": 90
+      "y": 180
     },
     "facing=south,half=top,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -148,12 +143,11 @@
       "model": "moonlit:block/bronze_tile_stairs_alt",
       "uvlock": true,
       "x": 180,
-      "y": 90
+      "y": -180
     },
     "facing=west,half=bottom,shape=inner_left": {
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
-      "uvlock": true,
-      "y": 90
+      "uvlock": true
     },
     "facing=west,half=bottom,shape=inner_right": {
       "model": "moonlit:block/bronze_tile_stairs_inner",
@@ -162,8 +156,7 @@
     },
     "facing=west,half=bottom,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
-      "uvlock": true,
-      "y": 90
+      "uvlock": true
     },
     "facing=west,half=bottom,shape=outer_right": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -185,7 +178,7 @@
       "model": "moonlit:block/bronze_tile_stairs_inner_alt",
       "uvlock": true,
       "x": 180,
-      "y": 270
+      "y": 360
     },
     "facing=west,half=top,shape=outer_left": {
       "model": "moonlit:block/bronze_tile_stairs_outer",
@@ -197,7 +190,7 @@
       "model": "moonlit:block/bronze_tile_stairs_outer_alt",
       "uvlock": true,
       "x": 180,
-      "y": 270
+      "y": 360
     },
     "facing=west,half=top,shape=straight": {
       "model": "moonlit:block/bronze_tile_stairs",

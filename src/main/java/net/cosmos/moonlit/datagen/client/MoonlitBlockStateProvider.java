@@ -222,51 +222,84 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
             ModelFile model = switch (shape) {
                 case STRAIGHT -> switch (facing) {
                     case DOWN, UP -> models().getBuilder(name);
-                    case NORTH, SOUTH -> stairsAlt;
+                    case NORTH, SOUTH -> switch (half) {
+                        case TOP -> {
+                            yRot -= 270;
+                            yield stairsAlt;
+                        }
+                        case BOTTOM -> {
+                            yRot -= 90;
+                            yield stairsAlt;
+                        }
+                    };
                     case EAST, WEST -> stairs;
                 };
                 case INNER_LEFT -> switch (facing) {
                     case DOWN, UP -> models().getBuilder(name);
                     case NORTH, SOUTH -> switch (half) {
                         case BOTTOM -> stairsInner;
-                        case TOP -> stairsInnerAlt;
+                        case TOP -> {
+                            yRot -= 270;
+                            yield stairsInnerAlt;
+                        }
                     };
                     case WEST, EAST -> switch (half) {
-                        case BOTTOM -> stairsInnerAlt;
+                        case BOTTOM -> {
+                            yRot -= 90;
+                            yield stairsInnerAlt;
+                        }
                         case TOP -> stairsInner;
                     };
                 };
                 case INNER_RIGHT -> switch (facing) {
                     case DOWN, UP -> models().getBuilder(name);
                     case NORTH, SOUTH -> switch (half) {
-                        case BOTTOM -> stairsInnerAlt;
+                        case BOTTOM -> {
+                            yRot -= 90;
+                            yield stairsInnerAlt;
+                        }
                         case TOP -> stairsInner;
                     };
                     case WEST, EAST -> switch (half) {
                         case BOTTOM -> stairsInner;
-                        case TOP -> stairsInnerAlt;
+                        case TOP -> {
+                            yRot += 90;
+                            yield stairsInnerAlt;
+                        }
                     };
                 };
                 case OUTER_LEFT -> switch (facing) {
                     case DOWN, UP -> models().getBuilder(name);
                     case NORTH, SOUTH -> switch (half) {
                         case BOTTOM -> stairsOuter;
-                        case TOP -> stairsOuterAlt;
+                        case TOP -> {
+                            yRot += 90;
+                            yield stairsOuterAlt;
+                        }
                     };
                     case WEST, EAST -> switch (half) {
-                        case BOTTOM -> stairsOuterAlt;
+                        case BOTTOM -> {
+                            yRot -= 90;
+                            yield stairsOuterAlt;
+                        }
                         case TOP -> stairsOuter;
                     };
                 };
                 case OUTER_RIGHT -> switch (facing) {
                     case DOWN, UP -> models().getBuilder(name);
                     case NORTH, SOUTH -> switch (half) {
-                        case BOTTOM -> stairsOuterAlt;
+                        case BOTTOM -> {
+                            yRot -= 90;
+                            yield stairsOuterAlt;
+                        }
                         case TOP -> stairsOuter;
                     };
                     case WEST, EAST -> switch (half) {
                         case BOTTOM -> stairsOuter;
-                        case TOP -> stairsOuterAlt;
+                        case TOP -> {
+                            yRot += 90;
+                            yield stairsOuterAlt;
+                        }
                     };
                 };
             };
