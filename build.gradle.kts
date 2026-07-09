@@ -45,7 +45,8 @@ neoForge {
                 "--mod", mod["id"],
                 "--all",
                 "--output", file("src/generated/resources/").absolutePath,
-                "--existing", file("src/main/resources/").absolutePath
+                "--existing", file("src/main/resources/").absolutePath,
+                "--existing-mod", "nomansland"
             )
         }
     }

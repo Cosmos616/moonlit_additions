@@ -1,5 +1,6 @@
 package net.cosmos.moonlit.datagen.client;
 
+import com.farcr.nomansland.NoMansLand;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.WrappedBeamBlock;
 import net.cosmos.moonlit.common.block.WrappedPillarBaseBlock;
@@ -17,6 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -34,13 +37,13 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        this.simpleBlockAndItem(ModBlocks.BRONZE_TILES);
+        this.tiles(ModBlocks.BRONZE_TILES);
         //this.simpleBlockItem(ModBlocks.ORNATE_WALNUT);
         this.simpleBlockAndItem(ModBlocks.MOONLIT_ASH_BLOCK, moonlitPath("block/moonlit_ash"));
         this.litCube(ModBlocks.METEOR);
         this.simpleBlockAndItem(ModBlocks.HOLLOW_METEOR, RenderType.CUTOUT);
-        this.simpleStairs(ModBlocks.BRONZE_TILE_STAIRS, ModBlocks.BRONZE_TILES);
-        this.simpleSlab(ModBlocks.BRONZE_TILE_SLAB, ModBlocks.BRONZE_TILES);
+        this.tileStairs(ModBlocks.BRONZE_TILE_STAIRS, ModBlocks.BRONZE_TILES);
+        this.tileSlab(ModBlocks.BRONZE_TILE_SLAB, ModBlocks.BRONZE_TILES);
         this.shinyPillar(ModBlocks.BRONZE_PILLAR);
         this.directionalBlock(ModBlocks.BRONZE_PILLAR_BASE.block(), (state) -> models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
         this.simpleBlockItem(ModBlocks.BRONZE_PILLAR_BASE.get(), models().getExistingFile(moonlitPath("block/bronze_pillar_base")));
@@ -166,6 +169,129 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         });
     }
 
+    private void tiles(Supplier<? extends Block> block) {
+        this.simpleBlock(block.get(), this.models()
+                .withExistingParent(this.name(block.get()), NoMansLand.location("block/tiles_cube"))
+                .texture("side", blockTexture(block.get()))
+                .texture("side_alt", blockTexture(block.get()).withSuffix("_alt"))
+        );
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+
+    private void tileStairs(Supplier<? extends Block> block, Supplier<? extends Block> texture) {
+        String name = this.name(block.get());
+        ModelFile stairs = this.models()
+                .withExistingParent(name, NoMansLand.location("block/tile_stairs"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile stairsAlt = this.models()
+                .withExistingParent(name + "_alt", NoMansLand.location("block/tile_stairs_alt"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile stairsInner = this.models()
+                .withExistingParent(name + "_inner", NoMansLand.location("block/tile_stairs_inner"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile stairsInnerAlt = this.models()
+                .withExistingParent(name + "_inner_alt", NoMansLand.location("block/tile_stairs_inner_alt"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile stairsOuter = this.models()
+                .withExistingParent(name + "_outer", NoMansLand.location("block/tile_stairs_outer"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile stairsOuterAlt = this.models()
+                .withExistingParent(name + "_outer_alt", NoMansLand.location("block/tile_stairs_outer_alt"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        this.getVariantBuilder(block.get()).forAllStatesExcept((state) -> {
+            Direction facing = state.getValue(StairBlock.FACING);
+            Half half = state.getValue(StairBlock.HALF);
+            StairsShape shape = state.getValue(StairBlock.SHAPE);
+            int yRot = (int)facing.getClockWise().toYRot();
+            if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
+                yRot += 270;
+            }
+
+            if (shape != StairsShape.STRAIGHT && half == Half.TOP) {
+                yRot += 90;
+            }
+
+            yRot %= 360;
+            boolean uvlock = yRot != 0 || half == Half.TOP;
+            ModelFile model = switch (shape) {
+                case STRAIGHT -> switch (facing) {
+                    case DOWN, UP -> models().getBuilder(name);
+                    case NORTH, SOUTH -> stairsAlt;
+                    case EAST, WEST -> stairs;
+                };
+                case INNER_LEFT -> switch (facing) {
+                    case DOWN, UP -> models().getBuilder(name);
+                    case NORTH, SOUTH -> switch (half) {
+                        case BOTTOM -> stairsInner;
+                        case TOP -> stairsInnerAlt;
+                    };
+                    case WEST, EAST -> switch (half) {
+                        case BOTTOM -> stairsInnerAlt;
+                        case TOP -> stairsInner;
+                    };
+                };
+                case INNER_RIGHT -> switch (facing) {
+                    case DOWN, UP -> models().getBuilder(name);
+                    case NORTH, SOUTH -> switch (half) {
+                        case BOTTOM -> stairsInnerAlt;
+                        case TOP -> stairsInner;
+                    };
+                    case WEST, EAST -> switch (half) {
+                        case BOTTOM -> stairsInner;
+                        case TOP -> stairsInnerAlt;
+                    };
+                };
+                case OUTER_LEFT -> switch (facing) {
+                    case DOWN, UP -> models().getBuilder(name);
+                    case NORTH, SOUTH -> switch (half) {
+                        case BOTTOM -> stairsOuter;
+                        case TOP -> stairsOuterAlt;
+                    };
+                    case WEST, EAST -> switch (half) {
+                        case BOTTOM -> stairsOuterAlt;
+                        case TOP -> stairsOuter;
+                    };
+                };
+                case OUTER_RIGHT -> switch (facing) {
+                    case DOWN, UP -> models().getBuilder(name);
+                    case NORTH, SOUTH -> switch (half) {
+                        case BOTTOM -> stairsOuterAlt;
+                        case TOP -> stairsOuter;
+                    };
+                    case WEST, EAST -> switch (half) {
+                        case BOTTOM -> stairsOuter;
+                        case TOP -> stairsOuterAlt;
+                    };
+                };
+            };
+
+            return ConfiguredModel.builder().modelFile(model).rotationX(half == Half.BOTTOM ? 0 : 180).rotationY(yRot).uvLock(uvlock).build();
+        }, StairBlock.WATERLOGGED);
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+
+    private void tileSlab(Supplier<? extends Block> block, Supplier<? extends Block> texture) {
+        String name = this.name(block.get());
+        ResourceLocation main = blockTexture(texture.get());
+        ResourceLocation doubleSlab = moonlitPath("block/" + this.name(texture.get()));
+        ModelFile bottom = this.models()
+                .withExistingParent(name, NoMansLand.location("block/tile_slab"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        ModelFile top = this.models()
+                .withExistingParent(name + "_top", NoMansLand.location("block/tile_slab_top"))
+                .texture("side", blockTexture(texture.get()))
+                .texture("side_alt", blockTexture(texture.get()).withSuffix("_alt"));
+        this.slabBlock((SlabBlock) block.get(), bottom, top, this.models().getExistingFile(doubleSlab));
+        this.simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(moonlitPath("block/" + this.name(block.get()))));
+    }
+
     private void shinyPillar(Supplier<? extends Block> block) {
         String name  = this.name(block.get());
         this.getVariantBuilder(block.get()).forAllStates((state) -> {
@@ -248,7 +374,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         String wood = name.replace("wrapped_", "").replace("_pillar_base", "");
         this.getVariantBuilder(block.get()).forAllStates(blockState -> {
             var direction = blockState.getValue(WrappedPillarBaseBlock.FACING);
-            var model = this.models().withExistingParent(name, Moonlit.moonlitPath("block/wooden/template_wrapped_pillar_base"))
+            var model = this.models().withExistingParent(name, moonlitPath("block/wooden/template_wrapped_pillar_base"))
                     .texture("base", moonlitPath("block/wooden/wrapped_%s_pillar_base".formatted(wood)))
                     .texture("end", moonlitPath("block/wooden/ornate_%s_pillar_end".formatted(wood)));
             return ConfiguredModel.builder().modelFile(model)
@@ -265,7 +391,7 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block.get()).forAllStates(blockState -> {
             var axis = blockState.getValue(WrappedBeamBlock.AXIS);
             var part = blockState.getValue(WrappedBeamBlock.PART);
-            ResourceLocation parentLoc = Moonlit.moonlitPath("block/wooden/template_wrapped_beam_%s".formatted(part.getSerializedName()));
+            ResourceLocation parentLoc = moonlitPath("block/wooden/template_wrapped_beam_%s".formatted(part.getSerializedName()));
             var model = this.models().withExistingParent(name + "_%s".formatted(part.getSerializedName()), parentLoc)
                     .texture("base", moonlitPath("block/wooden/wrapped_%s_beam".formatted(wood)));
             return ConfiguredModel.builder().modelFile(model)

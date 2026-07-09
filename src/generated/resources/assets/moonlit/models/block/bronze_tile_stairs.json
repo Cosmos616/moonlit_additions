@@ -1,5 +1,5 @@
 {
-  "parent": "nomansland:block/tiles_cube",
+  "parent": "nomansland:block/tile_stairs",
   "textures": {
     "side": "moonlit:block/bronze_tiles",
     "side_alt": "moonlit:block/bronze_tiles_alt"
