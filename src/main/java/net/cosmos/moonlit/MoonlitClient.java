@@ -6,6 +6,7 @@ import net.cosmos.moonlit.client.MoonlitModelLayers;
 import net.cosmos.moonlit.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit.client.particle.ModParticles;
 import net.cosmos.moonlit.client.rendering.*;
+import net.cosmos.moonlit.client.rendering.debug.GlowingAncestralCarvingRenderer;
 import net.cosmos.moonlit.client.shockwave.ShockwavePostProcessor;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
@@ -62,6 +63,7 @@ public class MoonlitClient {
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_LENS.get(), BronzeLensRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_MIRROR.get(), BronzeMirrorRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.MANUFACTURED_SUN.get(), ManufacturedSunRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.GLOWING_ANCESTRAL_CARVING.get(), GlowingAncestralCarvingRenderer::new);
     }
 
     @SubscribeEvent

@@ -4,6 +4,7 @@ import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.BlockProperties;
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
+import net.cosmos.moonlit.common.block.debug.GlowingAncestralCarving;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeMirrorBlock;
@@ -182,6 +183,12 @@ public class ModBlocks {
     public static final BlockDefinition<Block> BRONZE_MIRROR = register("bronze_mirror", () ->
             new BronzeMirrorBlock<>(BlockBehaviour.Properties.of()
                     .strength(4f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion())
+    );
+
+    public static final BlockDefinition<Block> GLOWING_CARVING = register("glowing_ancestral_carving", () ->
+            new GlowingAncestralCarving(BlockBehaviour.Properties.of()
                     .requiresCorrectToolForDrops()
                     .noOcclusion())
     );

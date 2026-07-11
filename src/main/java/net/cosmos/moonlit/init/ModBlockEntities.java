@@ -1,8 +1,10 @@
 package net.cosmos.moonlit.init;
 
 import net.cosmos.moonlit.Moonlit;
+import net.cosmos.moonlit.common.block.debug.GlowingAncestralCarving;
 import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeMirrorBlock;
+import net.cosmos.moonlit.common.block_entity.debug.GlowingAncestralCarvingBlockEntity;
 import net.cosmos.moonlit.common.block_entity.dream.BronzeBellBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.BronzeLensBlockEntity;
@@ -39,6 +41,9 @@ public class ModBlockEntities {
 
     public static final Supplier<LodestoneBlockEntityType<BronzeMirrorBlockEntity>> BRONZE_MIRROR = BLOCK_ENTITIES.register("bronze_mirror",
             () -> LodestoneBlockEntityTypeBuilder.create(BronzeMirrorBlockEntity::new, getBlocks(BronzeMirrorBlock.class)).setTickerType(LodestoneBlockEntityTicker.Type.BOTH).build());
+
+    public static final Supplier<LodestoneBlockEntityType<GlowingAncestralCarvingBlockEntity>> GLOWING_ANCESTRAL_CARVING = BLOCK_ENTITIES.register("glowing_ancestral_carving",
+            () -> LodestoneBlockEntityTypeBuilder.create(GlowingAncestralCarvingBlockEntity::new, getBlocks(GlowingAncestralCarving.class)).setTickerType(LodestoneBlockEntityTicker.Type.BOTH).build());
 
     public static Block[] getBlocks(Class<?>... blockClasses) {
         Collection<DeferredHolder<Block, ? extends Block>> blocks = ModBlocks.BLOCKS.getEntries();
