@@ -5,10 +5,7 @@ import net.cosmos.moonlit.client.MoonlitClientExtensions;
 import net.cosmos.moonlit.client.MoonlitModelLayers;
 import net.cosmos.moonlit.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit.client.particle.ModParticles;
-import net.cosmos.moonlit.client.rendering.BronzeBellRenderer;
-import net.cosmos.moonlit.client.rendering.BronzeLensRenderer;
-import net.cosmos.moonlit.client.rendering.BronzeMirrorRenderer;
-import net.cosmos.moonlit.client.rendering.LensClientSelection;
+import net.cosmos.moonlit.client.rendering.*;
 import net.cosmos.moonlit.client.shockwave.ShockwavePostProcessor;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
@@ -24,6 +21,7 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 @Mod(value = Moonlit.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Moonlit.MOD_ID, value = Dist.CLIENT)
@@ -63,6 +61,7 @@ public class MoonlitClient {
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_BELL_BLOCK_ENTITY.get(), BronzeBellRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_LENS.get(), BronzeLensRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_MIRROR.get(), BronzeMirrorRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MANUFACTURED_SUN.get(), ManufacturedSunRenderer::new);
     }
 
     @SubscribeEvent

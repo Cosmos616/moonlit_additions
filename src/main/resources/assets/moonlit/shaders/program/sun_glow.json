@@ -1,0 +1,66 @@
+{
+  "vertex": "moonlit:sun_glow",
+  "fragment": "moonlit:sun_glow",
+  "samplers": [
+    {
+      "name": "DiffuseSampler"
+    },
+    {
+      "name": "DepthSampler"
+    }
+  ],
+  "uniforms": [
+    {
+      "name": "ProjMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0
+      ]
+    },
+    {
+      "name": "OutSize",
+      "type": "float",
+      "count": 2,
+      "values": [1.0, 1.0]
+    },
+    {
+      "name": "InvProjMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0
+      ]
+    },
+    {
+      "name": "SunCenterView",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, -5.0]
+    },
+    {
+      "name": "SunRadius",
+      "type": "float",
+      "count": 1,
+      "values": [16.0]
+    },
+    {
+      "name": "SunColor",
+      "type": "float",
+      "count": 3,
+      "values": [1.0, 0.45, 0.05]
+    },
+    {
+      "name": "SunIntensity",
+      "type": "float",
+      "count": 1,
+      "values": [4.0]
+    }
+  ]
+}

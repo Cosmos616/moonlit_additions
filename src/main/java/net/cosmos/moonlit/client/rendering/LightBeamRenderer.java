@@ -42,7 +42,7 @@ public class LightBeamRenderer {
         float length = (float) lightBeam.position().distanceTo(lightBeam.getLastReachedPosition());
 
         BeamRenderSettings settings = new BeamRenderSettings(
-                0x55D8FFE8,
+                0x55d7ffE8,
                 2,
                 0.5F,
                 0.5F,
@@ -81,7 +81,7 @@ public class LightBeamRenderer {
             // Outer layer is wider and softer.
             // Inner layer is narrower and brighter.
             float widthScale = lerp(1F, 0.8F, t);
-            float alphaScale = lerp(0.35F, 1.0F, t);
+            float alphaScale = lerp(0.1F, 0.5F, t);
 
             float startWidth = settings.startWidthRadius() * widthScale;
             float startHeight = settings.startHeightRadius() * widthScale;
