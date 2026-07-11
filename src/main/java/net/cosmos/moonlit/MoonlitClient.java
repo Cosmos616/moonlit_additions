@@ -6,6 +6,7 @@ import net.cosmos.moonlit.client.MoonlitModelLayers;
 import net.cosmos.moonlit.client.particle.MeteorAuroraParticle;
 import net.cosmos.moonlit.client.particle.ModParticles;
 import net.cosmos.moonlit.client.rendering.*;
+import net.cosmos.moonlit.client.shaders.processor.SunShaderProcessor;
 import net.cosmos.moonlit.client.shockwave.ShockwavePostProcessor;
 import net.cosmos.moonlit.init.ModBlockEntities;
 import net.minecraft.client.Minecraft;
@@ -38,7 +39,7 @@ public class MoonlitClient {
         Moonlit.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
         event.enqueueWork(ShockwavePostProcessor::load);
-
+        PostProcessHandler.addInstance(SunShaderProcessor.INSTANCE);
     }
 
     @SubscribeEvent

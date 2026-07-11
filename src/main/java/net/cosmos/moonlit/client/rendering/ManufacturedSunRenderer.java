@@ -4,14 +4,20 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.cosmos.moonlit.client.ClientHelper;
 import net.cosmos.moonlit.client.manfactured_sun.ManufacturedSunClientData;
+import net.cosmos.moonlit.client.manfactured_sun.SunGlowPostProcessor;
+import net.cosmos.moonlit.client.shaders.fx.SunGlowFx;
+import net.cosmos.moonlit.client.shaders.processor.SunShaderProcessor;
 import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.FastColor;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
+import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
 public class ManufacturedSunRenderer implements BlockEntityRenderer<ManufacturedSunBlockEntity> {
 
@@ -24,6 +30,8 @@ public class ManufacturedSunRenderer implements BlockEntityRenderer<Manufactured
             float rotationSpeed
     ) {
     }
+
+    static SunGlowFx sunGlowFx;
 
     public ManufacturedSunRenderer(BlockEntityRendererProvider.Context context) {
 
@@ -38,6 +46,7 @@ public class ManufacturedSunRenderer implements BlockEntityRenderer<Manufactured
             int packedLight,
             int packedOverlay
     ) {
+
         float gameTime = 0.0F;
 
         if (blockEntity.getLevel() != null) {
@@ -53,16 +62,20 @@ public class ManufacturedSunRenderer implements BlockEntityRenderer<Manufactured
                 0.45F       // rotation speed
         );
 
-
         Vec3 center = Vec3.atLowerCornerOf(blockEntity.getBlockPos()).add(0.5D, 0.5D, 0.5D);
 
-        ManufacturedSunClientData.submit(
-                center,
-                new Vector3f(1.0F, 0.75F, 0.28F),
-                8.0F,
-                1.25F,
-                blockEntity.getLevel().getGameTime()
-        );
+        //ManufacturedSunClientData.submit(
+        //        center,
+        //        new Vector3f(1.0F, 0.75F, 0.28F),
+        //        8.0F,
+        //        1.25F,
+        //        blockEntity.getLevel().getGameTime()
+        //);
+
+        if(sunGlowFx == null) {
+            sunGlowFx = new SunGlowFx(center.toVector3f(), new Vector3f(1.0F, 0.75F, 0.28F), 8.0F, 1.25F);
+            SunShaderProcessor.INSTANCE.addFxInstance(sunGlowFx);
+        }
 
         poseStack.pushPose();
 
@@ -299,5 +312,10 @@ public class ManufacturedSunRenderer implements BlockEntityRenderer<Manufactured
     @Override
     public int getViewDistance() {
         return 96;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(ManufacturedSunBlockEntity blockEntity) {
+        return AABB.INFINITE;
     }
 }
