@@ -2,10 +2,12 @@ package net.cosmos.moonlit.init;
 
 import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.debug.GlowingAncestralCarving;
+import net.cosmos.moonlit.common.block.dream.reflection.PuddleBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeMirrorBlock;
 import net.cosmos.moonlit.common.block_entity.debug.GlowingAncestralCarvingBlockEntity;
 import net.cosmos.moonlit.common.block_entity.dream.BronzeBellBlockEntity;
+import net.cosmos.moonlit.common.block_entity.dream.reflection.PuddleBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.ManufacturedSunBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.BronzeLensBlockEntity;
 import net.cosmos.moonlit.common.block_entity.forge.light.BronzeMirrorBlockEntity;
@@ -44,6 +46,9 @@ public class ModBlockEntities {
 
     public static final Supplier<LodestoneBlockEntityType<GlowingAncestralCarvingBlockEntity>> GLOWING_ANCESTRAL_CARVING = BLOCK_ENTITIES.register("glowing_ancestral_carving",
             () -> LodestoneBlockEntityTypeBuilder.create(GlowingAncestralCarvingBlockEntity::new, getBlocks(GlowingAncestralCarving.class)).setTickerType(LodestoneBlockEntityTicker.Type.BOTH).build());
+
+    public static final Supplier<LodestoneBlockEntityType<PuddleBlockEntity>> PUDDLE = BLOCK_ENTITIES.register("puddle",
+            () -> LodestoneBlockEntityTypeBuilder.create(PuddleBlockEntity::new, getBlocks(PuddleBlock.class)).setTickerType(LodestoneBlockEntityTicker.Type.BOTH).build());
 
     public static Block[] getBlocks(Class<?>... blockClasses) {
         Collection<DeferredHolder<Block, ? extends Block>> blocks = ModBlocks.BLOCKS.getEntries();
