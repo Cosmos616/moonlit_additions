@@ -18,7 +18,7 @@ public class ModAttachmentTypes {
     );
 
     public static final Supplier<AttachmentType<Reflection>> REFLECTION = ATTACHMENT_TYPES.register(
-            "reflection", () -> AttachmentType.builder(Reflection::new).serialize(Reflection.CODEC).build()
+            "reflection", () -> AttachmentType.builder(() -> Reflection.create()).serialize(Reflection.CODEC).build()
     );
 
     public static void register(IEventBus eventBus){

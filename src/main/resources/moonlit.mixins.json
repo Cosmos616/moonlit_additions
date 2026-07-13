@@ -4,8 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "EntityRenderDispatcherAccessor",
-    "client.LightTextureMixin",
-    "client.LevelRendererAccessor"
+    "accessor.GameRendererAccessor",
+    "client.LevelRendererAccessor",
+    "client.LightTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1
