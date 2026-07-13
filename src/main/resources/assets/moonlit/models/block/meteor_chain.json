@@ -1,0 +1,29 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"0": "moonlit:block/meteor_chain",
+		"particle": "moonlit:block/meteor_chain"
+	},
+	"elements": [
+		{
+			"from": [8, 0, 6],
+			"to": [8, 16, 10],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [4, 0, 8, 16], "texture": "#0"},
+				"west": {"uv": [4, 0, 8, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8, 0, 6],
+			"to": [8, 16, 10],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [8, 0, 12, 16], "texture": "#0"},
+				"west": {"uv": [8, 0, 12, 16], "texture": "#0"}
+			}
+		}
+	]
+}

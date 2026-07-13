@@ -2,11 +2,13 @@ package net.cosmos.moonlit.client.rendering.debug;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.cosmos.moonlit.common.block.debug.GlowingAncestralCarving;
 import net.cosmos.moonlit.common.block_entity.debug.GlowingAncestralCarvingBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Vector3f;
 import team.lodestar.lodestone.modules.core.easing.Easing;
@@ -26,7 +28,8 @@ public class GlowingAncestralCarvingRenderer implements BlockEntityRenderer<Glow
 
     @Override
     public void render(GlowingAncestralCarvingBlockEntity blockEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        var direction = blockEntityIn.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        var direction = blockEntityIn.getBlockState().getValue(BlockStateProperties.FACING);
+        var rotation = blockEntityIn.getBlockState().getValue(GlowingAncestralCarving.ROTATION);
 
         var level = Minecraft.getInstance().level;
         var renderType = LodestoneRenderTypes.ADDITIVE_TEXTURE.apply(RenderTypeToken.createToken(moonlitPath("textures/vfx/glowing_carving/small.png")));
@@ -40,8 +43,23 @@ public class GlowingAncestralCarvingRenderer implements BlockEntityRenderer<Glow
                 new Vector3f(0.5125f, 1f, 0.5125f), new Vector3f(-0.5125f, 1f, 0.5125f)};
 
         poseStack.pushPose();
-        poseStack.translate(0.5f, 0, 0.5f);
-        poseStack.mulPose(Axis.YN.rotationDegrees(direction.toYRot()));
+//        poseStack.mulPose(direction.getRotation());
+        if (direction.getAxis().isVertical()){
+            poseStack.translate(0.5f, 0, 0.5f);
+            if (direction == Direction.UP){
+                poseStack.mulPose(Axis.YP.rotationDegrees(-90*rotation - 180));
+                poseStack.mulPose(Axis.XP.rotationDegrees(-90));
+
+            } else {
+                poseStack.mulPose(Axis.YP.rotationDegrees((90*rotation) + 180));
+                poseStack.mulPose(Axis.XP.rotationDegrees(90));
+            }
+
+        } else {
+            poseStack.translate(0.5f, 0, 0.5f);
+            poseStack.mulPose(Axis.YN.rotationDegrees(direction.toYRot()));
+        }
+
 
         float gameTime = level.getGameTime() + partialTicks;
         int time = 160;

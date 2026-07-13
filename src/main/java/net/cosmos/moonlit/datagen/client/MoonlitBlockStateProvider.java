@@ -65,7 +65,6 @@ public class MoonlitBlockStateProvider extends BlockStateProvider {
             this.wrappedPillarBase(woodset.wrappedPillarBase());
             this.wrappedBeam(woodset.wrappedBeam());
         }
-        this.horizontalBlock(ModBlocks.GLOWING_CARVING.block(), new ModelFile.UncheckedModelFile(NoMansLand.location("block/dungeon/ancestral_carving/ancestral_carving_single")), 0);
         this.simpleBlockItem(ModBlocks.GLOWING_CARVING.block(), new ModelFile.UncheckedModelFile(NoMansLand.location("item/ancestral_carving")));
     }
 

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "moonlit:block/meteor_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "moonlit:block/meteor_chain"
+    },
+    "axis=z": {
+      "model": "moonlit:block/meteor_chain",
+      "x": 90
+    }
+  }
+}

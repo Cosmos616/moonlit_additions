@@ -104,6 +104,22 @@ public class ModBlocks {
                     )
             );
 
+    public static final BlockDefinition<Block> LARGE_METEOR_CHAIN = register("large_meteor_chain", () ->
+            new MeteorChainLarge(BlockBehaviour.Properties.of()
+                    .strength(3.5F, 6.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+            )
+    );
+
+    public static final BlockDefinition<Block> METEOR_CHAIN = register("meteor_chain", () ->
+            new ChainBlock(BlockBehaviour.Properties.of()
+                    .strength(3.5F, 6.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+            )
+    );
+
     //public static final BlockDefinition<Block> ORNATE_WALNUT = register("ornate_walnut", () ->
     //        new Block(BlockBehaviour.Properties.of()
     //                .sound(SoundType.WOOD)
