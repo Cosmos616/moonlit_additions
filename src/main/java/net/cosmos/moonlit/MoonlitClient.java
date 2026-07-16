@@ -64,6 +64,7 @@ public class MoonlitClient {
         event.registerBlockEntityRenderer(ModBlockEntities.BRONZE_MIRROR.get(), BronzeMirrorRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.MANUFACTURED_SUN.get(), ManufacturedSunRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.GLOWING_ANCESTRAL_CARVING.get(), GlowingAncestralCarvingRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.PUDDLE.get(), PuddleRenderer::new);
     }
 
     @SubscribeEvent

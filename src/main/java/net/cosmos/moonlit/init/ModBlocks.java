@@ -6,6 +6,7 @@ import net.cosmos.moonlit.Moonlit;
 import net.cosmos.moonlit.common.block.*;
 import net.cosmos.moonlit.common.block.debug.GlowingAncestralCarving;
 import net.cosmos.moonlit.common.block.dream.BronzeBellBlock;
+import net.cosmos.moonlit.common.block.dream.reflection.PuddleBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeLensBlock;
 import net.cosmos.moonlit.common.block.forge.BronzeMirrorBlock;
 import net.cosmos.moonlit.common.block.forge.ManufacturedSunBlock;
@@ -207,6 +208,10 @@ public class ModBlocks {
             new GlowingAncestralCarving(BlockBehaviour.Properties.of()
                     .requiresCorrectToolForDrops()
                     .noOcclusion())
+    );
+
+    public static final BlockDefinition<Block> PUDDLE = register("puddle", () ->
+            new PuddleBlock(BlockBehaviour.Properties.of().noOcclusion())
     );
 
 

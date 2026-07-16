@@ -4,8 +4,10 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "EntityRenderDispatcherAccessor",
+    "accessor.GameRendererAccessor",
+    "client.LevelRendererAccessor",
     "client.LightTextureMixin",
-    "client.LevelRendererAccessor"
+    "client.GameRendererViewBobbingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
