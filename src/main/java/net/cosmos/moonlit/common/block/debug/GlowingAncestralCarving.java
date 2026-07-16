@@ -9,10 +9,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -28,8 +26,8 @@ public class GlowingAncestralCarving extends LodestoneEntityBlock<GlowingAncestr
     public static final EnumProperty<CarvingFormation> FORMATION = EnumProperty.create("formation", CarvingFormation.class);
     public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 
-    protected MapCodec<? extends DirectionalBlock> codec() {
-        return simpleCodec(AncestralCarvingBlock::new);
+    protected MapCodec<GlowingAncestralCarving> codec() {
+        return simpleCodec(GlowingAncestralCarving::new);
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -69,7 +67,7 @@ public class GlowingAncestralCarving extends LodestoneEntityBlock<GlowingAncestr
         BlockState clicked = level.getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite()));
         Direction facing;
         int rotation;
-        if (clicked.getBlock() instanceof AncestralCarvingBlock) {
+        if (clicked.getBlock() instanceof GlowingAncestralCarving) {
             facing = (Direction)clicked.getValue(FACING);
             rotation = (Integer)clicked.getValue(ROTATION);
         } else {
@@ -135,7 +133,7 @@ public class GlowingAncestralCarving extends LodestoneEntityBlock<GlowingAncestr
             for(int row = 0; row < size; ++row) {
                 BlockPos p = origin.relative(right, col).relative(down, row);
                 BlockState s = level.getBlockState(p);
-                if (!(s.getBlock() instanceof AncestralCarvingBlock)) {
+                if (!(s.getBlock() instanceof GlowingAncestralCarving)) {
                     return false;
                 }
 
