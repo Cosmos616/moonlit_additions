@@ -30,11 +30,11 @@ public class PuddleBlock extends LodestoneEntityBlock<PuddleBlockEntity> {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (player.hasData(ModAttachmentTypes.REFLECTION)) {
-                PacketDistributor.sendToPlayer(serverPlayer, new ToggleReflectionShaderPayload(true));
+                PacketDistributor.sendToPlayer(serverPlayer, new ToggleReflectionShaderPayload(false));
                 player.removeData(ModAttachmentTypes.REFLECTION);
             } else {
                 player.setData(ModAttachmentTypes.REFLECTION, Reflection.create());
-                PacketDistributor.sendToPlayer(serverPlayer, new ToggleReflectionShaderPayload(false));
+                PacketDistributor.sendToPlayer(serverPlayer, new ToggleReflectionShaderPayload(true));
             }
         }
 

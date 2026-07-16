@@ -6,7 +6,8 @@
     "EntityRenderDispatcherAccessor",
     "accessor.GameRendererAccessor",
     "client.LevelRendererAccessor",
-    "client.LightTextureMixin"
+    "client.LightTextureMixin",
+    "client.GameRendererViewBobbingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
